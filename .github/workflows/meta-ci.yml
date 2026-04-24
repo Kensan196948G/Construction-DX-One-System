@@ -1,0 +1,72 @@
+name: Construction-DX-One-System Meta CI
+
+on:
+  push:
+    branches: [main, develop, 'feature/**']
+  pull_request:
+    branches: [main, develop]
+  workflow_dispatch:
+
+jobs:
+  meta-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate state.json
+        run: |
+          python3 -c "
+          import json
+          data = json.load(open('state.json'))
+          print('state.json valid')
+          print('Project:', data['project']['name'])
+          print('Deadline:', data['project']['release_deadline'])
+          "
+
+      - name: Check subsystem structure
+        run: |
+          MISSING=0
+          for d in ZeroTrust-ID-Governance IT-Change-CAB-Platform IT-BCP-ITSCM-System Construction-SIEM-Platform Construction-GRC-System; do
+            if [ -d "$d" ]; then
+              echo "OK: $d exists"
+            else
+              echo "MISSING: $d"
+              MISSING=$((MISSING+1))
+            fi
+          done
+          echo "Missing subsystems: $MISSING"
+
+      - name: Validate README
+        run: |
+          if [ -f README.md ]; then
+            echo "README.md exists"
+            wc -l README.md
+          else
+            echo "README.md missing"
+            exit 1
+          fi
+
+  check-days-remaining:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Calculate days remaining
+        run: |
+          python3 - << 'PYEOF'
+          from datetime import datetime, timezone
+          deadline = datetime(2026, 10, 15, tzinfo=timezone.utc)
+          now = datetime.now(timezone.utc)
+          days_left = (deadline - now).days
+          print(f"Days remaining: {days_left}")
+          if days_left <= 7:
+              print("STATUS: RELEASE_PREP_ONLY")
+          elif days_left <= 14:
+              print("STATUS: FEATURE_FREEZE")
+          elif days_left <= 30:
+              print("STATUS: STABILIZATION")
+          else:
+              print("STATUS: ACTIVE_DEVELOPMENT")
+          PYEOF
