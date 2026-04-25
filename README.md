@@ -214,9 +214,9 @@ mindmap
 
 > **建設業 統合リスク＆コンプライアンス管理システム**
 
-[![CGRC CI](https://github.com/Kensan196948G/Construction-GRC-System/actions/workflows/claudeos-ci.yml/badge.svg)](https://github.com/Kensan196948G/Construction-GRC-System/actions)
-[![Tests](https://img.shields.io/badge/Tests-660+-brightgreen.svg)](Construction-GRC-System/)
-[![Version](https://img.shields.io/badge/Version-v1.2.0-orange.svg)](Construction-GRC-System/CHANGELOG.md)
+[![CGRC CI](https://github.com/Kensan196948G/Construction-DX-One-System/actions/workflows/cgrc-ci.yml/badge.svg)](https://github.com/Kensan196948G/Construction-DX-One-System/actions/workflows/cgrc-ci.yml)
+[![Tests](https://img.shields.io/badge/Tests-30%20passed-brightgreen.svg)](Construction-GRC-System/)
+[![Coverage](https://img.shields.io/badge/Coverage-92%25-brightgreen.svg)](Construction-GRC-System/)
 [![Controls](https://img.shields.io/badge/ISO27001-93管理策対応-blue.svg)](Construction-GRC-System/)
 
 | 項目 | 内容 |
@@ -225,8 +225,8 @@ mindmap
 | 👥 **利用者** | GRC管理者・リスクオーナー・監査員・経営層（約50名） |
 | 📋 **管理策数** | **ISO27001 全93管理策**（4ドメイン） |
 | 🏗️ **技術スタック** | Python 3.12 / Django 5.x + Vue.js 3.x / TypeScript + PostgreSQL 16 + Redis 7 |
-| 📊 **状態** | 🔵 開発中（v1.2.0） |
-| 🔗 **リポジトリ** | [Kensan196948G/Construction-GRC-System](https://github.com/Kensan196948G/Construction-GRC-System) |
+| 📊 **状態** | 🔵 バックエンド基盤実装済み: 30テスト / 92% カバレッジ · PR #5 |
+| 🔗 **実装パス** | `./Construction-GRC-System/backend/` |
 
 **GRC管理機能:**
 
@@ -329,10 +329,10 @@ sequenceDiagram
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 | 1 | ZeroTrust-ID-Governance | ZTIG | **13件** (backend) | **87%** | 1件 (Draft) | 🔵 バックエンド基盤実装済み |
 | 2 | Construction-SIEM-Platform | CSIEM | **19件** (backend) | **80.10%** | 1件 (Draft) | 🔵 バックエンド基盤実装済み |
-| 3 | Construction-GRC-System | CGRC | **660件+** | 80%+ | - | 🔵 開発中 |
+| 3 | Construction-GRC-System | CGRC | **30件** (backend) | **92%** | 1件 (Draft) | 🔵 バックエンド基盤実装済み |
 | 4 | IT-Change-CAB-Platform | ICCP | **1,253件**<br/>Backend 738 / FE 414 / E2E 101 | **100%** | **131件** | ✅ STABLE |
 | 5 | IT-BCP-ITSCM-System | IBIS | **1,012件**<br/>Backend 600+ / Frontend 412 | 80%+ | **173件** | ✅ STABLE |
-| 📊 | **合計** | | **🔢 2,957件+** | | **306件** | |
+| 📊 | **合計** | | **🔢 2,975件+** | | **306件** | |
 
 ### フェーズ進捗
 
@@ -341,7 +341,7 @@ xychart-beta
     title "各サブシステム 実装フェーズ進捗"
     x-axis ["ZTIG", "CSIEM", "CGRC", "ICCP", "IBIS"]
     y-axis "完了フェーズ数" 0 --> 50
-    bar [1, 1, 12, 7, 8]
+    bar [1, 1, 1, 7, 8]
 ```
 
 ---
@@ -712,6 +712,6 @@ flowchart LR
 
 *みらい建設工業 IT部門が推進する建設業 DX セキュリティ統合基盤*
 
-📅 最終更新: 2026-04-25 ｜ 🤖 ClaudeOS v8.0 自律開発 ｜ 🚀 本番リリース目標: 2026-10-15
+📅 最終更新: 2026-04-25 (CGRC backend追加) ｜ 🤖 ClaudeOS v8.0 自律開発 ｜ 🚀 本番リリース目標: 2026-10-15
 
 </div>
