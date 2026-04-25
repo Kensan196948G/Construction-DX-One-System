@@ -9,11 +9,15 @@
   },
   "subsystems": {
     "ZeroTrust-ID-Governance": {
-      "status": "development",
+      "status": "backend_complete",
       "priority": "high",
       "tech": "Python/FastAPI + Next.js 14",
       "github_repo": "Kensan196948G/ZeroTrust-ID-Governance",
-      "local_path": "ZeroTrust-ID-Governance"
+      "local_path": "ZeroTrust-ID-Governance",
+      "backend_test_pass_rate": 1.0,
+      "backend_coverage": 0.87,
+      "backend_lint": "CLEAN",
+      "pr_branch": "claude/quirky-bell-bzKP0"
     },
     "Construction-SIEM-Platform": {
       "status": "development",
@@ -86,9 +90,20 @@
     "current_focus_system": "ZeroTrust-ID-Governance"
   },
   "learning": {
-    "failure_patterns": [],
-    "success_patterns": [],
-    "blocked_patterns": [],
+    "failure_patterns": [
+      "passlib[bcrypt]==1.7.4 is incompatible with bcrypt>=4.x — use bcrypt directly",
+      "SQLAlchemy server_default with SQL functions (gen_random_uuid, NOW) breaks SQLite tests — use Python-side defaults",
+      "UUID stored as String(36) requires str() conversion in WHERE clauses for SQLite compatibility",
+      "ruff.toml must use flat [lint] sections, not [tool.ruff.lint]"
+    ],
+    "success_patterns": [
+      "SQLite-compatible models: String(36) for UUID PK + default=lambda: str(uuid.uuid4())",
+      "bcrypt direct usage: bcrypt.hashpw/checkpw avoids passlib compatibility issues",
+      "AmbiguousForeignKeys fix: foreign_keys='[Table.col]' string syntax in relationship()"
+    ],
+    "blocked_patterns": [
+      "GitHub App lacks workflows permission — cannot push .github/workflows/** via git or MCP"
+    ],
     "preferred_fix_order": ["security", "ci", "test", "review", "refactor"]
   },
   "github": {
@@ -106,12 +121,13 @@
     "month6": "リリース準備・本番移行（〜2026-10-15）"
   },
   "status": {
-    "stable": false,
+    "stable": true,
     "blocked": false,
-    "current_phase": "build",
-    "last_updated": "2026-04-24T00:00:00Z",
-    "days_elapsed": 9,
-    "days_remaining": 174,
-    "session_number": 1
+    "current_phase": "verify",
+    "last_updated": "2026-04-25T00:00:00Z",
+    "days_elapsed": 10,
+    "days_remaining": 173,
+    "session_number": 2,
+    "last_session_result": "STABLE: ZTIG backend 13/13 tests PASS, coverage 87%, ruff CLEAN"
   }
 }
