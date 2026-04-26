@@ -184,8 +184,9 @@ mindmap
 > **建設現場 サイバーセキュリティ監視・SIEM統合システム**
 
 [![CSIEM CI](https://github.com/Kensan196948G/Construction-DX-One-System/actions/workflows/siem-ci.yml/badge.svg)](https://github.com/Kensan196948G/Construction-DX-One-System/actions)
-[![Tests](https://img.shields.io/badge/Tests-19_passed-brightgreen.svg)](Construction-SIEM-Platform/backend/tests/)
-[![Coverage](https://img.shields.io/badge/Coverage-80.10%25-brightgreen.svg)](Construction-SIEM-Platform/backend/)
+[![Backend Tests](https://img.shields.io/badge/Backend_Tests-19_passed-brightgreen.svg)](Construction-SIEM-Platform/backend/tests/)
+[![Frontend Tests](https://img.shields.io/badge/Frontend_Tests-20_passed-brightgreen.svg)](Construction-SIEM-Platform/frontend/tests/)
+[![Frontend Coverage](https://img.shields.io/badge/Frontend_Coverage-75%25-brightgreen.svg)](Construction-SIEM-Platform/frontend/)
 [![EPS](https://img.shields.io/badge/処理能力-10000_EPS-orange.svg)](Construction-SIEM-Platform/)
 
 | 項目 | 内容 |
@@ -194,9 +195,10 @@ mindmap
 | ⏱️ **MTTD 目標** | **15分以内** |
 | ⏱️ **MTTR 目標** | **2時間以内** |
 | 📊 **処理能力** | **10,000 EPS（イベント/秒）以上** |
-| 🏗️ **技術スタック** | Python 3.12 / FastAPI 0.115.6 + SQLAlchemy 2.0 async + PostgreSQL 16 + Elasticsearch 8.x |
-| 📊 **状態** | 🔵 開発中（バックエンド基盤実装済み: **19テスト / 80.10%** カバレッジ · PR #5） |
-| 🔗 **実装パス** | [Construction-SIEM-Platform/backend](./Construction-SIEM-Platform/backend/) |
+| 🏗️ **技術スタック（バックエンド）** | Python 3.12 / FastAPI 0.115.6 + SQLAlchemy 2.0 async + PostgreSQL 16 + Elasticsearch 8.x |
+| 🖥️ **技術スタック（フロントエンド）** | Vue 3.5 + TypeScript + Vite 6 + Pinia 2 + Vue Router 4 + axios |
+| 📊 **状態** | 🟡 バックエンド+フロントエンド基盤実装済み: backend **19テスト/80%** · frontend **20テスト/75%** · PR #5 |
+| 🔗 **実装パス** | [Construction-SIEM-Platform/backend](./Construction-SIEM-Platform/backend/) · [Construction-SIEM-Platform/frontend](./Construction-SIEM-Platform/frontend/) |
 
 **脅威検知シナリオ:**
 
@@ -328,7 +330,7 @@ sequenceDiagram
 | 🔢 | システム | 略称 | テスト数 | カバレッジ | PR数 | ステータス |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 | 1 | ZeroTrust-ID-Governance | ZTIG | **13件** (backend) | **87%** | 1件 (Draft) | 🔵 バックエンド基盤実装済み |
-| 2 | Construction-SIEM-Platform | CSIEM | **19件** (backend) | **80.10%** | 1件 (Draft) | 🔵 バックエンド基盤実装済み |
+| 2 | Construction-SIEM-Platform | CSIEM | **19件** (backend)<br/>**20件** (frontend) | **80%** / **75%** | 1件 (Draft) | 🟡 バックエンド+フロントエンド基盤実装済み |
 | 3 | Construction-GRC-System | CGRC | **30件** (backend)<br/>**19件** (frontend) | **92%** / **62%** | 1件 (Draft) | 🟡 バックエンド+フロントエンド基盤実装済み |
 | 4 | IT-Change-CAB-Platform | ICCP | **1,253件**<br/>Backend 738 / FE 414 / E2E 101 | **100%** | **131件** | ✅ STABLE |
 | 5 | IT-BCP-ITSCM-System | IBIS | **1,012件**<br/>Backend 600+ / Frontend 412 | 80%+ | **173件** | ✅ STABLE |
