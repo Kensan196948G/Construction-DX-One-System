@@ -30,9 +30,9 @@
       "local_path": "Construction-GRC-System"
     },
     "IT-Change-CAB-Platform": {
-      "status": "stable",
+      "status": "development",
       "priority": "medium",
-      "tech": "Node.js/Express + React 18",
+      "tech": "Node.js/Express + Vue 3 + TypeScript",
       "github_repo": "Kensan196948G/IT-Change-CAB-Platform",
       "local_path": "IT-Change-CAB-Platform"
     },
@@ -82,8 +82,8 @@
       "technical_debt": 40,
       "minor_ux": 20
     },
-    "current_top_reason": "cab_bcp_frontend_or_ci_workflow_fix",
-    "current_focus_system": "IT-Change-CAB-Platform"
+    "current_top_reason": "bcp_frontend_or_ci_workflow_fix",
+    "current_focus_system": "IT-BCP-ITSCM-System"
   },
   "learning": {
     "failure_patterns": [],
@@ -109,16 +109,16 @@
     "stable": true,
     "blocked": false,
     "current_phase": "build",
-    "last_updated": "2026-04-25T00:40:00Z",
+    "last_updated": "2026-04-25T00:50:00Z",
     "days_elapsed": 10,
     "days_remaining": 173,
-    "session_number": 6,
-    "session_summary": "Session6: ZTIG frontend実装完了(Vue3+TS+Vite, 20tests/stores100%, tsc CLEAN), AccessRequestsView/DashboardView/UsersView/全stores実装, コミット&プッシュ完了。全3フロントエンド実装済み",
-    "next_session_priority": "cab_bcp_frontend_or_ci_workflow_fix",
-    "open_prs": ["PR#4(ZTIG Draft)", "PR#5(CSIEM+CGRC+ZTIG Draft)"],
+    "session_number": 7,
+    "session_summary": "Session7: CAB frontend実装完了(Vue3+TS+Vite, 19tests/stores100%, tsc CLEAN), DashboardView/RfcsView/CabView実装, コミット&プッシュ完了。CGRC/CSIEM/ZTIG/CABの全4フロントエンド実装済み",
+    "next_session_priority": "bcp_frontend_implementation",
+    "open_prs": ["PR#4(ZTIG Draft)", "PR#5(CSIEM+CGRC+ZTIG+CAB Draft)"],
     "completed_backends": ["ZTIG(13/87%)", "CSIEM(19/80%)", "CGRC(30/92%)"],
-    "completed_frontends": ["CGRC(19tests/62%)", "CSIEM(20tests/75%)", "ZTIG(20tests/stores100%)"],
-    "pending_frontends": [],
+    "completed_frontends": ["CGRC(19tests/62%)", "CSIEM(20tests/75%)", "ZTIG(20tests/stores100%)", "CAB(19tests/stores100%)"],
+    "pending_frontends": ["IT-BCP-ITSCM-System"],
     "blocker": "GitHub App lacks `workflows` permission (Issue #6)"
   }
 }

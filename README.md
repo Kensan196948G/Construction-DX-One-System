@@ -250,19 +250,19 @@ mindmap
 > **IT変更管理・リリース自動化プラットフォーム（CAB管理）**
 
 [![ICCP CI](https://github.com/Kensan196948G/IT-Change-CAB-Platform/actions/workflows/claudeos-ci.yml/badge.svg)](https://github.com/Kensan196948G/IT-Change-CAB-Platform/actions)
-[![Tests](https://img.shields.io/badge/Tests-1253_全PASS-brightgreen.svg)](IT-Change-CAB-Platform/)
-[![Coverage](https://img.shields.io/badge/Coverage-100%25-brightgreen.svg)](IT-Change-CAB-Platform/)
-[![Status](https://img.shields.io/badge/Status-STABLE_✅-brightgreen.svg)](IT-Change-CAB-Platform/)
-[![PRs](https://img.shields.io/badge/PRs-131_merged-blue.svg)](https://github.com/Kensan196948G/IT-Change-CAB-Platform)
+[![Tests](https://img.shields.io/badge/Tests-19_全PASS-brightgreen.svg)](IT-Change-CAB-Platform/frontend/)
+[![FE Stores](https://img.shields.io/badge/FE_Stores-100%25-brightgreen.svg)](IT-Change-CAB-Platform/frontend/)
+[![tsc](https://img.shields.io/badge/tsc-CLEAN-brightgreen.svg)](IT-Change-CAB-Platform/frontend/)
+[![Status](https://img.shields.io/badge/Status-バックエンド+フロントエンド基盤実装済み-blue.svg)](IT-Change-CAB-Platform/)
 
 | 項目 | 内容 |
 |:---:|---|
 | 🎯 **目的** | RFC承認・影響分析・CAB審議・展開・ロールバックの完全自動化 |
-| 📋 **テスト数** | **1,253件**（Backend 738 / Frontend 414 / E2E 101） |
-| 🖥️ **画面数** | **17画面** |
-| 🔌 **APIルーター** | **18ルーター**（全100%カバレッジ） |
-| 🏗️ **技術スタック** | Node.js / Express + React 18 / TypeScript + PostgreSQL 16 + Redis 7 (BullMQ) |
-| 📊 **状態** | ✅ **STABLE** |
+| 📋 **フロントエンドテスト** | **19件 全PASS** (rfcs-store: 11 / cab-meetings-store: 8) |
+| 🖥️ **画面数** | **3画面** (ダッシュボード / RFC管理 / CAB会議) |
+| 🔌 **フロントエンドスタック** | Vue 3.5 + TypeScript + Vite 6 + Pinia 2 + Vue Router 4 |
+| 🏗️ **バックエンドスタック** | Node.js / Express + PostgreSQL 16 + Redis 7 (BullMQ) |
+| 📊 **状態** | 🔨 **開発中** (バックエンド+フロントエンド基盤実装済み) |
 | 🔗 **リポジトリ** | [Kensan196948G/IT-Change-CAB-Platform](https://github.com/Kensan196948G/IT-Change-CAB-Platform) |
 
 **変更管理ワークフロー:**
@@ -334,7 +334,7 @@ sequenceDiagram
 | 1 | ZeroTrust-ID-Governance | ZTIG | **13件** (backend)<br/>**20件** (frontend) | **87%** / **stores100%** | 1件 (Draft) | 🟡 バックエンド+フロントエンド基盤実装済み |
 | 2 | Construction-SIEM-Platform | CSIEM | **19件** (backend)<br/>**20件** (frontend) | **80%** / **75%** | 1件 (Draft) | 🟡 バックエンド+フロントエンド基盤実装済み |
 | 3 | Construction-GRC-System | CGRC | **30件** (backend)<br/>**19件** (frontend) | **92%** / **62%** | 1件 (Draft) | 🟡 バックエンド+フロントエンド基盤実装済み |
-| 4 | IT-Change-CAB-Platform | ICCP | **1,253件**<br/>Backend 738 / FE 414 / E2E 101 | **100%** | **131件** | ✅ STABLE |
+| 4 | IT-Change-CAB-Platform | ICCP | **19件** (frontend)<br/>rfcs-store 11 / cab-store 8 | **stores100%** / tsc CLEAN | 1件 (Draft) | 🟡 バックエンド+フロントエンド基盤実装済み |
 | 5 | IT-BCP-ITSCM-System | IBIS | **1,012件**<br/>Backend 600+ / Frontend 412 | 80%+ | **173件** | ✅ STABLE |
 | 📊 | **合計** | | **🔢 2,994件+** | | **306件** | |
 
