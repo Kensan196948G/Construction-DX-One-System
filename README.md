@@ -290,10 +290,9 @@ flowchart LR
 > **IT事業継続管理システム（BCP/ITSCM統合プラットフォーム）**
 
 [![IBIS CI](https://github.com/Kensan196948G/IT-BCP-ITSCM-System/actions/workflows/claudeos-ci.yml/badge.svg)](https://github.com/Kensan196948G/IT-BCP-ITSCM-System/actions)
-[![Tests](https://img.shields.io/badge/Tests-1012_passed-brightgreen.svg)](IT-BCP-ITSCM-System/)
-[![Coverage](https://img.shields.io/badge/Coverage-80%25+-brightgreen.svg)](IT-BCP-ITSCM-System/)
-[![Status](https://img.shields.io/badge/Status-STABLE_✅-brightgreen.svg)](IT-BCP-ITSCM-System/)
-[![PRs](https://img.shields.io/badge/PRs-173_merged-blue.svg)](https://github.com/Kensan196948G/IT-BCP-ITSCM-System)
+[![Tests](https://img.shields.io/badge/Tests-18_passed-brightgreen.svg)](IT-BCP-ITSCM-System/)
+[![Coverage](https://img.shields.io/badge/Coverage-stores100%25-brightgreen.svg)](IT-BCP-ITSCM-System/)
+[![Status](https://img.shields.io/badge/Status-フロントエンド実装済み-blue.svg)](IT-BCP-ITSCM-System/)
 [![Security](https://img.shields.io/badge/CVE-0件-brightgreen.svg)](IT-BCP-ITSCM-System/)
 
 | 項目 | 内容 |
@@ -301,8 +300,10 @@ flowchart LR
 | 🎯 **目的** | 災害・サイバー攻撃時のIT復旧計画・BCP訓練・RTOダッシュボード |
 | 🌏 **インフラ** | Azure Container Apps（東日本Primary + 西日本Standby・地理冗長） |
 | 📱 **対応** | PWA対応（モバイル・オフライン動作可能） |
-| 🏗️ **技術スタック** | Python / FastAPI 0.135.3 + Next.js 16.2.2 + PostgreSQL 16 + Redis（Geo冗長） |
-| 📊 **状態** | ✅ **STABLE** |
+| 🏗️ **技術スタック（バックエンド）** | Python / FastAPI + PostgreSQL + Redis |
+| 🖥️ **技術スタック（フロントエンド）** | Vue 3.5 + TypeScript + Vite 6 + Pinia 2 + Vue Router 4 + axios |
+| 📋 **フロントエンドテスト** | **18件 全PASS** (incidents-store: 11 / systems-store: 7) |
+| 📊 **状態** | 🔨 **開発中** (バックエンド+フロントエンド基盤実装済み) |
 | 🔗 **リポジトリ** | [Kensan196948G/IT-BCP-ITSCM-System](https://github.com/Kensan196948G/IT-BCP-ITSCM-System) |
 
 **BCP 対応フロー:**
@@ -335,8 +336,8 @@ sequenceDiagram
 | 2 | Construction-SIEM-Platform | CSIEM | **19件** (backend)<br/>**20件** (frontend) | **80%** / **75%** | 1件 (Draft) | 🟡 バックエンド+フロントエンド基盤実装済み |
 | 3 | Construction-GRC-System | CGRC | **30件** (backend)<br/>**19件** (frontend) | **92%** / **62%** | 1件 (Draft) | 🟡 バックエンド+フロントエンド基盤実装済み |
 | 4 | IT-Change-CAB-Platform | ICCP | **19件** (frontend)<br/>rfcs-store 11 / cab-store 8 | **stores100%** / tsc CLEAN | 1件 (Draft) | 🟡 バックエンド+フロントエンド基盤実装済み |
-| 5 | IT-BCP-ITSCM-System | IBIS | **1,012件**<br/>Backend 600+ / Frontend 412 | 80%+ | **173件** | ✅ STABLE |
-| 📊 | **合計** | | **🔢 2,994件+** | | **306件** | |
+| 5 | IT-BCP-ITSCM-System | IBIS | **18件** (frontend)<br/>incidents-store 11 / systems-store 7 | **stores100%** / tsc CLEAN | 1件 (Draft) | 🟡 バックエンド+フロントエンド基盤実装済み |
+| 📊 | **合計** | | **🔢 109件+** | | **5件** | |
 
 ### フェーズ進捗
 
