@@ -225,8 +225,8 @@ mindmap
 | 👥 **利用者** | GRC管理者・リスクオーナー・監査員・経営層（約50名） |
 | 📋 **管理策数** | **ISO27001 全93管理策**（4ドメイン） |
 | 🏗️ **技術スタック** | Python 3.12 / Django 5.x + Vue.js 3.x / TypeScript + PostgreSQL 16 + Redis 7 |
-| 📊 **状態** | 🔵 バックエンド基盤実装済み: 30テスト / 92% カバレッジ · PR #5 |
-| 🔗 **実装パス** | `./Construction-GRC-System/backend/` |
+| 📊 **状態** | 🟡 バックエンド+フロントエンド基盤実装済み: backend 30テスト/92% · frontend 19テスト/62% · PR #5 |
+| 🔗 **実装パス** | `./Construction-GRC-System/backend/` · `./Construction-GRC-System/frontend/` |
 
 **GRC管理機能:**
 
@@ -329,10 +329,10 @@ sequenceDiagram
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 | 1 | ZeroTrust-ID-Governance | ZTIG | **13件** (backend) | **87%** | 1件 (Draft) | 🔵 バックエンド基盤実装済み |
 | 2 | Construction-SIEM-Platform | CSIEM | **19件** (backend) | **80.10%** | 1件 (Draft) | 🔵 バックエンド基盤実装済み |
-| 3 | Construction-GRC-System | CGRC | **30件** (backend) | **92%** | 1件 (Draft) | 🔵 バックエンド基盤実装済み |
+| 3 | Construction-GRC-System | CGRC | **30件** (backend)<br/>**19件** (frontend) | **92%** / **62%** | 1件 (Draft) | 🟡 バックエンド+フロントエンド基盤実装済み |
 | 4 | IT-Change-CAB-Platform | ICCP | **1,253件**<br/>Backend 738 / FE 414 / E2E 101 | **100%** | **131件** | ✅ STABLE |
 | 5 | IT-BCP-ITSCM-System | IBIS | **1,012件**<br/>Backend 600+ / Frontend 412 | 80%+ | **173件** | ✅ STABLE |
-| 📊 | **合計** | | **🔢 2,975件+** | | **306件** | |
+| 📊 | **合計** | | **🔢 2,994件+** | | **306件** | |
 
 ### フェーズ進捗
 
@@ -341,7 +341,7 @@ xychart-beta
     title "各サブシステム 実装フェーズ進捗"
     x-axis ["ZTIG", "CSIEM", "CGRC", "ICCP", "IBIS"]
     y-axis "完了フェーズ数" 0 --> 50
-    bar [1, 1, 1, 7, 8]
+    bar [1, 1, 2, 7, 8]
 ```
 
 ---
