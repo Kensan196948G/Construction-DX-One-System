@@ -143,16 +143,18 @@ graph TD
 [![ZTIG CI](https://github.com/Kensan196948G/Construction-DX-One-System/actions/workflows/ztig-ci.yml/badge.svg)](https://github.com/Kensan196948G/Construction-DX-One-System/actions)
 [![Coverage](https://img.shields.io/badge/Backend_Coverage-87%25-brightgreen.svg)](ZeroTrust-ID-Governance/backend/)
 [![Tests](https://img.shields.io/badge/Tests-13_passed-brightgreen.svg)](ZeroTrust-ID-Governance/backend/tests/)
-[![Status](https://img.shields.io/badge/Status-バックエンド基盤実装済-blue.svg)](ZeroTrust-ID-Governance/)
+[![Frontend Tests](https://img.shields.io/badge/Frontend_Tests-20_passed-brightgreen.svg)](ZeroTrust-ID-Governance/frontend/tests/)
+[![Frontend Coverage](https://img.shields.io/badge/Frontend_Stores-100%25-brightgreen.svg)](ZeroTrust-ID-Governance/frontend/)
+[![Status](https://img.shields.io/badge/Status-バックエンド+フロントエンド基盤実装済-blue.svg)](ZeroTrust-ID-Governance/)
 
 | 項目 | 内容 |
 |:---:|---|
 | 🎯 **目的** | ゼロトラスト原則（Never Trust, Always Verify）に基づく統合ID管理 |
 | 👥 **対象ユーザー** | 正社員・嘱託500名 + 協力会社100名 + 管理者7名（PIM対象） |
-| 🏗️ **技術スタック** | Python 3.12 / FastAPI 0.115 + SQLAlchemy 2.0 async + PostgreSQL 16 + JWT HS256 |
-| ☸️ **インフラ** | Docker (python:3.12-slim, non-root) |
-| 📊 **状態** | 🔵 開発中（バックエンド基盤実装済み: **13テスト / 87%** カバレッジ · PR #4） |
-| 🔗 **実装パス** | [ZeroTrust-ID-Governance/backend](./ZeroTrust-ID-Governance/backend/) |
+| 🏗️ **技術スタック** | Python 3.12 / FastAPI 0.115 + SQLAlchemy 2.0 async + PostgreSQL 16 + JWT HS256 · Vue 3.5 + Pinia 2 + Vue Router 4 |
+| ☸️ **インフラ** | Docker (python:3.12-slim, nginx:alpine, multi-stage) |
+| 📊 **状態** | 🟡 バックエンド+フロントエンド基盤実装済み: backend **13テスト/87%** · frontend **20テスト/stores100%** · PR #5 |
+| 🔗 **実装パス** | [ZeroTrust-ID-Governance/backend](./ZeroTrust-ID-Governance/backend/) · [ZeroTrust-ID-Governance/frontend](./ZeroTrust-ID-Governance/frontend/) |
 
 **主要機能:**
 
@@ -329,7 +331,7 @@ sequenceDiagram
 
 | 🔢 | システム | 略称 | テスト数 | カバレッジ | PR数 | ステータス |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| 1 | ZeroTrust-ID-Governance | ZTIG | **13件** (backend) | **87%** | 1件 (Draft) | 🔵 バックエンド基盤実装済み |
+| 1 | ZeroTrust-ID-Governance | ZTIG | **13件** (backend)<br/>**20件** (frontend) | **87%** / **stores100%** | 1件 (Draft) | 🟡 バックエンド+フロントエンド基盤実装済み |
 | 2 | Construction-SIEM-Platform | CSIEM | **19件** (backend)<br/>**20件** (frontend) | **80%** / **75%** | 1件 (Draft) | 🟡 バックエンド+フロントエンド基盤実装済み |
 | 3 | Construction-GRC-System | CGRC | **30件** (backend)<br/>**19件** (frontend) | **92%** / **62%** | 1件 (Draft) | 🟡 バックエンド+フロントエンド基盤実装済み |
 | 4 | IT-Change-CAB-Platform | ICCP | **1,253件**<br/>Backend 738 / FE 414 / E2E 101 | **100%** | **131件** | ✅ STABLE |

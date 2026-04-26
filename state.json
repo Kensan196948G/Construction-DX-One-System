@@ -82,8 +82,8 @@
       "technical_debt": 40,
       "minor_ux": 20
     },
-    "current_top_reason": "ztig_frontend_implementation",
-    "current_focus_system": "ZeroTrust-ID-Governance"
+    "current_top_reason": "cab_bcp_frontend_or_ci_workflow_fix",
+    "current_focus_system": "IT-Change-CAB-Platform"
   },
   "learning": {
     "failure_patterns": [],
@@ -109,16 +109,16 @@
     "stable": true,
     "blocked": false,
     "current_phase": "build",
-    "last_updated": "2026-04-26T00:30:00Z",
-    "days_elapsed": 11,
-    "days_remaining": 172,
-    "session_number": 5,
-    "session_summary": "Session5: CSIEM frontend実装完了(Vue3+TS+Vite, 20tests/75%, stores100%, tsc CLEAN), Issue#9クローズ, PR#5更新(CSIEM frontend追加), README更新。次: ZTIG frontend実装",
-    "next_session_priority": "ztig_frontend_implementation",
-    "open_prs": ["PR#4(ZTIG Draft)", "PR#5(CSIEM+CGRC Draft)"],
+    "last_updated": "2026-04-25T00:40:00Z",
+    "days_elapsed": 10,
+    "days_remaining": 173,
+    "session_number": 6,
+    "session_summary": "Session6: ZTIG frontend実装完了(Vue3+TS+Vite, 20tests/stores100%, tsc CLEAN), AccessRequestsView/DashboardView/UsersView/全stores実装, コミット&プッシュ完了。全3フロントエンド実装済み",
+    "next_session_priority": "cab_bcp_frontend_or_ci_workflow_fix",
+    "open_prs": ["PR#4(ZTIG Draft)", "PR#5(CSIEM+CGRC+ZTIG Draft)"],
     "completed_backends": ["ZTIG(13/87%)", "CSIEM(19/80%)", "CGRC(30/92%)"],
-    "completed_frontends": ["CGRC(19tests/62%)", "CSIEM(20tests/75%)"],
-    "pending_frontends": ["ZTIG"],
+    "completed_frontends": ["CGRC(19tests/62%)", "CSIEM(20tests/75%)", "ZTIG(20tests/stores100%)"],
+    "pending_frontends": [],
     "blocker": "GitHub App lacks `workflows` permission (Issue #6)"
   }
 }
