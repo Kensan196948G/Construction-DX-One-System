@@ -50,3 +50,40 @@ class RFCListResponse(BaseModel):
     status: str = "success"
     data: list[RFCResponse]
     meta: dict
+
+
+class ImpactAnalysisRequest(BaseModel):
+    title: str
+    change_type: ChangeType = "normal"
+    affected_systems: str | None = None
+    planned_start: datetime | None = None
+    planned_end: datetime | None = None
+
+
+class ImpactAnalysisDetail(BaseModel):
+    area: str
+    severity: str
+    description: str
+    score: float
+
+
+class ImpactAnalysisResult(BaseModel):
+    rfc_title: str
+    change_type: str
+    impact_score: float
+    impact_level: str
+    affected_system_count: int
+    planned_duration_hours: float | None = None
+    details: list[ImpactAnalysisDetail]
+    freeze_period_conflicts: list[dict]
+
+
+class ConflictDetectionResult(BaseModel):
+    has_conflicts: bool
+    total_conflicts: int
+    conflicting_rfcs: list[dict]
+
+
+class ChangeCalendarEntry(BaseModel):
+    date: str
+    items: list[dict]
