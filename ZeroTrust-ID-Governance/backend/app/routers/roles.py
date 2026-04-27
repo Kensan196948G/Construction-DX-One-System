@@ -8,6 +8,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.database import get_db
 from app.core.security import decode_token
 from app.schemas.role import RoleAssign, RoleCreate, RoleRead, RoleUpdate
+from app.services.audit_service import log_action
 from app.services.role_service import (
     assign_role,
     create_role,
@@ -40,6 +41,11 @@ async def create_role_endpoint(
     db: AsyncSession = Depends(get_db),
 ):
     role = await create_role(db, payload)
+    await log_action(
+        db, action="role_create", actor_id=_user_id,
+        target_type="role", target_id=str(role.id),
+        payload={"name": role.name}, result="success",
+    )
     return RoleRead.model_validate(role)
 
 
@@ -75,6 +81,11 @@ async def update_role_endpoint(
     if not role:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Role not found")
     role = await update_role(db, role, payload)
+    await log_action(
+        db, action="role_update", actor_id=_user_id,
+        target_type="role", target_id=str(role.id),
+        payload=payload.model_dump(exclude_unset=True), result="success",
+    )
     return RoleRead.model_validate(role)
 
 
@@ -87,6 +98,10 @@ async def delete_role_endpoint(
     role = await get_role(db, role_id)
     if not role:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Role not found")
+    await log_action(
+        db, action="role_delete", actor_id=_user_id,
+        target_type="role", target_id=str(role.id), result="success",
+    )
     await delete_role(db, role)
 
 
@@ -104,6 +119,11 @@ async def assign_role_endpoint(
     if not role:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Role not found")
     await assign_role(db, payload.user_id, role_id, payload.expires_at)
+    await log_action(
+        db, action="role_assign", actor_id=_user_id,
+        target_type="role", target_id=str(role_id),
+        payload={"user_id": str(payload.user_id)}, result="success",
+    )
     return RoleRead.model_validate(role)
 
 
@@ -120,4 +140,9 @@ async def revoke_role_endpoint(
     role = await get_role(db, role_id)
     if not role:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Role not found")
+    await log_action(
+        db, action="role_revoke", actor_id=_user_id,
+        target_type="role", target_id=str(role_id),
+        payload={"user_id": str(user_id)}, result="success",
+    )
     await revoke_role(db, user_id, role_id)

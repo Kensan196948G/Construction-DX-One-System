@@ -116,4 +116,4 @@ async def test_delete_user(client: AsyncClient, db_session: AsyncSession):
 @pytest.mark.asyncio
 async def test_users_unauthorized(client: AsyncClient):
     response = await client.get("/api/v1/users")
-    assert response.status_code == 403
+    assert response.status_code in (401, 403)

@@ -58,6 +58,13 @@ async def delete_user(db: AsyncSession, user: User) -> None:
     await db.commit()
 
 
+async def suspend_user(db: AsyncSession, user: User) -> User:
+    user.status = "suspended"
+    await db.commit()
+    await db.refresh(user)
+    return user
+
+
 async def list_users(
     db: AsyncSession, page: int = 1, page_size: int = 20
 ) -> tuple[list[User], int]:

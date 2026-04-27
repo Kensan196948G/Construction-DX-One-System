@@ -4,11 +4,11 @@ from typing import Optional
 
 from sqlalchemy import (
     JSON,
-    BigInteger,
     Boolean,
     Date,
     DateTime,
     ForeignKey,
+    Integer,
     String,
     Text,
 )
@@ -89,7 +89,7 @@ class UserRole(Base):
 class AuditLog(Base):
     __tablename__ = "audit_logs"
 
-    id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     action: Mapped[str] = mapped_column(String(100), nullable=False)
     actor_id: Mapped[str | None] = mapped_column(String(36), ForeignKey("users.id"))
     actor_ip: Mapped[str | None] = mapped_column(String(45))

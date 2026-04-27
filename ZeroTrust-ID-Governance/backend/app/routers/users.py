@@ -8,11 +8,13 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.database import get_db
 from app.core.security import decode_token
 from app.schemas.user import UserCreate, UserListResponse, UserResponse, UserUpdate
+from app.services.audit_service import log_action
 from app.services.user_service import (
     create_user,
     delete_user,
     get_user_by_id,
     list_users,
+    suspend_user,
     update_user,
 )
 
@@ -53,6 +55,12 @@ async def create_user_endpoint(
     db: AsyncSession = Depends(get_db),
 ):
     user = await create_user(db, payload)
+    await log_action(
+        db, action="user_create", actor_id=_user_id,
+        target_type="user", target_id=str(user.id),
+        payload={"username": user.username, "email": user.email},
+        result="success",
+    )
     return UserResponse.model_validate(user)
 
 
@@ -79,6 +87,29 @@ async def update_user_endpoint(
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
     user = await update_user(db, user, payload)
+    await log_action(
+        db, action="user_update", actor_id=_user_id,
+        target_type="user", target_id=str(user.id),
+        payload=payload.model_dump(exclude_unset=True),
+        result="success",
+    )
+    return UserResponse.model_validate(user)
+
+
+@router.put("/{user_id}/suspend", response_model=UserResponse)
+async def suspend_user_endpoint(
+    user_id: uuid.UUID,
+    _user_id: str = Depends(get_current_user_id),
+    db: AsyncSession = Depends(get_db),
+):
+    user = await get_user_by_id(db, user_id)
+    if not user:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+    user = await suspend_user(db, user)
+    await log_action(
+        db, action="user_suspend", actor_id=_user_id,
+        target_type="user", target_id=str(user.id), result="success",
+    )
     return UserResponse.model_validate(user)
 
 
@@ -91,4 +122,8 @@ async def delete_user_endpoint(
     user = await get_user_by_id(db, user_id)
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+    await log_action(
+        db, action="user_delete", actor_id=_user_id,
+        target_type="user", target_id=str(user.id), result="success",
+    )
     await delete_user(db, user)

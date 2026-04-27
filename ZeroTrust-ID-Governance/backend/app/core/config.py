@@ -24,6 +24,12 @@ class Settings(BaseSettings):
     # CORS
     allowed_origins: list[str] = ["http://localhost:3000", "https://ztig.miraikensetu.co.jp"]
 
+    # EntraID (Microsoft Graph API)
+    entraid_base_url: str = ""
+    entraid_tenant_id: str = ""
+    entraid_client_id: str = ""
+    entraid_client_secret: str = ""
+
 
 @lru_cache
 def get_settings() -> Settings:

@@ -14,6 +14,7 @@ from app.services.access_request_service import (
     list_requests,
     review_request,
 )
+from app.services.audit_service import log_action
 
 router = APIRouter(prefix="/access-requests", tags=["access-requests"])
 bearer_scheme = HTTPBearer()
@@ -36,6 +37,11 @@ async def create_access_request_endpoint(
     db: AsyncSession = Depends(get_db),
 ):
     request = await create_request(db, user_id, payload)
+    await log_action(
+        db, action="access_request_create", actor_id=user_id,
+        target_type="access_request", target_id=request.id,
+        payload={"target_resource": request.target_resource}, result="success",
+    )
     return AccessRequestRead.model_validate(request)
 
 
@@ -70,6 +76,11 @@ async def review_access_request_endpoint(
     db: AsyncSession = Depends(get_db),
 ):
     request = await review_request(db, request_id, user_id, payload)
+    await log_action(
+        db, action="access_request_review", actor_id=user_id,
+        target_type="access_request", target_id=request_id,
+        payload={"status": payload.status}, result="success",
+    )
     return AccessRequestRead.model_validate(request)
 
 
@@ -80,3 +91,7 @@ async def cancel_access_request_endpoint(
     db: AsyncSession = Depends(get_db),
 ):
     await cancel_request(db, request_id, user_id)
+    await log_action(
+        db, action="access_request_cancel", actor_id=user_id,
+        target_type="access_request", target_id=request_id, result="success",
+    )
