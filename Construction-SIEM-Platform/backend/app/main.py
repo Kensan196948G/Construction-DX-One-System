@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.config import settings
 from app.core.database import AsyncSessionLocal, init_db
-from app.routers import alerts, auth, events, health, ml, rules
+from app.routers import alerts, auth, events, events_processing, health, ml, playbooks, rules
 from app.services.rule_engine import seed_rules
 
 
@@ -37,3 +37,5 @@ app.include_router(events.router, prefix="/api/v1")
 app.include_router(alerts.router, prefix="/api/v1")
 app.include_router(rules.router, prefix="/api/v1")
 app.include_router(ml.router, prefix="/api/v1")
+app.include_router(playbooks.router, prefix="/api/v1")
+app.include_router(events_processing.router, prefix="/api/v1")

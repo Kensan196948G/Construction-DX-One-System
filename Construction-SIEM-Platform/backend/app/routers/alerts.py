@@ -14,6 +14,10 @@ from app.schemas.alert import (
     AlertSummaryItem,
     AlertSummaryResponse,
 )
+from app.schemas.alert_enrichment import AlertCorrelation, AlertEnrichment, AlertTimelineEntry
+from app.schemas.playbook import PlaybookExecuteRequest, PlaybookExecutionResult
+from app.services.alert_enrichment import correlate_alerts, enrich_alert, get_alert_timeline
+from app.services.playbook_service import execute_playbook
 
 router = APIRouter(prefix="/alerts", tags=["alerts"])
 
@@ -127,3 +131,53 @@ async def ingest_alert(payload: AlertCreate, db: AsyncSession = Depends(get_db))
     await db.commit()
     await db.refresh(alert)
     return AlertResponse.model_validate(alert)
+
+
+@router.post("/{alert_id}/enrich", response_model=AlertEnrichment)
+async def enrich_alert_endpoint(alert_id: str, db: AsyncSession = Depends(get_db)):
+    result = await db.execute(select(Alert).where(Alert.id == alert_id))
+    alert = result.scalar_one_or_none()
+    if not alert:
+        raise HTTPException(status_code=404, detail="Alert not found")
+    enrichment = await enrich_alert(alert, db)
+    return AlertEnrichment(**enrichment)
+
+
+@router.get("/{alert_id}/correlations", response_model=list[AlertCorrelation])
+async def get_alert_correlations(alert_id: str, db: AsyncSession = Depends(get_db)):
+    result = await db.execute(select(Alert).where(Alert.id == alert_id))
+    alert = result.scalar_one_or_none()
+    if not alert:
+        raise HTTPException(status_code=404, detail="Alert not found")
+    correlations = await correlate_alerts(alert, db)
+    return [AlertCorrelation(**c) for c in correlations]
+
+
+@router.post("/{alert_id}/playbook", response_model=PlaybookExecutionResult)
+async def execute_playbook_for_alert(
+    alert_id: str,
+    payload: PlaybookExecuteRequest,
+    db: AsyncSession = Depends(get_db),
+):
+    result = await db.execute(select(Alert).where(Alert.id == alert_id))
+    alert = result.scalar_one_or_none()
+    if not alert:
+        raise HTTPException(status_code=404, detail="Alert not found")
+    event_data = {
+        "alert_id": alert.id,
+        "title": alert.title,
+        "severity": alert.severity,
+        "source": alert.source,
+        "mitre_tactic": alert.mitre_tactic,
+        "mitre_technique": alert.mitre_technique,
+        "site": alert.site,
+        **payload.event_data,
+    }
+    result = await execute_playbook(payload.playbook_id, event_data, db)
+    return PlaybookExecutionResult(**result)
+
+
+@router.get("/{alert_id}/timeline", response_model=list[AlertTimelineEntry])
+async def get_alert_timeline_endpoint(alert_id: str, db: AsyncSession = Depends(get_db)):
+    timeline = await get_alert_timeline(alert_id, db)
+    return [AlertTimelineEntry(**t) for t in timeline]
