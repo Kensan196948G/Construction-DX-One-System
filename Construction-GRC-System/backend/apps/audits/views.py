@@ -1,8 +1,10 @@
+from django.http import FileResponse
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from .models import Audit, Finding
+from .report_generator import generate_audit_excel, generate_audit_pdf
 from .serializers import AuditSerializer, FindingSerializer
 
 
@@ -87,3 +89,39 @@ def finding_detail(request, audit_pk, pk):
 
     finding.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(["GET"])
+def audit_report_excel(request, pk):
+    try:
+        audit = Audit.objects.get(pk=pk)
+    except Audit.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    findings = audit.findings.all()
+    excel_file = generate_audit_excel(audit, findings)
+    filename = f"audit_report_{audit.title.replace(' ', '_')}.xlsx"
+    return FileResponse(
+        excel_file,
+        as_attachment=True,
+        filename=filename,
+        content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    )
+
+
+@api_view(["GET"])
+def audit_report_pdf(request, pk):
+    try:
+        audit = Audit.objects.get(pk=pk)
+    except Audit.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    findings = audit.findings.all()
+    pdf_file = generate_audit_pdf(audit, findings)
+    filename = f"audit_report_{audit.title.replace(' ', '_')}.pdf"
+    return FileResponse(
+        pdf_file,
+        as_attachment=True,
+        filename=filename,
+        content_type="application/pdf",
+    )

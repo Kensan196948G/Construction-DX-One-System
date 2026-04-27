@@ -1,6 +1,9 @@
+from django.http import FileResponse
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+
+from apps.audits.report_generator import generate_risk_register_excel
 
 from .models import Risk
 from .serializers import RiskSerializer
@@ -42,3 +45,15 @@ def risk_detail(request, pk):
 
     risk.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(["GET"])
+def risk_report_excel(request):
+    risks = Risk.objects.all()
+    excel_file = generate_risk_register_excel(risks)
+    return FileResponse(
+        excel_file,
+        as_attachment=True,
+        filename="risk_register_report.xlsx",
+        content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    )

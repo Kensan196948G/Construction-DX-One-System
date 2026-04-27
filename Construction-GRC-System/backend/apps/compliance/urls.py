@@ -1,6 +1,7 @@
 from django.urls import path
 
 from .views import (
+    compliance_report_excel,
     control_detail,
     control_list,
     framework_compliance_rates,
@@ -18,4 +19,5 @@ urlpatterns = [
     path("nist-csf/", nist_csf_status),
     path("nist-csf/heatmap/", nist_csf_heatmap),
     path("frameworks/", framework_compliance_rates),
+    path("report/excel/", compliance_report_excel),
 ]

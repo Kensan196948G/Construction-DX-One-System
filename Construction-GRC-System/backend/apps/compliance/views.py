@@ -1,8 +1,11 @@
 from __future__ import annotations
 
+from django.http import FileResponse
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+
+from apps.audits.report_generator import generate_compliance_summary_excel
 
 from .models import Control
 from .nist_mapping import get_nist_compliance_heatmap, get_nist_framework_status
@@ -80,6 +83,18 @@ def nist_csf_heatmap(request):
     controls = Control.objects.all()
     heatmap = get_nist_compliance_heatmap(controls)
     return Response(heatmap)
+
+
+@api_view(["GET"])
+def compliance_report_excel(request):
+    controls = Control.objects.all()
+    excel_file = generate_compliance_summary_excel(controls)
+    return FileResponse(
+        excel_file,
+        as_attachment=True,
+        filename="compliance_summary_report.xlsx",
+        content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    )
 
 
 @api_view(["GET"])
