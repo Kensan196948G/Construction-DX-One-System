@@ -57,16 +57,38 @@ jobs:
         run: |
           python3 - << 'PYEOF'
           from datetime import datetime, timezone
+          registered = datetime(2026, 4, 15, tzinfo=timezone.utc)
           deadline = datetime(2026, 10, 15, tzinfo=timezone.utc)
           now = datetime.now(timezone.utc)
+          total_days = (deadline - registered).days
+          elapsed_days = (now - registered).days
           days_left = (deadline - now).days
+          progress_pct = (elapsed_days / total_days) * 100
+
+          print(f"Registered: {registered.date()}")
+          print(f"Deadline: {deadline.date()}")
+          print(f"Project period: {total_days} days (6 months)")
+          print(f"Days elapsed: {elapsed_days} ({progress_pct:.1f}%)")
           print(f"Days remaining: {days_left}")
+
           if days_left <= 7:
               print("STATUS: RELEASE_PREP_ONLY")
+              print("RULE: Only CHANGELOG/README/tagging allowed")
           elif days_left <= 14:
               print("STATUS: FEATURE_FREEZE")
+              print("RULE: Bug fixes and stabilization only")
           elif days_left <= 30:
               print("STATUS: STABILIZATION")
+              print("RULE: Improvement reduced, Verify/Release prep priority")
           else:
-              print("STATUS: ACTIVE_DEVELOPMENT")
+              month = elapsed_days // 30 + 1
+              print(f"STATUS: ACTIVE_DEVELOPMENT (Month {min(month, 6)})")
+              if month <= 2:
+                  print("PHASE: Foundation & Core Features")
+              elif month <= 4:
+                  print("PHASE: Quality & Testing")
+              elif month <= 5:
+                  print("PHASE: Integration & Bug Fixes")
+              else:
+                  print("PHASE: Release Preparation")
           PYEOF
