@@ -252,9 +252,9 @@ sequenceDiagram
 
 | System | Backend | Frontend | Backend Tests | Lint | Build | Status |
 |:------:|:-------:|:--------:|:-------------:|:----:|:-----:|:------:|
-| ZTIG | FastAPI ✅ | Vue 3 + TS ✅ | 13/13 ✅ | CLEAN ✅ | ✅ | ✅ |
-| SIEM | FastAPI ✅ | Vue 3 + TS ✅ | 24/24 ✅ | CLEAN ✅ | ✅ | ✅ |
-| CGRC | Django 5 ✅ | Vue 3 + TS ✅ | 30/30 ✅ | CLEAN ✅ | ✅ | ✅ |
+| ZTIG | FastAPI ✅ | Vue 3 + TS ✅ | 29/29 ✅ | CLEAN ✅ | ✅ | ✅ |
+| SIEM | FastAPI ✅ | Vue 3 + TS ✅ | 87/87 ✅ | CLEAN ✅ | ✅ | ✅ |
+| CGRC | Django 5 ✅ | Vue 3 + TS ✅ | 36/36 ✅ | CLEAN ✅ | ✅ | ✅ |
 | ICCP | FastAPI ✅ | Vue 3 + TS ✅ | 16/16 ✅ | CLEAN ✅ | ✅ | ✅ |
 | IBIS | FastAPI ✅ | Vue 3 + TS ✅ | 24/24 ✅ | CLEAN ✅ | ✅ | ✅ |
 | **合計** | **5/5 ✅** | **5/5 ✅** | **107/107 ✅** | **ALL CLEAN** | **ALL ✅** | **ALL ✅** |
@@ -264,7 +264,7 @@ sequenceDiagram
 | KPI | 値 |  Status |
 |:---:|:---:|:-------:|
 | 🧩 全サブシステム実装完了 | 5/5 | ✅ |
-| 📊 バックエンドテスト総数 | **107件 全PASS** | ✅ |
+| 📊 バックエンドテスト総数 | **192件 全PASS** | ✅ |
 | 🔒 セキュリティブロッカー | 0件 | ✅ |
 | 🔄 CI/CD ワークフロー | 6 (Meta + 5 subs) | ✅ |
 | 📋 Lint Status | ALL CLEAN | ✅ |
@@ -350,7 +350,7 @@ gantt
 | 📊 KPI | 🎯 目標 | 📏 現在値 | Status |
 |:------:|:-------:|:---------:|:------:|
 | 🧩 システム完成数 | 5システム | **5/5** ✅ 全サブシステム実装完了 | ✅ |
-| 📊 バックエンドテスト | 100件以上 | **107件 全PASS** | ✅ |
+| 📊 バックエンドテスト | 100件以上 | **192件 全PASS** | ✅ |
 | ✅ 全テスト通過 | 100% | **100% (107/107)** | ✅ |
 | 🔒 セキュリティブロッカー | 0件 | **0件（CVE 0）** | ✅ |
 | ⚡ Lint Status | ALL CLEAN | **ALL CLEAN** | ✅ |
