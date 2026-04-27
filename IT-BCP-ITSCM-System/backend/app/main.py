@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.database import init_db
-from app.routers import dashboard, exercises, health, incidents, systems
+from app.routers import bia, dashboard, exercises, health, incidents, systems
 
 
 @asynccontextmanager
@@ -34,3 +34,4 @@ app.include_router(incidents.router, prefix=PREFIX, tags=["incidents"])
 app.include_router(systems.router, prefix=PREFIX, tags=["systems"])
 app.include_router(exercises.router, prefix=PREFIX, tags=["exercises"])
 app.include_router(dashboard.router, prefix=PREFIX, tags=["dashboard"])
+app.include_router(bia.router, prefix=PREFIX, tags=["bia"])
