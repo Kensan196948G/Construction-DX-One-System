@@ -1,6 +1,5 @@
 import pytest
 
-
 ALERT_PAYLOAD = {
     "title": "不審なポートスキャン検出",
     "severity": "critical",

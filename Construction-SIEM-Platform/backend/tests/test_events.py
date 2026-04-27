@@ -1,6 +1,5 @@
 import pytest
 
-
 EVENT_PAYLOAD = {
     "event_type": "port_scan",
     "source": "firewall",
