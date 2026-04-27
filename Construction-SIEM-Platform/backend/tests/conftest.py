@@ -27,6 +27,12 @@ async def setup_db():
 
 
 @pytest_asyncio.fixture
+async def db() -> AsyncSession:
+    async with TestSessionLocal() as session:
+        yield session
+
+
+@pytest_asyncio.fixture
 async def client():
     app.dependency_overrides[get_db] = override_get_db
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as c:

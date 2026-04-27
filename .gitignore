@@ -65,6 +65,16 @@ secrets/
 credentials/
 .secrets
 
+# OpenCodeSystem symlinks
+agents
+opencode
+
+# Runtime state
+state/
+
+# Backup files
+*.bak
+
 # CI artifacts
 coverage/
 .coverage
