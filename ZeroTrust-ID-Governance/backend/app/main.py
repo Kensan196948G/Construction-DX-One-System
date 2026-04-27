@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.config import get_settings
-from app.routers import access_requests, audit, auth, entraid, health, roles, users
+from app.routers import access_requests, audit, auth, entraid, health, inventory, roles, users
 
 settings = get_settings()
 
@@ -29,3 +29,4 @@ app.include_router(roles.router, prefix="/api/v1")
 app.include_router(access_requests.router, prefix="/api/v1")
 app.include_router(audit.router, prefix="/api/v1")
 app.include_router(entraid.router, prefix="/api/v1")
+app.include_router(inventory.router, prefix="/api/v1")
