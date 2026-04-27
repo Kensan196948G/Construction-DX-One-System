@@ -30,6 +30,17 @@ class Settings(BaseSettings):
     entraid_client_id: str = ""
     entraid_client_secret: str = ""
 
+    # HENGEONE (SCIM 2.0)
+    hengeone_base_url: str = ""
+    hengeone_api_key: str = ""
+
+    # Active Directory (LDAPS)
+    ad_server: str = ""
+    ad_port: int = 636
+    ad_base_dn: str = ""
+    ad_bind_dn: str = ""
+    ad_bind_password: str = ""
+
 
 @lru_cache
 def get_settings() -> Settings:
