@@ -84,7 +84,10 @@ const filterType = ref('')
 const detailEx = ref<Exercise | null>(null)
 
 function applyFilter() {
-  store.fetchExercises(filterStatus.value || undefined, filterType.value || undefined)
+  store.fetchExercises(
+    (filterStatus.value || undefined) as Exercise['status'] | undefined,
+    (filterType.value || undefined) as Exercise['type'] | undefined,
+  )
 }
 
 function typeLabel(t: Exercise['type']) {

@@ -43,7 +43,7 @@
               :value="control.implementation_status"
               class="status-select"
               :class="control.implementation_status"
-              @change="(e) => updateStatus(control.id, (e.target as HTMLSelectElement).value)"
+              @change="(e) => updateStatus(control.id, (e.target as HTMLSelectElement).value as Control['implementation_status'])"
             >
               <option value="not_started">Not Started</option>
               <option value="in_progress">In Progress</option>
@@ -85,14 +85,14 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, reactive } from 'vue'
 import { complianceApi } from '@/api/compliance'
-import type { Control } from '@/types'
+import type { Control, ControlCreate } from '@/types'
 
 const controls = ref<Control[]>([])
 const loading = ref(false)
 const error = ref<string | null>(null)
 const statusFilter = ref('')
 const showForm = ref(false)
-const form = reactive({ control_number: '', title: '', domain: '', applicability: 'applicable', description: '' })
+const form: ControlCreate = reactive({ control_number: '', title: '', domain: '', applicability: 'applicable', description: '' })
 
 const filteredControls = computed(() =>
   statusFilter.value
@@ -116,7 +116,7 @@ function applyFilter() {
   // filtered via computed
 }
 
-async function updateStatus(id: string, status: string) {
+async function updateStatus(id: string, status: Control['implementation_status']) {
   const control = controls.value.find((c) => c.id === id)
   if (!control) return
   try {
@@ -130,7 +130,7 @@ async function updateStatus(id: string, status: string) {
 
 async function submitControl() {
   try {
-    const created = await complianceApi.create({ ...form })
+    const created = await complianceApi.create(form as ControlCreate)
     controls.value.unshift(created)
     showForm.value = false
     Object.assign(form, { control_number: '', title: '', domain: '', applicability: 'applicable', description: '' })

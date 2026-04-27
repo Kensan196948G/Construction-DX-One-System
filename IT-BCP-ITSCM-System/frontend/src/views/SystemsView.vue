@@ -88,7 +88,10 @@ const filterStatus = ref('')
 const detailSys = ref<ItSystem | null>(null)
 
 function applyFilter() {
-  store.fetchSystems(filterTier.value || undefined, filterStatus.value || undefined)
+  store.fetchSystems(
+    (filterTier.value || undefined) as ItSystem['tier'] | undefined,
+    (filterStatus.value || undefined) as ItSystem['status'] | undefined,
+  )
 }
 
 function statusLabel(s: ItSystem['status']) {

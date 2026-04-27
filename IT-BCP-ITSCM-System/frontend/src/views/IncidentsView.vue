@@ -134,7 +134,10 @@ const createError = ref<string | null>(null)
 const form = ref({ title: '', description: '', severity: 'high' as Incident['severity'] })
 
 function applyFilter() {
-  store.fetchIncidents(filterStatus.value || undefined, filterSeverity.value || undefined)
+  store.fetchIncidents(
+    (filterStatus.value || undefined) as Incident['status'] | undefined,
+    (filterSeverity.value || undefined) as Incident['severity'] | undefined,
+  )
 }
 
 async function onStatusChange(id: string, newStatus: string) {
