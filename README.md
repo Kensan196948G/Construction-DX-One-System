@@ -23,7 +23,7 @@
 | 🎯 プロジェクト期間 | 📅 登録日 | 🚀 リリース期限 | ⏳ 残日数 |
 |:---:|:---:|:---:|:---:|
 | **6ヶ月** | 2026-04-15 | **2026-10-15** | **171日** |
-| 📊 **進捗** | 🟩⬜⬜⬜⬜⬜⬜⬜⬜⬜ | 12日経過 / 183日 | **7%** |
+| 📊 **進捗** | 🟩🟩🟩⬜⬜⬜⬜⬜⬜⬜ | 96分経過 / 300分 | **32%** |
 
 </div>
 
@@ -35,6 +35,7 @@
 - [🔥 なぜこのシステムが必要か](#-なぜこのシステムが必要か)
 - [🏛️ システム全体アーキテクチャ](#️-システム全体アーキテクチャ)
 - [🧩 5サブシステム詳細](#-5サブシステム詳細)
+- [✅ 実装済み機能一覧](#-実装済み機能一覧)
 - [📊 開発状況ダッシュボード](#-開発状況ダッシュボード)
 - [🚦 CI/CD Status](#-cicd-status)
 - [📋 Project Board](#-project-board)
@@ -78,7 +79,7 @@
 | 📅 プロジェクト登録日 | 2026-04-15 | — |
 | 🚀 **本番リリース期限** | **2026-10-15** | **残り 171 日** |
 | 🔄 現在のフェーズ | Month 1-2（2026-04〜06）: 基盤整備・主要機能実装 | 🟢 |
-| 📊 進捗バー | 🟩⬜⬜⬜⬜⬜⬜⬜⬜⬜ | **7%完了**（12日経過 / 183日中） |
+| 📊 進捗バー | 🟩🟩🟩⬜⬜⬜⬜⬜⬜⬜ | **32%**（96分経過 / 300分 セッション） |
 
 ---
 
@@ -155,7 +156,7 @@ graph TD
 | 🎯 **目的** | ゼロトラスト原則に基づく統合ID管理（正社員500名＋協力会社100名） |
 | 🏗️ **Backend** | Python 3.12 / FastAPI 0.115 + SQLAlchemy 2.0 async + PostgreSQL 16 + JWT HS256 |
 | 🖥️ **Frontend** | Vue 3.5 + TypeScript + Vite 6 + Pinia 2 + Vue Router 4 |
-| 📊 **状態** | ✅ Backend 13/13 tests · Frontend stores 100% · Lint CLEAN |
+| 📊 **状態** | ✅ Backend 47/47 tests · Frontend stores 100% · Lint CLEAN |
 
 ---
 
@@ -169,7 +170,7 @@ graph TD
 | ⏱️ **目標** | MTTD 15分以内 / MTTR 2時間以内 / 処理能力 10,000 EPS |
 | 🏗️ **Backend** | Python 3.12 / FastAPI 0.115.6 + SQLAlchemy 2.0 async + PostgreSQL 16 + Elasticsearch 8.x |
 | 🖥️ **Frontend** | Vue 3.5 + TypeScript + Vite 6 + Pinia 2 + Vue Router 4 |
-| 📊 **状態** | ✅ Backend 24/24 tests · Lint CLEAN · Frontend stores 100% |
+| 📊 **状態** | ✅ Backend 128/128 tests · Lint CLEAN · Frontend stores 100% |
 
 ---
 
@@ -183,7 +184,7 @@ graph TD
 | 📋 **管理策** | ISO27001 全93管理策（4ドメイン） |
 | 🏗️ **Backend** | Python 3.12 / Django 5.x + PostgreSQL 16 + Redis 7 |
 | 🖥️ **Frontend** | Vue 3 + TypeScript |
-| 📊 **状態** | ✅ Backend 30/30 tests · Lint CLEAN · Frontend stores 100% |
+| 📊 **状態** | ✅ Backend 48/48 tests · Lint CLEAN · Frontend stores 100% |
 
 ---
 
@@ -196,7 +197,7 @@ graph TD
 | 🎯 **目的** | RFC承認・影響分析・CAB審議・展開・ロールバックの完全自動化 |
 | 🏗️ **Backend** | FastAPI + PostgreSQL 16 + Redis 7 |
 | 🖥️ **Frontend** | Vue 3.5 + TypeScript + Vite 6 + Pinia 2 + Vue Router 4 |
-| 📊 **状態** | ✅ Backend 16/16 tests · Lint CLEAN · tsc CLEAN |
+| 📊 **状態** | ✅ Backend 42/42 tests · Lint CLEAN · tsc CLEAN |
 
 **変更管理ワークフロー:**
 
@@ -227,7 +228,7 @@ flowchart LR
 | 🌏 **インフラ** | Azure Container Apps（東日本Primary + 西日本Standby 地理冗長） |
 | 🏗️ **Backend** | Python 3.12 / FastAPI + PostgreSQL + Redis |
 | 🖥️ **Frontend** | Vue 3.5 + TypeScript + Vite 6 + Pinia 2 + Vue Router 4（PWA対応） |
-| 📊 **状態** | ✅ Backend 24/24 tests · Lint CLEAN · CVE 0件 |
+| 📊 **状態** | ✅ Backend 38/38 tests · Lint CLEAN · CVE 0件 |
 
 **BCP 対応フロー:**
 
@@ -248,23 +249,55 @@ sequenceDiagram
 
 ---
 
+## ✅ 実装済み機能一覧
+
+### 🔐 ZeroTrust-ID-Governance (ZTIG)
+- [x] ロール管理API（RBAC）
+- [x] アクセス申請ワークフロー
+- [x] 監査ログハッシュチェーン（SHA-256）
+- [x] EntraID ディレクトリ同期
+
+### 🛡️ Construction-SIEM-Platform (SIEM)
+- [x] Sigma/YARA ルールエンジン
+- [x] ML 異常検知エンジン（ZScore/MovingAvg/Percentile）
+- [x] Kafka 統合（ストリーム処理）
+- [x] プレイブック自動実行
+- [x] アラートエンリッチメント（コンテキスト付与）
+
+### 🏗️ Construction-GRC-System (CGRC)
+- [x] SoA（Statement of Applicability）自動生成
+- [x] NIST CSF 2.0 マッピング
+- [x] 監査レポート出力（Excel/PDF）
+
+### 🔄 IT-Change-CAB-Platform (ICCP)
+- [x] 影響分析エンジン
+- [x] 変更衝突検知
+- [x] フリーズ期間管理
+- [x] KPI ダッシュボード
+- [x] CAB カレンダー
+
+### ♻️ IT-BCP-ITSCM-System (IBIS)
+- [x] BIA（Business Impact Analysis）業務影響分析API
+
+---
+
 ## 📊 開発状況ダッシュボード
 
 | System | Backend | Frontend | Backend Tests | Lint | Build | Status |
 |:------:|:-------:|:--------:|:-------------:|:----:|:-----:|:------:|
-| ZTIG | FastAPI ✅ | Vue 3 + TS ✅ | 29/29 ✅ | CLEAN ✅ | ✅ | ✅ |
-| SIEM | FastAPI ✅ | Vue 3 + TS ✅ | 87/87 ✅ | CLEAN ✅ | ✅ | ✅ |
-| CGRC | Django 5 ✅ | Vue 3 + TS ✅ | 36/36 ✅ | CLEAN ✅ | ✅ | ✅ |
-| ICCP | FastAPI ✅ | Vue 3 + TS ✅ | 16/16 ✅ | CLEAN ✅ | ✅ | ✅ |
-| IBIS | FastAPI ✅ | Vue 3 + TS ✅ | 24/24 ✅ | CLEAN ✅ | ✅ | ✅ |
-| **合計** | **5/5 ✅** | **5/5 ✅** | **107/107 ✅** | **ALL CLEAN** | **ALL ✅** | **ALL ✅** |
+| ZTIG | FastAPI ✅ | Vue 3 + TS ✅ | 47/47 ✅ | CLEAN ✅ | ✅ | ✅ |
+| SIEM | FastAPI ✅ | Vue 3 + TS ✅ | 128/128 ✅ | CLEAN ✅ | ✅ | ✅ |
+| CGRC | Django 5 ✅ | Vue 3 + TS ✅ | 48/48 ✅ | CLEAN ✅ | ✅ | ✅ |
+| ICCP | FastAPI ✅ | Vue 3 + TS ✅ | 42/42 ✅ | CLEAN ✅ | ✅ | ✅ |
+| IBIS | FastAPI ✅ | Vue 3 + TS ✅ | 38/38 ✅ | CLEAN ✅ | ✅ | ✅ |
+| **合計** | **5/5 ✅** | **5/5 ✅** | **303/303 ✅** | **ALL CLEAN** | **ALL ✅** | **ALL ✅** |
 
 ### 進捗サマリー
 
 | KPI | 値 |  Status |
 |:---:|:---:|:-------:|
 | 🧩 全サブシステム実装完了 | 5/5 | ✅ |
-| 📊 バックエンドテスト総数 | **192件 全PASS** | ✅ |
+| 📊 バックエンドテスト総数 | **303件 全PASS** | ✅ |
 | 🔒 セキュリティブロッカー | 0件 | ✅ |
 | 🔄 CI/CD ワークフロー | 6 (Meta + 5 subs) | ✅ |
 | 📋 Lint Status | ALL CLEAN | ✅ |
@@ -350,8 +383,8 @@ gantt
 | 📊 KPI | 🎯 目標 | 📏 現在値 | Status |
 |:------:|:-------:|:---------:|:------:|
 | 🧩 システム完成数 | 5システム | **5/5** ✅ 全サブシステム実装完了 | ✅ |
-| 📊 バックエンドテスト | 100件以上 | **192件 全PASS** | ✅ |
-| ✅ 全テスト通過 | 100% | **100% (107/107)** | ✅ |
+| 📊 バックエンドテスト | 100件以上 | **303件 全PASS** | ✅ |
+| ✅ 全テスト通過 | 100% | **100% (303/303)** | ✅ |
 | 🔒 セキュリティブロッカー | 0件 | **0件（CVE 0）** | ✅ |
 | ⚡ Lint Status | ALL CLEAN | **ALL CLEAN** | ✅ |
 | 🏗️ Build Status | ALL SUCCESS | **ALL SUCCESS** | ✅ |
@@ -603,6 +636,7 @@ flowchart LR
 | 日付 | セッション | 主な成果 |
 |:----:|:---------:|:--------:|
 | 2026-04-27 | #012 | 🚦 CI/CDワークフロー作成（Meta CI + 5 subsystem CI）· 📊 全107テスト完了確認 · 🤖 自律開発ループ安定化 · 📋 README全面更新 |
+| 2026-04-27 第2部 | #013 | 🔄 自律ループ#4-#10実行 · 🔐 ZTIG:ロール管理/アクセス申請WF/監査ログ/EntraID同期 · 🛡️ SIEM:Sigma/YARAルール/ML異常検知/Kafka/プレイブック · 🏗️ CGRC:SoA自動生成/NIST CSF 2.0/監査レポート · 🔄 ICCP:影響分析/衝突検知/フリーズ期間/KPI/CABカレンダー · ♻️ IBIS:BIA分析API · 📊 全303テスト完了 ✅ |
 
 ---
 
