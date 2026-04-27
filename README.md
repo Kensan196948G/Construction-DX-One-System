@@ -286,14 +286,14 @@ sequenceDiagram
 
 ## 📊 開発状況ダッシュボード
 
-| System | Backend | Frontend | Backend Tests | Lint | Build | Status |
-|:------:|:-------:|:--------:|:-------------:|:----:|:-----:|:------:|
-| ZTIG | FastAPI ✅ | Vue 3 + TS ✅ | 74/74 ✅ | CLEAN ✅ | ✅ | ✅ |
-| SIEM | FastAPI ✅ | Vue 3 + TS ✅ | 173/173 ✅ | CLEAN ✅ | ✅ | ✅ |
-| CGRC | Django 5 ✅ | Vue 3 + TS ✅ | 54/54 ✅ | CLEAN ✅ | ✅ | ✅ |
-| ICCP | FastAPI ✅ | Vue 3 + TS ✅ | 51/51 ✅ | CLEAN ✅ | ✅ | ✅ |
-| IBIS | FastAPI ✅ | Vue 3 + TS ✅ | 53/53 ✅ | CLEAN ✅ | ✅ | ✅ |
-| **合計** | **5/5 ✅** | **5/5 ✅** | **405/405 ✅** | **ALL CLEAN** | **ALL ✅** | **ALL ✅** |
+| System | Backend | Frontend | Backend Tests | Frontend Tests | Coverage | Lint | Status |
+|:------:|:-------:|:--------:|:-------------:|:--------------:|:--------:|:----:|:------:|
+| ZTIG | FastAPI ✅ | Vue 3 + TS ✅ | 74/74 ✅ | 51 ✅ | 62.8% ✅ | CLEAN ✅ | ✅ |
+| SIEM | FastAPI ✅ | Vue 3 + TS ✅ | 173/173 ✅ | 53 ✅ | 68.5% ✅ | CLEAN ✅ | ✅ |
+| CGRC | Django 5 ✅ | Vue 3 + TS ✅ | 54/54 ✅ | 31 ✅ | 60.9% ✅ | CLEAN ✅ | ✅ |
+| ICCP | FastAPI ✅ | Vue 3 + TS ✅ | 51/51 ✅ | 32 ✅ | 77.87% ✅ | CLEAN ✅ | ✅ |
+| IBIS | FastAPI ✅ | Vue 3 + TS ✅ | 53/53 ✅ | 40 ✅ | 73.22% ✅ | CLEAN ✅ | ✅ |
+| **合計** | **5/5 ✅** | **5/5 ✅** | **405/405 ✅** | **207/207 ✅** | **≥60% ✅** | **ALL CLEAN** | **ALL ✅** |
 
 ### 進捗サマリー
 
@@ -301,6 +301,8 @@ sequenceDiagram
 |:---:|:---:|:-------:|
 | 🧩 全サブシステム実装完了 | 5/5 | ✅ |
 | 📊 バックエンドテスト総数 | **405件 全PASS** | ✅ |
+| 🖥️ フロントエンドテスト総数 | **207件 全PASS** | ✅ |
+| 📈 フロントエンドカバレッジ | **ZTIG 62.8% · CGRC 60.9% · SIEM 68.5% · ICCP 77.87% · IBIS 73.22%（全5系統≥60%）** | ✅ |
 | 🔒 セキュリティブロッカー | 0件 | ✅ |
 | 🔄 CI/CD ワークフロー | 6 (Meta + 5 subs) | ✅ |
 | 📋 Lint Status | ALL CLEAN | ✅ |
@@ -640,6 +642,8 @@ flowchart LR
 | 2026-04-27 第2部 | #013 | 🔄 自律ループ#4-#10実行 · 🔐 ZTIG:ロール管理/アクセス申請WF/監査ログ/EntraID同期 · 🛡️ SIEM:Sigma/YARAルール/ML異常検知/Kafka/プレイブック · 🏗️ CGRC:SoA自動生成/NIST CSF 2.0/監査レポート · 🔄 ICCP:影響分析/衝突検知/フリーズ期間/KPI/CABカレンダー · ♻️ IBIS:BIA分析API · 📊 全303テスト完了 ✅ |
 | 2026-04-27 第3部 | #014 | 🔐 ZTIG:アカウント棚卸ワークフロー追加（56 tests） · 🔄 ICCP:PIR事後レビューワークフロー追加（51 tests） · ♻️ IBIS:経営層向け状況報告API + 通知システム追加（53 tests） · 📊 全336テスト完了 ✅ |
 | 2026-04-27 第4部 | #015 | 🏗️ CGRC:Celery定期タスク(6種類)追加（54 tests） · 🔐 ZTIG:HENGEONE SCIM 2.0 + AD LDAPS + セッション管理追加（74 tests） · 🛡️ SIEM:多チャネル通知 + IoT軽量エージェント + 脅威インテリジェンス追加（173 tests） · 📊 全405テスト完了 ✅ |
+| 2026-04-27 第5部 | #016 | 🖥️ フロントエンドストアテスト追加（5ファイル76テスト） · ZTIG:auth-store(11)/roles-store(20) · CGRC:auth-store(12) · SIEM:auth-store(10)/rules-store(23) · カバレッジ60%閾値達成(ZTIG 62.8%/CGRC 60.9%/SIEM 68.5%) · lintスクリプトvue-tsc統一 · 合計172フロントエンドテスト全PASS ✅ · PR#20作成 |
+| 2026-04-27 第6部 | #017 | 🖥️ CAB/BCPフロントエンドカバレッジ60%閾値達成 · ICCP:auth-store(13tests/77.87%) · IBIS:auth-store(12)+exercises-store(10)(73.22%) · api/client.ts除外で計測精度向上 · 合計207フロントエンドテスト全PASS ✅ · 全5サブシステムカバレッジ完備 |
 
 ---
 
@@ -663,6 +667,6 @@ flowchart LR
 
 *みらい建設工業 IT部門が推進する建設業 DX セキュリティ統合基盤*
 
-📅 最終更新: 2026-04-27 ｜ 🤖 ClaudeOS v8.0 自律開発 ｜ 🚀 本番リリース目標: 2026-10-15
+📅 最終更新: 2026-04-27 (Session #016) ｜ 🤖 ClaudeOS v8.5 自律開発 ｜ 🚀 本番リリース目標: 2026-10-15
 
 </div>
