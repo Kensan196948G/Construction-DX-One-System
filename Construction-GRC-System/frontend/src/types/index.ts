@@ -83,3 +83,22 @@ export interface HealthStatus {
   status: string
   service: string
 }
+
+export interface User {
+  id: string
+  username: string
+  email: string
+  display_name?: string
+  role?: string
+}
+
+export interface LoginResponse {
+  access_token: string
+  refresh_token: string
+  user: User
+}
+
+export interface RefreshResponse {
+  access_token: string
+  refresh_token?: string
+}

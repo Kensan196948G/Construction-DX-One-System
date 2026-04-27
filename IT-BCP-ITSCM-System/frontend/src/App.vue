@@ -1,6 +1,6 @@
 <template>
   <div id="app-layout">
-    <nav class="sidebar">
+    <nav v-if="auth.isAuthenticated" class="sidebar">
       <div class="sidebar-title">
         <span class="icon">🛡️</span>
         <span>BCP/ITSCM</span>
@@ -11,8 +11,14 @@
         <li><RouterLink to="/systems">🖥️ ITシステム</RouterLink></li>
         <li><RouterLink to="/exercises">🎯 BCP演習</RouterLink></li>
       </ul>
-      <div class="health-dot">
-        API: <span :class="'dot dot-' + healthStatus">●</span>
+      <div class="sidebar-footer">
+        <div v-if="auth.user" class="user-info">
+          <span class="user-name">{{ auth.user.displayName ?? auth.user.username }}</span>
+        </div>
+        <div class="health-dot">
+          API: <span :class="'dot dot-' + healthStatus">●</span>
+        </div>
+        <button class="logout-btn" @click="handleLogout">ログアウト</button>
       </div>
     </nav>
     <main class="main-content">
@@ -23,10 +29,19 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import { RouterLink, RouterView } from 'vue-router'
 import { healthApi } from '@/api/health'
+import { useAuthStore } from '@/stores/auth'
 
+const auth = useAuthStore()
+const router = useRouter()
 const healthStatus = ref<'ok' | 'error' | 'unknown'>('unknown')
+
+async function handleLogout() {
+  await auth.logout()
+  router.push('/login')
+}
 
 onMounted(async () => {
   try {
@@ -62,10 +77,14 @@ select, input, textarea {
 .sidebar ul { list-style: none; display: flex; flex-direction: column; gap: 0.25rem; }
 .sidebar a { display: block; padding: 0.5rem; border-radius: 4px; text-decoration: none; color: #cdd6f4; }
 .sidebar a:hover, .sidebar a.router-link-active { background: #313244; }
-.health-dot { margin-top: auto; font-size: 0.8rem; color: #6c7086; }
+.sidebar-footer { margin-top: auto; display: flex; flex-direction: column; gap: 0.5rem; }
+.user-info { font-size: 0.85rem; color: #a6adc8; }
+.user-name { font-weight: 600; color: #cdd6f4; }
+.health-dot { font-size: 0.8rem; color: #6c7086; }
 .dot { font-size: 1rem; }
 .dot-ok { color: #a6e3a1; }
 .dot-error { color: #f38ba8; }
 .dot-unknown { color: #6c7086; }
+.logout-btn { font-size: 0.8rem; }
 .main-content { flex: 1; overflow: auto; padding: 1rem; }
 </style>

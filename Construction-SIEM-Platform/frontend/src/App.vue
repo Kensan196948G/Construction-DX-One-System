@@ -1,6 +1,6 @@
 <template>
   <div id="app-layout">
-    <nav class="sidebar">
+    <nav v-if="auth.isAuthenticated" class="sidebar">
       <div class="sidebar-title">
         <span class="icon">🛡️</span>
         <span>CSIEM</span>
@@ -9,9 +9,17 @@
         <li><RouterLink to="/">📊 ダッシュボード</RouterLink></li>
         <li><RouterLink to="/events">⚡ イベント</RouterLink></li>
         <li><RouterLink to="/alerts">🚨 アラート</RouterLink></li>
+        <li><RouterLink to="/rules">📜 検知ルール</RouterLink></li>
       </ul>
-      <div class="health-dot">
-        API: <span :class="'dot dot-' + healthStatus">●</span>
+      <div class="sidebar-footer">
+        <div class="user-info">
+          <span class="user-icon">👤</span>
+          <span class="user-name">{{ auth.user?.username ?? 'unknown' }}</span>
+        </div>
+        <button class="logout-btn" @click="handleLogout">ログアウト</button>
+        <div class="health-dot">
+          API: <span :class="'dot dot-' + healthStatus">●</span>
+        </div>
       </div>
     </nav>
     <main class="main-content">
@@ -22,12 +30,21 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterLink, RouterView, useRouter } from 'vue-router'
 import { healthApi } from '@/api/health'
+import { useAuthStore } from '@/stores/auth'
 
+const auth = useAuthStore()
+const router = useRouter()
 const healthStatus = ref<'ok' | 'error' | 'unknown'>('unknown')
 
+async function handleLogout() {
+  await auth.logout()
+  router.push('/login')
+}
+
 onMounted(async () => {
+  auth.checkAuth()
   try {
     const res = await healthApi.check()
     healthStatus.value = res.status === 'ok' ? 'ok' : 'error'
@@ -61,7 +78,12 @@ select, input, textarea {
 .sidebar ul { list-style: none; display: flex; flex-direction: column; gap: 0.25rem; }
 .sidebar a { display: block; padding: 0.5rem; border-radius: 4px; text-decoration: none; color: #cdd6f4; }
 .sidebar a:hover, .sidebar a.router-link-active { background: #313244; }
-.health-dot { margin-top: auto; font-size: 0.8rem; color: #6c7086; }
+.sidebar-footer { margin-top: auto; display: flex; flex-direction: column; gap: 0.5rem; }
+.user-info { display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; color: #a6adc8; }
+.user-icon { font-size: 1rem; }
+.user-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.logout-btn { font-size: 0.8rem; padding: 0.3rem 0.6rem; }
+.health-dot { font-size: 0.8rem; color: #6c7086; }
 .dot { font-size: 1rem; }
 .dot-ok { color: #a6e3a1; }
 .dot-error { color: #f38ba8; }

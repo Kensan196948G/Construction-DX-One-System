@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <nav class="sidebar">
+    <nav v-if="auth.isAuthenticated" class="sidebar">
       <div class="logo">
         <span class="logo-icon">🏗️</span>
         <span class="logo-text">GRC</span>
@@ -32,8 +32,12 @@
         </li>
       </ul>
       <div class="sidebar-footer">
+        <div class="user-info">
+          <span class="user-name">{{ auth.user?.display_name || auth.user?.username }}</span>
+          <span v-if="auth.user?.role" class="user-role">{{ auth.user.role }}</span>
+        </div>
         <span :class="['health-dot', healthStatus]" :title="healthStatus"></span>
-        <span class="health-label">API {{ healthStatus === 'ok' ? 'オンライン' : 'オフライン' }}</span>
+        <button class="logout-btn" @click="handleLogout">ログアウト</button>
       </div>
     </nav>
 
@@ -45,11 +49,17 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
 import { healthApi } from '@/api/health'
+
+const router = useRouter()
+const auth = useAuthStore()
 
 const healthStatus = ref<'ok' | 'error' | 'unknown'>('unknown')
 
 onMounted(async () => {
+  await auth.checkAuth()
   try {
     const result = await healthApi.check()
     healthStatus.value = result.status === 'ok' ? 'ok' : 'error'
@@ -57,6 +67,11 @@ onMounted(async () => {
     healthStatus.value = 'error'
   }
 })
+
+function handleLogout() {
+  auth.logout()
+  router.push('/login')
+}
 </script>
 
 <style>
@@ -77,7 +92,12 @@ select { padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; background
 .nav-links li a:hover, .nav-links li a.active { background: rgba(255,255,255,0.12); color: #fff; }
 .nav-links li a.active { border-left: 3px solid #90caf9; }
 .nav-icon { font-size: 1rem; width: 1.25rem; text-align: center; }
-.sidebar-footer { padding: 1rem; border-top: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: rgba(255,255,255,0.6); }
+.sidebar-footer { padding: 1rem; border-top: 1px solid rgba(255,255,255,0.1); display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.8rem; color: rgba(255,255,255,0.6); }
+.user-info { display: flex; flex-direction: column; gap: 0.15rem; }
+.user-name { font-size: 0.85rem; font-weight: 600; color: #fff; }
+.user-role { font-size: 0.75rem; color: rgba(255,255,255,0.6); }
+.logout-btn { padding: 0.35rem 0.75rem; font-size: 0.8rem; background: rgba(255,255,255,0.15); color: #fff; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; }
+.logout-btn:hover { background: rgba(255,255,255,0.25); }
 .health-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 .health-dot.ok { background: #69f0ae; }
 .health-dot.error { background: #ff5252; }

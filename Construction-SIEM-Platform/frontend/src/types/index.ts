@@ -73,7 +73,77 @@ export interface HealthStatus {
   service: string
 }
 
+export interface TokenResponse {
+  access_token: string
+  refresh_token: string
+  token_type: string
+}
+
+export interface AuthUser {
+  username: string
+  role: string
+}
+
 export function severityWeight(s: EventSeverity | AlertSeverity): number {
   const map: Record<string, number> = { info: 0, low: 1, medium: 2, high: 3, critical: 4 }
   return map[s] ?? 0
+}
+
+export type RuleSeverity = 'low' | 'medium' | 'high' | 'critical'
+export type RuleType = 'sigma' | 'yara' | 'custom'
+
+export interface Rule {
+  id: string
+  rule_id: string
+  name: string
+  description: string | null
+  rule_type: RuleType
+  rule_content: string
+  severity: RuleSeverity
+  category: string
+  is_active: boolean
+  mitre_attack_id: string | null
+  match_count: number
+  last_matched_at: string | null
+  created_at: string
+  updated_at: string
+}
+
+export interface RuleCreate {
+  name: string
+  description?: string | null
+  rule_type: RuleType
+  rule_content: string
+  severity: RuleSeverity
+  category: string
+  mitre_attack_id?: string | null
+}
+
+export interface RuleUpdate {
+  name?: string
+  description?: string | null
+  rule_type?: RuleType
+  rule_content?: string
+  severity?: RuleSeverity
+  category?: string
+  is_active?: boolean
+  mitre_attack_id?: string | null
+}
+
+export interface RuleTestRequest {
+  rule_content: string
+  rule_type: RuleType
+  event_data: Record<string, unknown>
+}
+
+export interface RuleTestResult {
+  matched: boolean
+  details: string | null
+}
+
+export interface RuleStatsSummary {
+  by_severity: Record<string, number>
+  by_category: Record<string, number>
+  total_active: number
+  total_inactive: number
 }

@@ -64,3 +64,42 @@ export interface HealthStatus {
   status: string
   service: string
 }
+
+export interface TokenResponse {
+  access_token: string
+  refresh_token: string
+  token_type: string
+}
+
+export interface AuthUser {
+  username: string
+  role?: string
+}
+
+export interface Role {
+  id: string
+  name: string
+  description: string | null
+  permissions: string[]
+  is_privileged: boolean
+  created_at: string
+}
+
+export interface RoleCreate {
+  name: string
+  description?: string | null
+  permissions?: string[]
+  is_privileged?: boolean
+}
+
+export interface RoleUpdate {
+  name?: string
+  description?: string | null
+  permissions?: string[]
+  is_privileged?: boolean
+}
+
+export interface RoleAssign {
+  user_id: string
+  expires_at?: string | null
+}
