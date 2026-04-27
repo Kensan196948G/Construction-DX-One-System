@@ -1,0 +1,60 @@
+name: SIEM CI
+
+on:
+  push:
+    paths:
+      - 'Construction-SIEM-Platform/**'
+      - '.github/workflows/ci-siem.yml'
+  pull_request:
+    paths:
+      - 'Construction-SIEM-Platform/**'
+      - '.github/workflows/ci-siem.yml'
+
+jobs:
+  backend-test:
+    name: Backend Lint & Test
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Construction-SIEM-Platform/backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+          cache-dependency-path: Construction-SIEM-Platform/backend/requirements-dev.txt
+      - name: Install dependencies
+        run: pip install -r requirements-dev.txt
+      - name: Lint
+        run: ruff check .
+      - name: Test
+        run: pytest --cov=app --cov-report=term-missing --cov-fail-under=80
+
+  frontend-build:
+    name: Frontend Build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Construction-SIEM-Platform/frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: Construction-SIEM-Platform/frontend/package-lock.json
+      - name: Install dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build
+
+  docker-build:
+    name: Docker Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build backend image
+        run: docker build -t siem-backend:ci Construction-SIEM-Platform/backend/
+      - name: Build frontend image
+        run: docker build -t siem-frontend:ci Construction-SIEM-Platform/frontend/
