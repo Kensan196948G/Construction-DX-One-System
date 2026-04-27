@@ -34,16 +34,16 @@
       "local_path": "Construction-GRC-System"
     },
     "IT-Change-CAB-Platform": {
-      "status": "stable",
+      "status": "development",
       "priority": "medium",
-      "tech": "Node.js/Express + React 18",
+      "tech": "Node.js/Express + Vue 3 + TypeScript",
       "github_repo": "Kensan196948G/IT-Change-CAB-Platform",
       "local_path": "IT-Change-CAB-Platform"
     },
     "IT-BCP-ITSCM-System": {
-      "status": "stable",
+      "status": "development",
       "priority": "medium",
-      "tech": "Python/FastAPI + Next.js (PWA)",
+      "tech": "Python/FastAPI + Vue 3 + TypeScript",
       "github_repo": "Kensan196948G/IT-BCP-ITSCM-System",
       "local_path": "IT-BCP-ITSCM-System"
     }
@@ -86,8 +86,8 @@
       "technical_debt": 40,
       "minor_ux": 20
     },
-    "current_top_reason": "foundation_setup",
-    "current_focus_system": "ZeroTrust-ID-Governance"
+    "current_top_reason": "bcp_frontend_or_ci_workflow_fix",
+    "current_focus_system": "IT-BCP-ITSCM-System"
   },
   "learning": {
     "failure_patterns": [
@@ -121,13 +121,19 @@
     "month6": "リリース準備・本番移行（〜2026-10-15）"
   },
   "status": {
-    "stable": true,
+    "stable": false,
     "blocked": false,
-    "current_phase": "verify",
-    "last_updated": "2026-04-25T00:00:00Z",
-    "days_elapsed": 10,
-    "days_remaining": 173,
-    "session_number": 2,
-    "last_session_result": "STABLE: ZTIG backend 13/13 tests PASS, coverage 87%, ruff CLEAN"
+    "current_phase": "build",
+    "last_updated": "2026-04-27T00:00:00Z",
+    "days_elapsed": 12,
+    "days_remaining": 171,
+    "session_number": 9,
+    "session_summary": "Session9: PR#4, #10 merged. PR#5 merge conflicts resolved. Build phase active.",
+    "next_session_priority": "verify_and_ci_workflow",
+    "open_prs": [],
+    "completed_backends": ["ZTIG(13/87%)", "CSIEM(19/80%)", "CGRC(30/92%)", "SIEM-Platform(20/80%)", "IBIS(24)", "ICCP(16)"],
+    "completed_frontends": ["CGRC(19tests/62%)", "CSIEM(20tests/75%)", "ZTIG(20tests/stores100%)", "CAB(19tests/stores100%)", "BCP(18tests/stores100%)"],
+    "pending_frontends": [],
+    "blocker": "GitHub App lacks `workflows` permission (Issue #6)"
   }
 }

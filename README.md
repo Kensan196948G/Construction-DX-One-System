@@ -21,7 +21,7 @@
 
 | 🎯 プロジェクト期間 | 📅 登録日 | 🚀 リリース期限 | ⏳ 残日数 |
 |:---:|:---:|:---:|:---:|
-| **6ヶ月** | 2026-04-15 | **2026-10-15** | **174日** |
+| **6ヶ月** | 2026-04-15 | **2026-10-15** | **173日** |
 
 </div>
 
@@ -140,20 +140,21 @@ graph TD
 
 > **EntraID Connect × HENGEONE × AD 統合アイデンティティ管理プラットフォーム**
 
-[![ZTIG CI](https://github.com/Kensan196948G/ZeroTrust-ID-Governance/actions/workflows/claudeos-ci.yml/badge.svg)](https://github.com/Kensan196948G/ZeroTrust-ID-Governance/actions)
-[![Coverage](https://img.shields.io/badge/Backend_Coverage-99%25-brightgreen.svg)](ZeroTrust-ID-Governance/)
-[![Frontend](https://img.shields.io/badge/Frontend_Stmts-100%25-brightgreen.svg)](ZeroTrust-ID-Governance/frontend/)
-[![Tests](https://img.shields.io/badge/Tests-331_backend_+_168_frontend-brightgreen.svg)](ZeroTrust-ID-Governance/backend/tests/)
-[![Phase](https://img.shields.io/badge/Phase-39_完了-blue.svg)](ZeroTrust-ID-Governance/)
+[![ZTIG CI](https://github.com/Kensan196948G/Construction-DX-One-System/actions/workflows/ztig-ci.yml/badge.svg)](https://github.com/Kensan196948G/Construction-DX-One-System/actions)
+[![Coverage](https://img.shields.io/badge/Backend_Coverage-87%25-brightgreen.svg)](ZeroTrust-ID-Governance/backend/)
+[![Tests](https://img.shields.io/badge/Tests-13_passed-brightgreen.svg)](ZeroTrust-ID-Governance/backend/tests/)
+[![Frontend Tests](https://img.shields.io/badge/Frontend_Tests-20_passed-brightgreen.svg)](ZeroTrust-ID-Governance/frontend/tests/)
+[![Frontend Coverage](https://img.shields.io/badge/Frontend_Stores-100%25-brightgreen.svg)](ZeroTrust-ID-Governance/frontend/)
+[![Status](https://img.shields.io/badge/Status-バックエンド+フロントエンド基盤実装済-blue.svg)](ZeroTrust-ID-Governance/)
 
 | 項目 | 内容 |
 |:---:|---|
 | 🎯 **目的** | ゼロトラスト原則（Never Trust, Always Verify）に基づく統合ID管理 |
 | 👥 **対象ユーザー** | 正社員・嘱託500名 + 協力会社100名 + 管理者7名（PIM対象） |
-| 🏗️ **技術スタック** | Python 3.12 / FastAPI + Next.js 15.5.14 + PostgreSQL + Redis + Celery |
-| ☸️ **インフラ** | Kubernetes (Helm v1.0.0) + ArgoCD/Flux CD（GitOps） |
-| 📊 **状態** | 🔵 開発中（Phase 39 完了） |
-| 🔗 **リポジトリ** | [Kensan196948G/ZeroTrust-ID-Governance](https://github.com/Kensan196948G/ZeroTrust-ID-Governance) |
+| 🏗️ **技術スタック** | Python 3.12 / FastAPI 0.115 + SQLAlchemy 2.0 async + PostgreSQL 16 + JWT HS256 · Vue 3.5 + Pinia 2 + Vue Router 4 |
+| ☸️ **インフラ** | Docker (python:3.12-slim, nginx:alpine, multi-stage) |
+| 📊 **状態** | 🟡 バックエンド+フロントエンド基盤実装済み: backend **13テスト/87%** · frontend **20テスト/stores100%** · PR #5 |
+| 🔗 **実装パス** | [ZeroTrust-ID-Governance/backend](./ZeroTrust-ID-Governance/backend/) · [ZeroTrust-ID-Governance/frontend](./ZeroTrust-ID-Governance/frontend/) |
 
 **主要機能:**
 
@@ -184,9 +185,10 @@ mindmap
 
 > **建設現場 サイバーセキュリティ監視・SIEM統合システム**
 
-[![CSIEM CI](https://github.com/Kensan196948G/Construction-SIEM-Platform/actions/workflows/claudeos-ci.yml/badge.svg)](https://github.com/Kensan196948G/Construction-SIEM-Platform/actions)
-[![Tests](https://img.shields.io/badge/Tests-1284_passed-brightgreen.svg)](Construction-SIEM-Platform/)
-[![Phase](https://img.shields.io/badge/Phase-47_完了-blue.svg)](Construction-SIEM-Platform/)
+[![CSIEM CI](https://github.com/Kensan196948G/Construction-DX-One-System/actions/workflows/siem-ci.yml/badge.svg)](https://github.com/Kensan196948G/Construction-DX-One-System/actions)
+[![Backend Tests](https://img.shields.io/badge/Backend_Tests-19_passed-brightgreen.svg)](Construction-SIEM-Platform/backend/tests/)
+[![Frontend Tests](https://img.shields.io/badge/Frontend_Tests-20_passed-brightgreen.svg)](Construction-SIEM-Platform/frontend/tests/)
+[![Frontend Coverage](https://img.shields.io/badge/Frontend_Coverage-75%25-brightgreen.svg)](Construction-SIEM-Platform/frontend/)
 [![EPS](https://img.shields.io/badge/処理能力-10000_EPS-orange.svg)](Construction-SIEM-Platform/)
 
 | 項目 | 内容 |
@@ -195,9 +197,10 @@ mindmap
 | ⏱️ **MTTD 目標** | **15分以内** |
 | ⏱️ **MTTR 目標** | **2時間以内** |
 | 📊 **処理能力** | **10,000 EPS（イベント/秒）以上** |
-| 🏗️ **技術スタック** | Python 3.12 / FastAPI + Elasticsearch 8.x |
-| 📊 **状態** | 🔵 開発中（Phase 47 完了） |
-| 🔗 **リポジトリ** | [Kensan196948G/Construction-SIEM-Platform](https://github.com/Kensan196948G/Construction-SIEM-Platform) |
+| 🏗️ **技術スタック（バックエンド）** | Python 3.12 / FastAPI 0.115.6 + SQLAlchemy 2.0 async + PostgreSQL 16 + Elasticsearch 8.x |
+| 🖥️ **技術スタック（フロントエンド）** | Vue 3.5 + TypeScript + Vite 6 + Pinia 2 + Vue Router 4 + axios |
+| 📊 **状態** | 🟡 バックエンド+フロントエンド基盤実装済み: backend **19テスト/80%** · frontend **20テスト/75%** · PR #5 |
+| 🔗 **実装パス** | [Construction-SIEM-Platform/backend](./Construction-SIEM-Platform/backend/) · [Construction-SIEM-Platform/frontend](./Construction-SIEM-Platform/frontend/) |
 
 **脅威検知シナリオ:**
 
@@ -215,9 +218,9 @@ mindmap
 
 > **建設業 統合リスク＆コンプライアンス管理システム**
 
-[![CGRC CI](https://github.com/Kensan196948G/Construction-GRC-System/actions/workflows/claudeos-ci.yml/badge.svg)](https://github.com/Kensan196948G/Construction-GRC-System/actions)
-[![Tests](https://img.shields.io/badge/Tests-660+-brightgreen.svg)](Construction-GRC-System/)
-[![Version](https://img.shields.io/badge/Version-v1.2.0-orange.svg)](Construction-GRC-System/CHANGELOG.md)
+[![CGRC CI](https://github.com/Kensan196948G/Construction-DX-One-System/actions/workflows/cgrc-ci.yml/badge.svg)](https://github.com/Kensan196948G/Construction-DX-One-System/actions/workflows/cgrc-ci.yml)
+[![Tests](https://img.shields.io/badge/Tests-30%20passed-brightgreen.svg)](Construction-GRC-System/)
+[![Coverage](https://img.shields.io/badge/Coverage-92%25-brightgreen.svg)](Construction-GRC-System/)
 [![Controls](https://img.shields.io/badge/ISO27001-93管理策対応-blue.svg)](Construction-GRC-System/)
 
 | 項目 | 内容 |
@@ -226,8 +229,8 @@ mindmap
 | 👥 **利用者** | GRC管理者・リスクオーナー・監査員・経営層（約50名） |
 | 📋 **管理策数** | **ISO27001 全93管理策**（4ドメイン） |
 | 🏗️ **技術スタック** | Python 3.12 / Django 5.x + Vue.js 3.x / TypeScript + PostgreSQL 16 + Redis 7 |
-| 📊 **状態** | 🔵 開発中（v1.2.0） |
-| 🔗 **リポジトリ** | [Kensan196948G/Construction-GRC-System](https://github.com/Kensan196948G/Construction-GRC-System) |
+| 📊 **状態** | 🟡 バックエンド+フロントエンド基盤実装済み: backend 30テスト/92% · frontend 19テスト/62% · PR #5 |
+| 🔗 **実装パス** | `./Construction-GRC-System/backend/` · `./Construction-GRC-System/frontend/` |
 
 **GRC管理機能:**
 
@@ -247,19 +250,19 @@ mindmap
 > **IT変更管理・リリース自動化プラットフォーム（CAB管理）**
 
 [![ICCP CI](https://github.com/Kensan196948G/IT-Change-CAB-Platform/actions/workflows/claudeos-ci.yml/badge.svg)](https://github.com/Kensan196948G/IT-Change-CAB-Platform/actions)
-[![Tests](https://img.shields.io/badge/Tests-1253_全PASS-brightgreen.svg)](IT-Change-CAB-Platform/)
-[![Coverage](https://img.shields.io/badge/Coverage-100%25-brightgreen.svg)](IT-Change-CAB-Platform/)
-[![Status](https://img.shields.io/badge/Status-STABLE_✅-brightgreen.svg)](IT-Change-CAB-Platform/)
-[![PRs](https://img.shields.io/badge/PRs-131_merged-blue.svg)](https://github.com/Kensan196948G/IT-Change-CAB-Platform)
+[![Tests](https://img.shields.io/badge/Tests-19_全PASS-brightgreen.svg)](IT-Change-CAB-Platform/frontend/)
+[![FE Stores](https://img.shields.io/badge/FE_Stores-100%25-brightgreen.svg)](IT-Change-CAB-Platform/frontend/)
+[![tsc](https://img.shields.io/badge/tsc-CLEAN-brightgreen.svg)](IT-Change-CAB-Platform/frontend/)
+[![Status](https://img.shields.io/badge/Status-バックエンド+フロントエンド基盤実装済み-blue.svg)](IT-Change-CAB-Platform/)
 
 | 項目 | 内容 |
 |:---:|---|
 | 🎯 **目的** | RFC承認・影響分析・CAB審議・展開・ロールバックの完全自動化 |
-| 📋 **テスト数** | **1,253件**（Backend 738 / Frontend 414 / E2E 101） |
-| 🖥️ **画面数** | **17画面** |
-| 🔌 **APIルーター** | **18ルーター**（全100%カバレッジ） |
-| 🏗️ **技術スタック** | Node.js / Express + React 18 / TypeScript + PostgreSQL 16 + Redis 7 (BullMQ) |
-| 📊 **状態** | ✅ **STABLE** |
+| 📋 **フロントエンドテスト** | **19件 全PASS** (rfcs-store: 11 / cab-meetings-store: 8) |
+| 🖥️ **画面数** | **3画面** (ダッシュボード / RFC管理 / CAB会議) |
+| 🔌 **フロントエンドスタック** | Vue 3.5 + TypeScript + Vite 6 + Pinia 2 + Vue Router 4 |
+| 🏗️ **バックエンドスタック** | Node.js / Express + PostgreSQL 16 + Redis 7 (BullMQ) |
+| 📊 **状態** | 🔨 **開発中** (バックエンド+フロントエンド基盤実装済み) |
 | 🔗 **リポジトリ** | [Kensan196948G/IT-Change-CAB-Platform](https://github.com/Kensan196948G/IT-Change-CAB-Platform) |
 
 **変更管理ワークフロー:**
@@ -287,10 +290,9 @@ flowchart LR
 > **IT事業継続管理システム（BCP/ITSCM統合プラットフォーム）**
 
 [![IBIS CI](https://github.com/Kensan196948G/IT-BCP-ITSCM-System/actions/workflows/claudeos-ci.yml/badge.svg)](https://github.com/Kensan196948G/IT-BCP-ITSCM-System/actions)
-[![Tests](https://img.shields.io/badge/Tests-1012_passed-brightgreen.svg)](IT-BCP-ITSCM-System/)
-[![Coverage](https://img.shields.io/badge/Coverage-80%25+-brightgreen.svg)](IT-BCP-ITSCM-System/)
-[![Status](https://img.shields.io/badge/Status-STABLE_✅-brightgreen.svg)](IT-BCP-ITSCM-System/)
-[![PRs](https://img.shields.io/badge/PRs-173_merged-blue.svg)](https://github.com/Kensan196948G/IT-BCP-ITSCM-System)
+[![Tests](https://img.shields.io/badge/Tests-18_passed-brightgreen.svg)](IT-BCP-ITSCM-System/)
+[![Coverage](https://img.shields.io/badge/Coverage-stores100%25-brightgreen.svg)](IT-BCP-ITSCM-System/)
+[![Status](https://img.shields.io/badge/Status-フロントエンド実装済み-blue.svg)](IT-BCP-ITSCM-System/)
 [![Security](https://img.shields.io/badge/CVE-0件-brightgreen.svg)](IT-BCP-ITSCM-System/)
 
 | 項目 | 内容 |
@@ -298,8 +300,10 @@ flowchart LR
 | 🎯 **目的** | 災害・サイバー攻撃時のIT復旧計画・BCP訓練・RTOダッシュボード |
 | 🌏 **インフラ** | Azure Container Apps（東日本Primary + 西日本Standby・地理冗長） |
 | 📱 **対応** | PWA対応（モバイル・オフライン動作可能） |
-| 🏗️ **技術スタック** | Python / FastAPI 0.135.3 + Next.js 16.2.2 + PostgreSQL 16 + Redis（Geo冗長） |
-| 📊 **状態** | ✅ **STABLE** |
+| 🏗️ **技術スタック（バックエンド）** | Python / FastAPI + PostgreSQL + Redis |
+| 🖥️ **技術スタック（フロントエンド）** | Vue 3.5 + TypeScript + Vite 6 + Pinia 2 + Vue Router 4 + axios |
+| 📋 **フロントエンドテスト** | **18件 全PASS** (incidents-store: 11 / systems-store: 7) |
+| 📊 **状態** | 🔨 **開発中** (バックエンド+フロントエンド基盤実装済み) |
 | 🔗 **リポジトリ** | [Kensan196948G/IT-BCP-ITSCM-System](https://github.com/Kensan196948G/IT-BCP-ITSCM-System) |
 
 **BCP 対応フロー:**
@@ -328,12 +332,12 @@ sequenceDiagram
 
 | 🔢 | システム | 略称 | テスト数 | カバレッジ | PR数 | ステータス |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| 1 | ZeroTrust-ID-Governance | ZTIG | **499件**<br/>Backend 331 + Frontend 168 | Backend **99%**<br/>Frontend **Stmts 100%** | - | 🔵 開発中 |
-| 2 | Construction-SIEM-Platform | CSIEM | **1,284件** | 83%+ | - | 🔵 開発中 |
-| 3 | Construction-GRC-System | CGRC | **660件+** | 80%+ | - | 🔵 開発中 |
-| 4 | IT-Change-CAB-Platform | ICCP | **1,253件**<br/>Backend 738 / FE 414 / E2E 101 | **100%** | **131件** | ✅ STABLE |
-| 5 | IT-BCP-ITSCM-System | IBIS | **1,012件**<br/>Backend 600+ / Frontend 412 | 80%+ | **173件** | ✅ STABLE |
-| 📊 | **合計** | | **🔢 4,708件+** | | **304件** | |
+| 1 | ZeroTrust-ID-Governance | ZTIG | **13件** (backend)<br/>**20件** (frontend) | **87%** / **stores100%** | 1件 (Draft) | 🟡 バックエンド+フロントエンド基盤実装済み |
+| 2 | Construction-SIEM-Platform | CSIEM | **19件** (backend)<br/>**20件** (frontend) | **80%** / **75%** | 1件 (Draft) | 🟡 バックエンド+フロントエンド基盤実装済み |
+| 3 | Construction-GRC-System | CGRC | **30件** (backend)<br/>**19件** (frontend) | **92%** / **62%** | 1件 (Draft) | 🟡 バックエンド+フロントエンド基盤実装済み |
+| 4 | IT-Change-CAB-Platform | ICCP | **19件** (frontend)<br/>rfcs-store 11 / cab-store 8 | **stores100%** / tsc CLEAN | 1件 (Draft) | 🟡 バックエンド+フロントエンド基盤実装済み |
+| 5 | IT-BCP-ITSCM-System | IBIS | **18件** (frontend)<br/>incidents-store 11 / systems-store 7 | **stores100%** / tsc CLEAN | 1件 (Draft) | 🟡 バックエンド+フロントエンド基盤実装済み |
+| 📊 | **合計** | | **🔢 109件+** | | **5件** | |
 
 ### フェーズ進捗
 
@@ -342,7 +346,7 @@ xychart-beta
     title "各サブシステム 実装フェーズ進捗"
     x-axis ["ZTIG", "CSIEM", "CGRC", "ICCP", "IBIS"]
     y-axis "完了フェーズ数" 0 --> 50
-    bar [39, 47, 12, 7, 8]
+    bar [1, 1, 2, 7, 8]
 ```
 
 ---
@@ -713,6 +717,6 @@ flowchart LR
 
 *みらい建設工業 IT部門が推進する建設業 DX セキュリティ統合基盤*
 
-📅 最終更新: 2026-04-24 ｜ 🤖 ClaudeOS v8.0 自律開発 ｜ 🚀 本番リリース目標: 2026-10-15
+📅 最終更新: 2026-04-25 (CGRC backend追加) ｜ 🤖 ClaudeOS v8.0 自律開発 ｜ 🚀 本番リリース目標: 2026-10-15
 
 </div>
