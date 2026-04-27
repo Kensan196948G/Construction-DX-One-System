@@ -156,7 +156,7 @@ graph TD
 | 🎯 **目的** | ゼロトラスト原則に基づく統合ID管理（正社員500名＋協力会社100名） |
 | 🏗️ **Backend** | Python 3.12 / FastAPI 0.115 + SQLAlchemy 2.0 async + PostgreSQL 16 + JWT HS256 |
 | 🖥️ **Frontend** | Vue 3.5 + TypeScript + Vite 6 + Pinia 2 + Vue Router 4 |
-| 📊 **状態** | ✅ Backend 56/56 tests · Frontend stores 100% · Lint CLEAN |
+| 📊 **状態** | ✅ Backend 74/74 tests · Frontend stores 100% · Lint CLEAN |
 
 ---
 
@@ -170,7 +170,7 @@ graph TD
 | ⏱️ **目標** | MTTD 15分以内 / MTTR 2時間以内 / 処理能力 10,000 EPS |
 | 🏗️ **Backend** | Python 3.12 / FastAPI 0.115.6 + SQLAlchemy 2.0 async + PostgreSQL 16 + Elasticsearch 8.x |
 | 🖥️ **Frontend** | Vue 3.5 + TypeScript + Vite 6 + Pinia 2 + Vue Router 4 |
-| 📊 **状態** | ✅ Backend 128/128 tests · Lint CLEAN · Frontend stores 100% |
+| 📊 **状態** | ✅ Backend 173/173 tests · Lint CLEAN · Frontend stores 100% |
 
 ---
 
@@ -184,7 +184,7 @@ graph TD
 | 📋 **管理策** | ISO27001 全93管理策（4ドメイン） |
 | 🏗️ **Backend** | Python 3.12 / Django 5.x + PostgreSQL 16 + Redis 7 |
 | 🖥️ **Frontend** | Vue 3 + TypeScript |
-| 📊 **状態** | ✅ Backend 48/48 tests · Lint CLEAN · Frontend stores 100% |
+| 📊 **状態** | ✅ Backend 54/54 tests · Lint CLEAN · Frontend stores 100% |
 
 ---
 
@@ -288,19 +288,19 @@ sequenceDiagram
 
 | System | Backend | Frontend | Backend Tests | Lint | Build | Status |
 |:------:|:-------:|:--------:|:-------------:|:----:|:-----:|:------:|
-| ZTIG | FastAPI ✅ | Vue 3 + TS ✅ | 56/56 ✅ | CLEAN ✅ | ✅ | ✅ |
-| SIEM | FastAPI ✅ | Vue 3 + TS ✅ | 128/128 ✅ | CLEAN ✅ | ✅ | ✅ |
-| CGRC | Django 5 ✅ | Vue 3 + TS ✅ | 48/48 ✅ | CLEAN ✅ | ✅ | ✅ |
+| ZTIG | FastAPI ✅ | Vue 3 + TS ✅ | 74/74 ✅ | CLEAN ✅ | ✅ | ✅ |
+| SIEM | FastAPI ✅ | Vue 3 + TS ✅ | 173/173 ✅ | CLEAN ✅ | ✅ | ✅ |
+| CGRC | Django 5 ✅ | Vue 3 + TS ✅ | 54/54 ✅ | CLEAN ✅ | ✅ | ✅ |
 | ICCP | FastAPI ✅ | Vue 3 + TS ✅ | 51/51 ✅ | CLEAN ✅ | ✅ | ✅ |
 | IBIS | FastAPI ✅ | Vue 3 + TS ✅ | 53/53 ✅ | CLEAN ✅ | ✅ | ✅ |
-| **合計** | **5/5 ✅** | **5/5 ✅** | **336/336 ✅** | **ALL CLEAN** | **ALL ✅** | **ALL ✅** |
+| **合計** | **5/5 ✅** | **5/5 ✅** | **405/405 ✅** | **ALL CLEAN** | **ALL ✅** | **ALL ✅** |
 
 ### 進捗サマリー
 
 | KPI | 値 |  Status |
 |:---:|:---:|:-------:|
 | 🧩 全サブシステム実装完了 | 5/5 | ✅ |
-| 📊 バックエンドテスト総数 | **336件 全PASS** | ✅ |
+| 📊 バックエンドテスト総数 | **405件 全PASS** | ✅ |
 | 🔒 セキュリティブロッカー | 0件 | ✅ |
 | 🔄 CI/CD ワークフロー | 6 (Meta + 5 subs) | ✅ |
 | 📋 Lint Status | ALL CLEAN | ✅ |
@@ -386,8 +386,8 @@ gantt
 | 📊 KPI | 🎯 目標 | 📏 現在値 | Status |
 |:------:|:-------:|:---------:|:------:|
 | 🧩 システム完成数 | 5システム | **5/5** ✅ 全サブシステム実装完了 | ✅ |
-| 📊 バックエンドテスト | 100件以上 | **336件 全PASS** | ✅ |
-| ✅ 全テスト通過 | 100% | **100% (336/336)** | ✅ |
+| 📊 バックエンドテスト | 100件以上 | **405件 全PASS** | ✅ |
+| ✅ 全テスト通過 | 100% | **100% (405/405)** | ✅ |
 | 🔒 セキュリティブロッカー | 0件 | **0件（CVE 0）** | ✅ |
 | ⚡ Lint Status | ALL CLEAN | **ALL CLEAN** | ✅ |
 | 🏗️ Build Status | ALL SUCCESS | **ALL SUCCESS** | ✅ |
@@ -639,6 +639,7 @@ flowchart LR
 | 2026-04-27 | #012 | 🚦 CI/CDワークフロー作成（Meta CI + 5 subsystem CI）· 📊 全107テスト完了確認 · 🤖 自律開発ループ安定化 · 📋 README全面更新 |
 | 2026-04-27 第2部 | #013 | 🔄 自律ループ#4-#10実行 · 🔐 ZTIG:ロール管理/アクセス申請WF/監査ログ/EntraID同期 · 🛡️ SIEM:Sigma/YARAルール/ML異常検知/Kafka/プレイブック · 🏗️ CGRC:SoA自動生成/NIST CSF 2.0/監査レポート · 🔄 ICCP:影響分析/衝突検知/フリーズ期間/KPI/CABカレンダー · ♻️ IBIS:BIA分析API · 📊 全303テスト完了 ✅ |
 | 2026-04-27 第3部 | #014 | 🔐 ZTIG:アカウント棚卸ワークフロー追加（56 tests） · 🔄 ICCP:PIR事後レビューワークフロー追加（51 tests） · ♻️ IBIS:経営層向け状況報告API + 通知システム追加（53 tests） · 📊 全336テスト完了 ✅ |
+| 2026-04-27 第4部 | #015 | 🏗️ CGRC:Celery定期タスク(6種類)追加（54 tests） · 🔐 ZTIG:HENGEONE SCIM 2.0 + AD LDAPS + セッション管理追加（74 tests） · 🛡️ SIEM:多チャネル通知 + IoT軽量エージェント + 脅威インテリジェンス追加（173 tests） · 📊 全405テスト完了 ✅ |
 
 ---
 
