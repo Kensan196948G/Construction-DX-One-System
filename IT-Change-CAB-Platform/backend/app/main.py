@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.database import init_db
-from app.routers import cab_meetings, freeze_periods, health, impact_analysis, rfcs
+from app.routers import cab_meetings, calendar, freeze_periods, health, impact_analysis, kpi, rfcs
 
 
 @asynccontextmanager
@@ -34,3 +34,5 @@ app.include_router(rfcs.router, prefix=PREFIX, tags=["rfcs"])
 app.include_router(cab_meetings.router, prefix=PREFIX, tags=["cab-meetings"])
 app.include_router(impact_analysis.router, prefix=PREFIX, tags=["impact"])
 app.include_router(freeze_periods.router, prefix=PREFIX, tags=["freeze-periods"])
+app.include_router(kpi.router, prefix=PREFIX, tags=["kpi"])
+app.include_router(calendar.router, prefix=PREFIX, tags=["calendar"])

@@ -109,9 +109,7 @@ async def test_assign_meeting(client):
 @pytest.mark.asyncio
 async def test_filter_rfcs_by_status(client):
     await client.post("/api/v1/rfcs", json={"title": "RFC A", "description": "desc"})
-    create_resp = await client.post(
-        "/api/v1/rfcs", json={"title": "RFC B", "description": "desc"}
-    )
+    create_resp = await client.post("/api/v1/rfcs", json={"title": "RFC B", "description": "desc"})
     rfc_id = create_resp.json()["id"]
     await client.patch(f"/api/v1/rfcs/{rfc_id}/status", json={"status": "submitted"})
 

@@ -89,12 +89,14 @@ async def analyze_impact(rfc_data: dict, db: AsyncSession) -> dict:
             )
         )
         for fp in result.scalars().all():
-            freeze_conflicts.append({
-                "freeze_period_id": fp.id,
-                "name": fp.name,
-                "start_date": fp.start_date.isoformat(),
-                "end_date": fp.end_date.isoformat(),
-            })
+            freeze_conflicts.append(
+                {
+                    "freeze_period_id": fp.id,
+                    "name": fp.name,
+                    "start_date": fp.start_date.isoformat(),
+                    "end_date": fp.end_date.isoformat(),
+                }
+            )
 
     freeze_score = 10 if freeze_conflicts else 0
     impact_score = system_score * change_weight + duration_score + freeze_score
@@ -125,18 +127,22 @@ async def analyze_impact(rfc_data: dict, db: AsyncSession) -> dict:
         {
             "area": "duration",
             "severity": _severity(duration_score, (1, 3, 5)),
-            "description": f"Duration: {duration_hours:.1f}h" if duration_hours else "No duration set",
+            "description": f"Duration: {duration_hours:.1f}h"
+            if duration_hours
+            else "No duration set",
             "score": duration_score,
         },
     ]
 
     if freeze_conflicts:
-        details.append({
-            "area": "freeze_period",
-            "severity": "critical",
-            "description": f"Conflicts with {len(freeze_conflicts)} freeze period(s)",
-            "score": float(freeze_score),
-        })
+        details.append(
+            {
+                "area": "freeze_period",
+                "severity": "critical",
+                "description": f"Conflicts with {len(freeze_conflicts)} freeze period(s)",
+                "score": float(freeze_score),
+            }
+        )
 
     return {
         "rfc_title": rfc_data.get("title", ""),
@@ -188,16 +194,18 @@ async def detect_conflicts(rfc_data: dict, db: AsyncSession) -> list[dict]:
         if change_type == "emergency" and other.change_type == "emergency":
             overlap_details.append("Multiple emergency changes in same window")
 
-        conflicts.append({
-            "rfc_id": other.id,
-            "title": other.title,
-            "change_type": other.change_type,
-            "status": other.status,
-            "planned_start": other.planned_start.isoformat() if other.planned_start else None,
-            "planned_end": other.planned_end.isoformat() if other.planned_end else None,
-            "overlap_details": overlap_details,
-            "shared_systems": shared_systems,
-        })
+        conflicts.append(
+            {
+                "rfc_id": other.id,
+                "title": other.title,
+                "change_type": other.change_type,
+                "status": other.status,
+                "planned_start": other.planned_start.isoformat() if other.planned_start else None,
+                "planned_end": other.planned_end.isoformat() if other.planned_end else None,
+                "overlap_details": overlap_details,
+                "shared_systems": shared_systems,
+            }
+        )
 
     freeze_result = await db.execute(
         select(FreezePeriod).where(
@@ -207,16 +215,18 @@ async def detect_conflicts(rfc_data: dict, db: AsyncSession) -> list[dict]:
         )
     )
     for fp in freeze_result.scalars().all():
-        conflicts.append({
-            "rfc_id": None,
-            "title": f"[FREEZE] {fp.name}",
-            "change_type": "freeze",
-            "status": "active",
-            "planned_start": fp.start_date.isoformat(),
-            "planned_end": fp.end_date.isoformat(),
-            "overlap_details": [f"Planned during freeze period: {fp.name}"],
-            "shared_systems": [],
-        })
+        conflicts.append(
+            {
+                "rfc_id": None,
+                "title": f"[FREEZE] {fp.name}",
+                "change_type": "freeze",
+                "status": "active",
+                "planned_start": fp.start_date.isoformat(),
+                "planned_end": fp.end_date.isoformat(),
+                "overlap_details": [f"Planned during freeze period: {fp.name}"],
+                "shared_systems": [],
+            }
+        )
 
     return conflicts
 
@@ -227,11 +237,13 @@ async def get_change_calendar(
     db: AsyncSession,
 ) -> list[dict]:
     result = await db.execute(
-        select(RFC).where(
+        select(RFC)
+        .where(
             RFC.planned_start.isnot(None),
             RFC.planned_start >= date_from,
             RFC.planned_start <= date_to,
-        ).order_by(RFC.planned_start)
+        )
+        .order_by(RFC.planned_start)
     )
     rfcs = result.scalars().all()
 
@@ -247,28 +259,32 @@ async def get_change_calendar(
     entries: list[dict] = []
 
     for rfc in rfcs:
-        entries.append({
-            "type": "rfc",
-            "id": rfc.id,
-            "title": rfc.title,
-            "change_type": rfc.change_type,
-            "status": rfc.status,
-            "planned_start": rfc.planned_start.isoformat() if rfc.planned_start else None,
-            "planned_end": rfc.planned_end.isoformat() if rfc.planned_end else None,
-            "systems": _parse_systems(rfc.affected_systems),
-        })
+        entries.append(
+            {
+                "type": "rfc",
+                "id": rfc.id,
+                "title": rfc.title,
+                "change_type": rfc.change_type,
+                "status": rfc.status,
+                "planned_start": rfc.planned_start.isoformat() if rfc.planned_start else None,
+                "planned_end": rfc.planned_end.isoformat() if rfc.planned_end else None,
+                "systems": _parse_systems(rfc.affected_systems),
+            }
+        )
 
     for fp in freeze_periods:
-        entries.append({
-            "type": "freeze",
-            "id": fp.id,
-            "title": fp.name,
-            "change_type": "freeze",
-            "status": "active" if fp.is_active else "inactive",
-            "planned_start": fp.start_date.isoformat(),
-            "planned_end": fp.end_date.isoformat(),
-            "systems": _parse_systems(fp.affected_systems),
-        })
+        entries.append(
+            {
+                "type": "freeze",
+                "id": fp.id,
+                "title": fp.name,
+                "change_type": "freeze",
+                "status": "active" if fp.is_active else "inactive",
+                "planned_start": fp.start_date.isoformat(),
+                "planned_end": fp.end_date.isoformat(),
+                "systems": _parse_systems(fp.affected_systems),
+            }
+        )
 
     entries.sort(key=lambda e: e.get("planned_start", ""))
     return entries
@@ -289,14 +305,16 @@ async def get_system_impact_map(db: AsyncSession) -> dict:
         for sys in systems:
             if sys not in system_map:
                 system_map[sys] = []
-            system_map[sys].append({
-                "rfc_id": rfc.id,
-                "title": rfc.title,
-                "change_type": rfc.change_type,
-                "status": rfc.status,
-                "planned_start": rfc.planned_start.isoformat() if rfc.planned_start else None,
-                "planned_end": rfc.planned_end.isoformat() if rfc.planned_end else None,
-            })
+            system_map[sys].append(
+                {
+                    "rfc_id": rfc.id,
+                    "title": rfc.title,
+                    "change_type": rfc.change_type,
+                    "status": rfc.status,
+                    "planned_start": rfc.planned_start.isoformat() if rfc.planned_start else None,
+                    "planned_end": rfc.planned_end.isoformat() if rfc.planned_end else None,
+                }
+            )
 
     return {
         "systems": system_map,
