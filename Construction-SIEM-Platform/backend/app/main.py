@@ -4,13 +4,16 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.config import settings
-from app.core.database import init_db
-from app.routers import alerts, auth, events, health
+from app.core.database import AsyncSessionLocal, init_db
+from app.routers import alerts, auth, events, health, rules
+from app.services.rule_engine import seed_rules
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     await init_db()
+    async with AsyncSessionLocal() as session:
+        await seed_rules(session)
     yield
 
 
@@ -32,3 +35,4 @@ app.include_router(health.router, prefix="/api/v1")
 app.include_router(auth.router)
 app.include_router(events.router, prefix="/api/v1")
 app.include_router(alerts.router, prefix="/api/v1")
+app.include_router(rules.router, prefix="/api/v1")
