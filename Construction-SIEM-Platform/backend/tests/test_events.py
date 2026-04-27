@@ -1,91 +1,92 @@
-from datetime import UTC, datetime
-
 import pytest
-from httpx import AsyncClient
-
-NOW = datetime.now(UTC).isoformat()
 
 
-@pytest.mark.asyncio
-async def test_ingest_event(client: AsyncClient) -> None:
-    response = await client.post(
-        "/api/v1/events",
-        json={
-            "event_type": "login_failure",
-            "severity": "medium",
-            "source_ip": "192.168.1.100",
-            "occurred_at": NOW,
-        },
-    )
-    assert response.status_code == 201
-    data = response.json()
-    assert data["event_type"] == "login_failure"
-    assert data["severity"] == "medium"
-    assert "id" in data
+EVENT_PAYLOAD = {
+    "event_type": "port_scan",
+    "source": "firewall",
+    "source_ip": "192.168.1.100",
+    "destination_ip": "10.0.0.1",
+    "severity": "high",
+    "description": "Suspicious port scan detected",
+    "site": "東京建設現場A",
+}
 
 
 @pytest.mark.asyncio
-async def test_list_events_empty(client: AsyncClient) -> None:
-    response = await client.get("/api/v1/events")
-    assert response.status_code == 200
-    assert isinstance(response.json(), list)
+async def test_create_event(client):
+    resp = await client.post("/api/v1/events", json=EVENT_PAYLOAD)
+    assert resp.status_code == 201
+    data = resp.json()
+    assert data["event_type"] == "port_scan"
+    assert data["severity"] == "high"
+    assert data["processed"] is False
 
 
 @pytest.mark.asyncio
-async def test_list_events_with_severity_filter(client: AsyncClient) -> None:
-    for sev in ["low", "medium", "high"]:
-        await client.post(
-            "/api/v1/events",
-            json={"event_type": "port_scan", "severity": sev, "occurred_at": NOW},
-        )
-    response = await client.get("/api/v1/events?severity=high")
-    assert response.status_code == 200
-    events = response.json()
-    assert all(e["severity"] == "high" for e in events)
+async def test_list_events_empty(client):
+    resp = await client.get("/api/v1/events")
+    assert resp.status_code == 200
+    body = resp.json()
+    assert body["status"] == "success"
+    assert body["data"] == []
+    assert body["meta"]["total"] == 0
 
 
 @pytest.mark.asyncio
-async def test_get_event_by_id(client: AsyncClient) -> None:
-    create_res = await client.post(
-        "/api/v1/events",
-        json={"event_type": "brute_force", "severity": "high", "occurred_at": NOW},
-    )
-    event_id = create_res.json()["id"]
-
-    response = await client.get(f"/api/v1/events/{event_id}")
-    assert response.status_code == 200
-    assert response.json()["id"] == event_id
+async def test_list_events(client):
+    await client.post("/api/v1/events", json=EVENT_PAYLOAD)
+    await client.post("/api/v1/events", json={**EVENT_PAYLOAD, "severity": "critical"})
+    resp = await client.get("/api/v1/events")
+    assert resp.status_code == 200
+    assert resp.json()["meta"]["total"] == 2
 
 
 @pytest.mark.asyncio
-async def test_get_event_not_found(client: AsyncClient) -> None:
-    response = await client.get("/api/v1/events/nonexistent-id")
-    assert response.status_code == 404
+async def test_list_events_filter_severity(client):
+    await client.post("/api/v1/events", json=EVENT_PAYLOAD)
+    await client.post("/api/v1/events", json={**EVENT_PAYLOAD, "severity": "critical"})
+    resp = await client.get("/api/v1/events?severity=critical")
+    assert resp.status_code == 200
+    assert resp.json()["meta"]["total"] == 1
 
 
 @pytest.mark.asyncio
-async def test_bulk_ingest(client: AsyncClient) -> None:
-    response = await client.post(
-        "/api/v1/events/bulk",
-        json={
-            "events": [
-                {"event_type": f"event_{i}", "severity": "low", "occurred_at": NOW}
-                for i in range(5)
-            ]
-        },
-    )
-    assert response.status_code == 201
-    assert response.json()["ingested"] == 5
+async def test_get_event(client):
+    create_resp = await client.post("/api/v1/events", json=EVENT_PAYLOAD)
+    event_id = create_resp.json()["id"]
+    resp = await client.get(f"/api/v1/events/{event_id}")
+    assert resp.status_code == 200
+    assert resp.json()["id"] == event_id
 
 
 @pytest.mark.asyncio
-async def test_mark_event_processed(client: AsyncClient) -> None:
-    create_res = await client.post(
-        "/api/v1/events",
-        json={"event_type": "sql_injection", "severity": "critical", "occurred_at": NOW},
-    )
-    event_id = create_res.json()["id"]
+async def test_get_event_not_found(client):
+    resp = await client.get("/api/v1/events/nonexistent-id")
+    assert resp.status_code == 404
 
-    response = await client.patch(f"/api/v1/events/{event_id}/processed")
-    assert response.status_code == 200
-    assert response.json()["is_processed"] is True
+
+@pytest.mark.asyncio
+async def test_mark_event_processed(client):
+    create_resp = await client.post("/api/v1/events", json=EVENT_PAYLOAD)
+    event_id = create_resp.json()["id"]
+    resp = await client.patch(f"/api/v1/events/{event_id}/mark-processed")
+    assert resp.status_code == 200
+    data = resp.json()
+    assert data["processed"] is True
+    assert data["processed_at"] is not None
+
+
+@pytest.mark.asyncio
+async def test_list_events_filter_processed(client):
+    create_resp = await client.post("/api/v1/events", json=EVENT_PAYLOAD)
+    event_id = create_resp.json()["id"]
+    await client.patch(f"/api/v1/events/{event_id}/mark-processed")
+    await client.post("/api/v1/events", json=EVENT_PAYLOAD)
+
+    resp = await client.get("/api/v1/events?processed=true")
+    assert resp.status_code == 200
+    assert resp.json()["meta"]["total"] == 1
+
+    resp2 = await client.get("/api/v1/events?processed=false")
+    assert resp2.status_code == 200
+    assert resp2.json()["meta"]["total"] == 1

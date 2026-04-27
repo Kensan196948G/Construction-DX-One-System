@@ -1,30 +1,56 @@
 from datetime import datetime
+from typing import Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
+
+SeverityLevel = Literal["critical", "high", "medium", "low"]
+AlertStatus = Literal["open", "processing", "closed"]
 
 
 class AlertCreate(BaseModel):
-    title: str = Field(..., max_length=256)
-    description: str | None = None
-    severity: str = Field(default="medium", pattern="^(low|medium|high|critical)$")
-    risk_score: float = Field(default=0.0, ge=0.0, le=100.0)
-    event_count: int = Field(default=1, ge=1)
-    rule_name: str | None = Field(default=None, max_length=128)
-    correlation_id: str | None = None
-    assigned_to: str | None = Field(default=None, max_length=64)
-    mitre_technique: str | None = Field(default=None, max_length=32)
-    mitre_tactic: str | None = Field(default=None, max_length=64)
+    title: str
+    severity: SeverityLevel = "low"
+    source: str
+    description: str
+    mitre_tactic: str | None = None
+    mitre_technique: str | None = None
+    site: str | None = None
 
 
 class AlertStatusUpdate(BaseModel):
-    status: str = Field(..., pattern="^(open|investigating|resolved|false_positive)$")
-    assigned_to: str | None = Field(default=None, max_length=64)
+    status: AlertStatus
 
 
-class AlertRead(AlertCreate):
+class AlertResponse(BaseModel):
     id: str
+    title: str
+    severity: str
+    source: str
+    description: str
     status: str
-    detected_at: datetime
-    resolved_at: datetime | None
+    acknowledged: bool
+    acknowledged_by: str | None
+    acknowledged_at: datetime | None
+    mitre_tactic: str | None
+    mitre_technique: str | None
+    site: str | None
+    created_at: datetime
+    updated_at: datetime
 
     model_config = {"from_attributes": True}
+
+
+class AlertListResponse(BaseModel):
+    status: str = "success"
+    data: list[AlertResponse]
+    meta: dict
+
+
+class AlertSummaryItem(BaseModel):
+    severity: str
+    count: int
+
+
+class AlertSummaryResponse(BaseModel):
+    status: str = "success"
+    data: list[AlertSummaryItem]

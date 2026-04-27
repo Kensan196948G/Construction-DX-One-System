@@ -1,92 +1,120 @@
 import pytest
-from httpx import AsyncClient
+
+
+ALERT_PAYLOAD = {
+    "title": "不審なポートスキャン検出",
+    "severity": "critical",
+    "source": "firewall",
+    "description": "192.168.1.100 から複数ポートへのスキャンを検出",
+    "mitre_tactic": "Discovery",
+    "mitre_technique": "T1046",
+    "site": "東京建設現場A",
+}
 
 
 @pytest.mark.asyncio
-async def test_create_alert(client: AsyncClient) -> None:
-    response = await client.post(
-        "/api/v1/alerts",
-        json={
-            "title": "Brute Force Detected",
-            "severity": "high",
-            "risk_score": 85.0,
-            "event_count": 50,
-            "rule_name": "brute_force_rule",
-            "mitre_technique": "T1110",
-            "mitre_tactic": "Credential Access",
-        },
-    )
-    assert response.status_code == 201
-    data = response.json()
-    assert data["title"] == "Brute Force Detected"
+async def test_create_alert(client):
+    resp = await client.post("/api/v1/alerts", json=ALERT_PAYLOAD)
+    assert resp.status_code == 201
+    data = resp.json()
+    assert data["title"] == ALERT_PAYLOAD["title"]
+    assert data["severity"] == "critical"
+    assert data["acknowledged"] is False
     assert data["status"] == "open"
-    assert "id" in data
 
 
 @pytest.mark.asyncio
-async def test_list_alerts_empty(client: AsyncClient) -> None:
-    response = await client.get("/api/v1/alerts")
-    assert response.status_code == 200
-    assert isinstance(response.json(), list)
+async def test_list_alerts_empty(client):
+    resp = await client.get("/api/v1/alerts")
+    assert resp.status_code == 200
+    body = resp.json()
+    assert body["status"] == "success"
+    assert body["data"] == []
+    assert body["meta"]["total"] == 0
 
 
 @pytest.mark.asyncio
-async def test_list_alerts_by_status(client: AsyncClient) -> None:
-    await client.post("/api/v1/alerts", json={"title": "Alert A", "severity": "low"})
-    response = await client.get("/api/v1/alerts?status=open")
-    assert response.status_code == 200
-    assert len(response.json()) >= 1
+async def test_list_alerts(client):
+    await client.post("/api/v1/alerts", json=ALERT_PAYLOAD)
+    await client.post("/api/v1/alerts", json={**ALERT_PAYLOAD, "severity": "high"})
+    resp = await client.get("/api/v1/alerts")
+    assert resp.status_code == 200
+    assert resp.json()["meta"]["total"] == 2
 
 
 @pytest.mark.asyncio
-async def test_get_alert_by_id(client: AsyncClient) -> None:
-    create_res = await client.post(
-        "/api/v1/alerts",
-        json={"title": "Port Scan Alert", "severity": "medium"},
-    )
-    alert_id = create_res.json()["id"]
-
-    response = await client.get(f"/api/v1/alerts/{alert_id}")
-    assert response.status_code == 200
-    assert response.json()["id"] == alert_id
+async def test_list_alerts_filter_severity(client):
+    await client.post("/api/v1/alerts", json=ALERT_PAYLOAD)
+    await client.post("/api/v1/alerts", json={**ALERT_PAYLOAD, "severity": "high"})
+    resp = await client.get("/api/v1/alerts?severity=critical")
+    assert resp.status_code == 200
+    assert resp.json()["meta"]["total"] == 1
 
 
 @pytest.mark.asyncio
-async def test_get_alert_not_found(client: AsyncClient) -> None:
-    response = await client.get("/api/v1/alerts/nonexistent-id")
-    assert response.status_code == 404
+async def test_get_alert(client):
+    create_resp = await client.post("/api/v1/alerts", json=ALERT_PAYLOAD)
+    alert_id = create_resp.json()["id"]
+    resp = await client.get(f"/api/v1/alerts/{alert_id}")
+    assert resp.status_code == 200
+    assert resp.json()["id"] == alert_id
 
 
 @pytest.mark.asyncio
-async def test_update_alert_status_to_investigating(client: AsyncClient) -> None:
-    create_res = await client.post(
-        "/api/v1/alerts",
-        json={"title": "Ransomware Detected", "severity": "critical", "risk_score": 99.0},
-    )
-    alert_id = create_res.json()["id"]
-
-    response = await client.patch(
-        f"/api/v1/alerts/{alert_id}/status",
-        json={"status": "investigating", "assigned_to": "analyst01"},
-    )
-    assert response.status_code == 200
-    data = response.json()
-    assert data["status"] == "investigating"
-    assert data["assigned_to"] == "analyst01"
+async def test_get_alert_not_found(client):
+    resp = await client.get("/api/v1/alerts/nonexistent-id")
+    assert resp.status_code == 404
 
 
 @pytest.mark.asyncio
-async def test_update_alert_status_to_resolved(client: AsyncClient) -> None:
-    create_res = await client.post(
-        "/api/v1/alerts",
-        json={"title": "Test Alert", "severity": "low"},
-    )
-    alert_id = create_res.json()["id"]
+async def test_update_alert_status(client):
+    create_resp = await client.post("/api/v1/alerts", json=ALERT_PAYLOAD)
+    alert_id = create_resp.json()["id"]
+    resp = await client.patch(f"/api/v1/alerts/{alert_id}/status", json={"status": "processing"})
+    assert resp.status_code == 200
+    assert resp.json()["status"] == "processing"
 
-    response = await client.patch(
-        f"/api/v1/alerts/{alert_id}/status",
-        json={"status": "resolved"},
-    )
-    assert response.status_code == 200
-    assert response.json()["status"] == "resolved"
-    assert response.json()["resolved_at"] is not None
+
+@pytest.mark.asyncio
+async def test_acknowledge_alert(client):
+    create_resp = await client.post("/api/v1/alerts", json=ALERT_PAYLOAD)
+    alert_id = create_resp.json()["id"]
+    resp = await client.patch(f"/api/v1/alerts/{alert_id}/acknowledge?acknowledged_by=analyst01")
+    assert resp.status_code == 200
+    data = resp.json()
+    assert data["acknowledged"] is True
+    assert data["acknowledged_by"] == "analyst01"
+    assert data["acknowledged_at"] is not None
+
+
+@pytest.mark.asyncio
+async def test_alert_summary_by_severity(client):
+    await client.post("/api/v1/alerts", json=ALERT_PAYLOAD)
+    await client.post("/api/v1/alerts", json={**ALERT_PAYLOAD, "severity": "high"})
+    await client.post("/api/v1/alerts", json={**ALERT_PAYLOAD, "severity": "high"})
+    resp = await client.get("/api/v1/alerts/summary/by-severity")
+    assert resp.status_code == 200
+    data = resp.json()
+    assert data["status"] == "success"
+    summary = {item["severity"]: item["count"] for item in data["data"]}
+    assert summary.get("critical") == 1
+    assert summary.get("high") == 2
+
+
+@pytest.mark.asyncio
+async def test_ingest_alert(client):
+    resp = await client.post("/api/v1/alerts/ingest", json=ALERT_PAYLOAD)
+    assert resp.status_code == 201
+    assert resp.json()["title"] == ALERT_PAYLOAD["title"]
+
+
+@pytest.mark.asyncio
+async def test_list_alerts_filter_acknowledged(client):
+    create_resp = await client.post("/api/v1/alerts", json=ALERT_PAYLOAD)
+    alert_id = create_resp.json()["id"]
+    await client.patch(f"/api/v1/alerts/{alert_id}/acknowledge")
+    await client.post("/api/v1/alerts", json=ALERT_PAYLOAD)
+
+    resp = await client.get("/api/v1/alerts?acknowledged=true")
+    assert resp.status_code == 200
+    assert resp.json()["meta"]["total"] == 1
