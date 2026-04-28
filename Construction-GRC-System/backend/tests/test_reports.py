@@ -1,3 +1,4 @@
+import importlib.util
 import uuid
 
 import pytest
@@ -12,6 +13,11 @@ from apps.audits.report_generator import (
 )
 from apps.compliance.models import Control
 from apps.risks.models import Risk
+
+skip_no_weasyprint = pytest.mark.skipif(
+    importlib.util.find_spec("weasyprint") is None,
+    reason="weasyprint not installed",
+)
 
 
 def _consume(streaming_response):
@@ -78,6 +84,7 @@ def test_audit_excel_report_structure(client, audit_data):
 # ---------------------------------------------------------------------------
 
 
+@skip_no_weasyprint
 @pytest.mark.django_db
 def test_audit_pdf_report_generation(client, audit_data):
     create_resp = client.post("/api/v1/audits/", data=audit_data, content_type="application/json")
@@ -121,6 +128,7 @@ def test_audit_report_excel_download(client, audit_data):
     assert len(_consume(response)) > 100
 
 
+@skip_no_weasyprint
 @pytest.mark.django_db
 def test_audit_report_pdf_download(client, audit_data):
     create_resp = client.post("/api/v1/audits/", data=audit_data, content_type="application/json")
@@ -229,6 +237,7 @@ def test_audit_excel_no_findings(client, audit_data):
         assert ws3.cell(row=row, column=2).value == 0
 
 
+@skip_no_weasyprint
 @pytest.mark.django_db
 def test_audit_pdf_no_findings(client, audit_data):
     create_resp = client.post("/api/v1/audits/", data=audit_data, content_type="application/json")

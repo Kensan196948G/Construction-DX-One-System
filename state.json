@@ -123,17 +123,21 @@
   "status": {
     "stable": false,
     "blocked": false,
-    "current_phase": "verify",
-    "last_updated": "2026-04-27T11:16:00Z",
-    "days_elapsed": 12,
-    "days_remaining": 171,
-    "session_number": 9,
-    "session_summary": "Session9: PR#4/#5/#10 merged. 107 backend tests PASS, all ruff lint CLEAN. Integration fixes applied.",
-    "next_session_priority": "frontend_test_verification_and_ci_workflows",
+    "current_phase": "build",
+    "last_updated": "2026-04-28T02:35:00Z",
+    "days_elapsed": 13,
+    "days_remaining": 170,
+    "session_number": 10,
+    "session_summary": "Session10: 全5システムテスト完全PASS。Backend:402(ZTIG74+SIEM173+GRC51+CAB51+BCP53). Frontend:156(ZTIG44+SIEM45+GRC30+CAB19+BCP18). Ruff lint全CLEAN。GRC weasyprint skip修正、フロントエンドauth/roles/rules stores テスト追加、カバレッジ60%超達成。",
+    "next_session_priority": "new_features_and_integration_apis",
     "open_prs": [],
-    "completed_backends": ["ZTIG(13/87%)", "SIEM(24)", "CGRC(30/92%)", "ICCP(16)", "IBIS(24)"],
-    "completed_frontends": ["CGRC(19tests/62%)", "CSIEM(20tests/75%)", "ZTIG(20tests/stores100%)", "CAB(19tests/stores100%)", "BCP(18tests/stores100%)"],
-    "pending_frontends": [],
+    "completed_backends": ["ZTIG(74tests/69%)", "SIEM(173tests)", "GRC(51tests/92%)", "CAB(51tests)", "BCP(53tests)"],
+    "completed_frontends": ["ZTIG(44tests/61%)", "SIEM(45tests/60%+)", "GRC(30tests/60%+)", "CAB(19tests)", "BCP(18tests)"],
+    "test_totals": {
+      "backend": 402,
+      "frontend": 156,
+      "total": 558
+    },
     "blocker": "GitHub App lacks `workflows` permission (Issue #6)"
   }
 }
