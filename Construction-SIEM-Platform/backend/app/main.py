@@ -11,6 +11,7 @@ from app.routers import (
     events,
     events_processing,
     health,
+    integration,
     iot,
     ml,
     notifications,
@@ -54,3 +55,4 @@ app.include_router(events_processing.router, prefix="/api/v1")
 app.include_router(notifications.router)
 app.include_router(iot.router)
 app.include_router(threat_intel.router)
+app.include_router(integration.router)

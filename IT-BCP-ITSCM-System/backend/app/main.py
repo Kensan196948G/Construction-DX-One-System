@@ -10,6 +10,7 @@ from app.routers import (
     exercises,
     health,
     incidents,
+    integration,
     notifications,
     reports,
     systems,
@@ -46,3 +47,4 @@ app.include_router(dashboard.router, prefix=PREFIX, tags=["dashboard"])
 app.include_router(bia.router, prefix=PREFIX, tags=["bia"])
 app.include_router(reports.router, prefix=PREFIX, tags=["reports"])
 app.include_router(notifications.router, prefix=PREFIX, tags=["notifications"])
+app.include_router(integration.router, tags=["integration"])

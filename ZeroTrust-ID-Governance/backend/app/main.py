@@ -10,6 +10,7 @@ from app.routers import (
     entraid,
     health,
     hengeone,
+    integration,
     inventory,
     roles,
     sessions,
@@ -45,3 +46,4 @@ app.include_router(inventory.router, prefix="/api/v1")
 app.include_router(hengeone.router, prefix="/api/v1")
 app.include_router(ad.router, prefix="/api/v1")
 app.include_router(sessions.router, prefix="/api/v1")
+app.include_router(integration.router, prefix="/api/v1")
