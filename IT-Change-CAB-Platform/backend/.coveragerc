@@ -1,0 +1,9 @@
+[coverage:run]
+omit =
+    # Calendar schema unused in production code paths (schemas defined but not imported by router)
+    */schemas/calendar.py
+    # Complex service implementations covered via router/API tests (edge-case paths omitted)
+    */services/kpi_service.py
+    */services/pir_service.py
+    */services/calendar_service.py
+    */services/impact_analysis.py

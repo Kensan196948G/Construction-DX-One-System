@@ -1,5 +1,6 @@
 """Tests for GRC integration API endpoints."""
 import json
+
 import pytest
 
 INTEGRATION_KEY = "dev-integration-key-change-in-prod"
