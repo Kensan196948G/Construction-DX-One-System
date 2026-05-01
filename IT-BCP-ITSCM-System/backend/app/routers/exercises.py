@@ -1,5 +1,5 @@
 import uuid
-from datetime import date, datetime
+from datetime import UTC, date, datetime
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy import select
@@ -73,7 +73,7 @@ async def complete_exercise(
     exercise.completed_date = date.today()
     if results:
         exercise.results = results
-    exercise.updated_at = datetime.utcnow()
+    exercise.updated_at = datetime.now(UTC)
     await db.commit()
     await db.refresh(exercise)
     return ExerciseResponse.model_validate(exercise)

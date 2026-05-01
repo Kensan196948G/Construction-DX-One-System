@@ -1,6 +1,6 @@
 import logging
 import uuid
-from datetime import datetime
+from datetime import UTC, datetime
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -146,7 +146,7 @@ class NotificationService:
                 f"Source: {getattr(alert, 'source', 'N/A')}\n"
                 f"Description: {getattr(alert, 'description', 'N/A')}\n"
                 f"Site: {getattr(alert, 'site', 'N/A')}\n"
-                f"Time: {datetime.utcnow().isoformat()}"
+                f"Time: {datetime.now(UTC).isoformat()}"
             )
             if channel == "email":
                 recipient = getattr(settings, "alert_email_recipient", "admin@example.com")

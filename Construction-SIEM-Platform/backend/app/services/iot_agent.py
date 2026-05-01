@@ -4,7 +4,7 @@ import logging
 import time
 import uuid
 from collections import defaultdict
-from datetime import datetime
+from datetime import UTC, datetime
 
 logger = logging.getLogger(__name__)
 
@@ -23,7 +23,7 @@ class IoTLightweightAgent:
             "device_id": device_id,
             "event_type": event_type,
             "payload": payload if isinstance(payload, dict) else payload.model_dump(),
-            "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.now(UTC).isoformat(),
             "collected_at": time.time(),
         }
         self._event_counters[device_id] += 1
@@ -71,7 +71,7 @@ class IoTLightweightAgent:
                 "device_id": event.get("device_id", "unknown"),
                 "event_type": event.get("event_type", "unknown"),
                 "payload": event.get("payload", {}),
-                "timestamp": event.get("timestamp", datetime.utcnow().isoformat()),
+                "timestamp": event.get("timestamp", datetime.now(UTC).isoformat()),
             }
             batched.append(ev)
         return batched
@@ -102,7 +102,7 @@ class IoTLightweightAgent:
                 "device_id": device_id,
                 "event_type": event.get("event_type", "unknown"),
                 "payload": event.get("payload", {}),
-                "timestamp": event.get("timestamp", datetime.utcnow().isoformat()),
+                "timestamp": event.get("timestamp", datetime.now(UTC).isoformat()),
                 "collected_at": time.time(),
                 "offline_buffered": True,
             }
@@ -136,11 +136,11 @@ class IoTLightweightAgent:
             events = self._buffer.pop(dev_id, [])
             for ev in events:
                 ev.pop("offline_buffered", None)
-                ev["flushed_at"] = datetime.utcnow().isoformat()
+                ev["flushed_at"] = datetime.now(UTC).isoformat()
             flushed.extend(events)
             if dev_id in self._device_status:
                 self._device_status[dev_id]["online"] = True
-                self._device_status[dev_id]["last_seen"] = datetime.utcnow().isoformat()
+                self._device_status[dev_id]["last_seen"] = datetime.now(UTC).isoformat()
                 self._device_status[dev_id]["last_seen_ts"] = time.time()
         return flushed
 

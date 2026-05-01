@@ -1,6 +1,6 @@
 import logging
 import uuid
-from datetime import datetime
+from datetime import UTC, datetime
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -163,7 +163,7 @@ async def execute_playbook(playbook_id: str, event_data: dict, db: AsyncSession)
             "playbook_name": "unknown",
             "success": False,
             "actions": [],
-            "execution_time": datetime.utcnow(),
+            "execution_time": datetime.now(UTC),
             "log_id": "",
             "error": f"Playbook not found: {playbook_id}",
         }
@@ -174,7 +174,7 @@ async def execute_playbook(playbook_id: str, event_data: dict, db: AsyncSession)
             "playbook_name": playbook["name"],
             "success": True,
             "actions": [],
-            "execution_time": datetime.utcnow(),
+            "execution_time": datetime.now(UTC),
             "log_id": "",
             "message": "Conditions not met, no actions executed",
         }
@@ -210,7 +210,7 @@ async def execute_playbook(playbook_id: str, event_data: dict, db: AsyncSession)
         "event_data_summary": str({k: v for k, v in event_data.items() if k in ("rule_id", "event_type", "source", "severity")}),
         "actions": results,
         "success": all_success,
-        "executed_at": datetime.utcnow(),
+        "executed_at": datetime.now(UTC),
     }
     _execution_logs.append(log_entry)
 
@@ -224,7 +224,7 @@ async def execute_playbook(playbook_id: str, event_data: dict, db: AsyncSession)
             {"action": r.get("action", "unknown"), "success": r.get("success", False), "message": r.get("message", ""), "details": r}
             for r in results
         ],
-        "execution_time": datetime.utcnow(),
+        "execution_time": datetime.now(UTC),
         "log_id": log_id,
     }
 

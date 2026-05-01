@@ -1,5 +1,5 @@
 import uuid
-from datetime import datetime
+from datetime import UTC, datetime
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy import select
@@ -102,7 +102,7 @@ async def update_freeze_period(
     for field, value in update_data.items():
         setattr(fp, field, value)
 
-    fp.updated_at = datetime.utcnow()
+    fp.updated_at = datetime.now(UTC)
     await db.commit()
     await db.refresh(fp)
     return FreezePeriodRead.model_validate(fp)

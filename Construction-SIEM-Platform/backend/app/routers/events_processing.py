@@ -1,5 +1,5 @@
 import logging
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
 
 from fastapi import APIRouter, Depends
 from sqlalchemy import func, select
@@ -109,7 +109,7 @@ async def ingest_raw_events_batch(
 
 @router.get("/processing/stats", response_model=ProcessingStats)
 async def get_processing_stats(db: AsyncSession = Depends(get_db)):
-    now = datetime.utcnow()
+    now = datetime.now(UTC)
     window_start = now - timedelta(hours=24)
 
     total_result = await db.execute(

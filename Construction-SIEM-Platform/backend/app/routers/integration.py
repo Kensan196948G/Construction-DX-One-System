@@ -177,7 +177,7 @@ async def escalate_incident_to_cab(
     alert.status = "escalated_to_cab"
     alert.acknowledged = True
     alert.acknowledged_by = payload.requested_by
-    alert.acknowledged_at = datetime.utcnow()
+    alert.acknowledged_at = datetime.now(UTC)
     await db.commit()
 
     rfc_ref = f"RFC-SIEM-{incident_id[:8].upper()}"

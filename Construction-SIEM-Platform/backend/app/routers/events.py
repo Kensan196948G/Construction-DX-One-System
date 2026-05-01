@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import UTC, datetime
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy import func, select
@@ -73,7 +73,7 @@ async def mark_processed(event_id: str, db: AsyncSession = Depends(get_db)):
     if not event:
         raise HTTPException(status_code=404, detail="Event not found")
     event.processed = True
-    event.processed_at = datetime.utcnow()
+    event.processed_at = datetime.now(UTC)
     await db.commit()
     await db.refresh(event)
     return SecurityEventResponse.model_validate(event)

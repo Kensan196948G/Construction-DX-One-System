@@ -1,5 +1,5 @@
 import logging
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
 from typing import Any
 
 logger = logging.getLogger(__name__)
@@ -60,7 +60,7 @@ class ThreatIntelService:
             "ioc_value": value,
             "ioc_type": ioc_type,
             "malicious": malicious,
-            "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.now(UTC).isoformat(),
         })
 
         return {
@@ -156,13 +156,13 @@ class ThreatIntelService:
             "type": "correlate",
             "fields_checked": len(searchable_fields),
             "matches_found": len(matches),
-            "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.now(UTC).isoformat(),
         })
 
         return matches
 
     def get_recent_threats(self, hours: int = 24) -> list[dict]:
-        cutoff = datetime.utcnow() - timedelta(hours=hours)
+        cutoff = datetime.now(UTC) - timedelta(hours=hours)
         recent: list[dict[str, Any]] = []
         for update in self._recent_updates:
             ts_str = update.get("timestamp", "")
@@ -189,15 +189,15 @@ class ThreatIntelService:
         entry = {
             "value": value, "type": ioc_type, "threat_type": threat_type,
             "confidence": confidence, "severity": severity, "description": description,
-            "source": source, "first_seen": datetime.utcnow().strftime("%Y-%m-%d"),
-            "last_seen": datetime.utcnow().strftime("%Y-%m-%d"),
+            "source": source, "first_seen": datetime.now(UTC).strftime("%Y-%m-%d"),
+            "last_seen": datetime.now(UTC).strftime("%Y-%m-%d"),
         }
         self._iocs.append(entry)
         self._recent_updates.append({
             "type": "add_ioc",
             "ioc_value": value,
             "ioc_type": ioc_type,
-            "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.now(UTC).isoformat(),
         })
         return {"status": "success", "ioc_value": value, "ioc_type": ioc_type}
 

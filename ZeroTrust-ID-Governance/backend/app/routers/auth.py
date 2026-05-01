@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import UTC, datetime
 
 from fastapi import APIRouter, Depends, HTTPException, Request, status
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -32,7 +32,7 @@ async def login(
             detail="Invalid credentials",
             headers={"WWW-Authenticate": "Bearer"},
         )
-    user.last_login_at = datetime.utcnow()
+    user.last_login_at = datetime.now(UTC).replace(tzinfo=None)
     await db.commit()
     session_id = session_manager.create_session(str(user.id), ip=actor_ip, user_agent=user_agent)
     await log_action(

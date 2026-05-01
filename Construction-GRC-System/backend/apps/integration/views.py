@@ -1,6 +1,6 @@
 """Integration views for GRC: cross-system API endpoints."""
 import json
-from datetime import datetime
+from datetime import UTC, datetime
 
 from django.conf import settings
 from django.http import JsonResponse
@@ -129,5 +129,5 @@ class RiskSummaryView(View):
             "by_category": by_category,
             "high_risk_items": high_risks,
             "total": all_risks.count(),
-            "generated_at": datetime.utcnow().isoformat(),
+            "generated_at": datetime.now(UTC).isoformat(),
         })

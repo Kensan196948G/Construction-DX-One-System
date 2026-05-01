@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -113,7 +113,7 @@ async def get_kpi_trend(db: AsyncSession, days: int = 30) -> list[dict]:
     result = await db.execute(select(RFC).order_by(RFC.created_at))
     all_rfcs = result.scalars().all()
 
-    today = datetime.utcnow().date()
+    today = datetime.now(UTC).date()
     trends: dict[str, list[dict]] = {
         "change_success_rate": [],
         "cab_approval_lead_time": [],

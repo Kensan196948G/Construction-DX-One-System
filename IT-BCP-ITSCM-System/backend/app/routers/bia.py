@@ -1,5 +1,5 @@
 import uuid
-from datetime import datetime
+from datetime import UTC, datetime
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy import func, select
@@ -92,7 +92,7 @@ async def update_business_process(
     update_data = payload.model_dump(exclude_unset=True)
     for field, value in update_data.items():
         setattr(process, field, value)
-    process.updated_at = datetime.utcnow()
+    process.updated_at = datetime.now(UTC)
     await db.commit()
     await db.refresh(process)
     return BusinessProcessRead.model_validate(process)

@@ -1,5 +1,5 @@
 import uuid
-from datetime import datetime
+from datetime import UTC, datetime
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy import select
@@ -75,7 +75,7 @@ async def update_system_status(
         raise HTTPException(status_code=404, detail="IT System not found")
 
     system.status = status
-    system.updated_at = datetime.utcnow()
+    system.updated_at = datetime.now(UTC)
     await db.commit()
     await db.refresh(system)
     return ITSystemResponse.model_validate(system)

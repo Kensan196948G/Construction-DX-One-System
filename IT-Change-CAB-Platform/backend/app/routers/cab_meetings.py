@@ -1,5 +1,5 @@
 import uuid
-from datetime import datetime
+from datetime import UTC, datetime
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy import select
@@ -73,7 +73,7 @@ async def complete_meeting(
     meeting.status = "completed"
     if minutes:
         meeting.minutes = minutes
-    meeting.updated_at = datetime.utcnow()
+    meeting.updated_at = datetime.now(UTC)
     await db.commit()
     await db.refresh(meeting)
     return CABMeetingResponse.model_validate(meeting)
