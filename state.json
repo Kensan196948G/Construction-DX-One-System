@@ -138,12 +138,12 @@
     "stable": true,
     "blocked": false,
     "current_phase": "verify",
-    "last_updated": "2026-05-01T11:20:00Z",
+    "last_updated": "2026-05-01T11:30:00Z",
     "days_elapsed": 16,
     "days_remaining": 167,
     "session_number": 12,
-    "session_summary": "Session12: E2EテストZTIG追加(Playwright 13tests)、CGRCバックエンドテスト拡充(+9tests→74tests)、BCP型安全性改善(any型除去)。PR#23マージ。テスト総計757件。",
-    "next_session_priority": "e2e_tests_other_subsystems_and_siem_threat_intel_api_client",
+    "session_summary": "Session12: 全5サブシステムE2E Playwright テスト完成（計61tests）。CGRC backend +9tests(74total)。BCP型安全性改善。PR#23・PR#24マージ。テスト総計817件(vitest286+pytest457+e2e61+pinia/misc13)。",
+    "next_session_priority": "backend_api_integration_and_frontend_component_tests",
     "open_prs": [],
     "completed_backends": [
       "ZTIG(87tests/81%ci)",
@@ -167,13 +167,18 @@
       "BCP": ["Dashboard", "Incidents", "Exercises", "Systems", "BIA", "Reports"]
     },
     "e2e_tests": {
-      "ZTIG_playwright": 13
+      "ZTIG_playwright": 13,
+      "SIEM_playwright": 12,
+      "CGRC_playwright": 12,
+      "CAB_playwright": 12,
+      "BCP_playwright": 12,
+      "total_playwright": 61
     },
     "test_totals": {
       "frontend_vitest": 286,
       "backend_pytest": 457,
-      "e2e_playwright": 13,
-      "total": 756
+      "e2e_playwright": 61,
+      "total": 804
     },
     "blocker": "none",
     "security_issues": ["JWT localStorage → httpOnly Cookie 未対応 (Issue起票済み, P2)"]
