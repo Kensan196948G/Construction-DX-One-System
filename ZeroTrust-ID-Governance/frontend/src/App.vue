@@ -14,6 +14,7 @@
         <li><RouterLink to="/users">👤 ユーザー管理</RouterLink></li>
         <li><RouterLink to="/access-requests">📋 アクセス申請</RouterLink></li>
         <li><RouterLink to="/integration">🔗 統合ステータス</RouterLink></li>
+        <li><RouterLink to="/inventory">📋 アカウント棚卸</RouterLink></li>
       </ul>
       <div class="sidebar-bottom">
         <div class="health-dot">

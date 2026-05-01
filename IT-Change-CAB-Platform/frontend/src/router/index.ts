@@ -22,6 +22,18 @@ const router = createRouter({
       component: () => import('@/views/CabView.vue'),
       meta: { requiresAuth: true },
     },
+    {
+      path: '/freeze-periods',
+      name: 'freeze-periods',
+      component: () => import('@/views/FreezePeriodView.vue'),
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/kpi',
+      name: 'kpi',
+      component: () => import('@/views/KpiView.vue'),
+      meta: { requiresAuth: true },
+    },
   ],
 })
 
