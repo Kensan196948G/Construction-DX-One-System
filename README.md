@@ -22,8 +22,8 @@
 
 | 🎯 プロジェクト期間 | 📅 登録日 | 🚀 リリース期限 | ⏳ 残日数 |
 |:---:|:---:|:---:|:---:|
-| **6ヶ月** | 2026-04-15 | **2026-10-15** | **171日** |
-| 📊 **進捗** | 🟩🟩🟩⬜⬜⬜⬜⬜⬜⬜ | 96分経過 / 300分 | **32%** |
+| **6ヶ月** | 2026-04-15 | **2026-10-15** | **167日** |
+| 📊 **進捗** | 🟩🟩🟩⬜⬜⬜⬜⬜⬜⬜ | Session 10 完了 | **Month 1-2** |
 
 </div>
 
@@ -77,9 +77,9 @@
 | 項目 | 日付 | 残日数 |
 |:----:|:----:|:------:|
 | 📅 プロジェクト登録日 | 2026-04-15 | — |
-| 🚀 **本番リリース期限** | **2026-10-15** | **残り 171 日** |
+| 🚀 **本番リリース期限** | **2026-10-15** | **残り 167 日** |
 | 🔄 現在のフェーズ | Month 1-2（2026-04〜06）: 基盤整備・主要機能実装 | 🟢 |
-| 📊 進捗バー | 🟩🟩🟩⬜⬜⬜⬜⬜⬜⬜ | **32%**（96分経過 / 300分 セッション） |
+| 📊 進捗バー | 🟩🟩🟩⬜⬜⬜⬜⬜⬜⬜ | Session 10 完了（全 CI グリーン化達成） |
 
 ---
 
@@ -156,7 +156,7 @@ graph TD
 | 🎯 **目的** | ゼロトラスト原則に基づく統合ID管理（正社員500名＋協力会社100名） |
 | 🏗️ **Backend** | Python 3.12 / FastAPI 0.115 + SQLAlchemy 2.0 async + PostgreSQL 16 + JWT HS256 |
 | 🖥️ **Frontend** | Vue 3.5 + TypeScript + Vite 6 + Pinia 2 + Vue Router 4 |
-| 📊 **状態** | ✅ Backend 74/74 tests · Frontend stores 100% · Lint CLEAN |
+| 📊 **状態** | ✅ Backend 87/87 tests · Coverage 81.23% · Frontend stores 100% · Lint CLEAN |
 
 ---
 
@@ -170,7 +170,7 @@ graph TD
 | ⏱️ **目標** | MTTD 15分以内 / MTTR 2時間以内 / 処理能力 10,000 EPS |
 | 🏗️ **Backend** | Python 3.12 / FastAPI 0.115.6 + SQLAlchemy 2.0 async + PostgreSQL 16 + Elasticsearch 8.x |
 | 🖥️ **Frontend** | Vue 3.5 + TypeScript + Vite 6 + Pinia 2 + Vue Router 4 |
-| 📊 **状態** | ✅ Backend 173/173 tests · Lint CLEAN · Frontend stores 100% |
+| 📊 **状態** | ✅ Backend 182/182 tests · Coverage 82.41% · Lint CLEAN · Frontend stores 100% |
 
 ---
 
@@ -184,7 +184,7 @@ graph TD
 | 📋 **管理策** | ISO27001 全93管理策（4ドメイン） |
 | 🏗️ **Backend** | Python 3.12 / Django 5.x + PostgreSQL 16 + Redis 7 |
 | 🖥️ **Frontend** | Vue 3 + TypeScript |
-| 📊 **状態** | ✅ Backend 54/54 tests · Lint CLEAN · Frontend stores 100% |
+| 📊 **状態** | ✅ Backend tests PASS · Coverage 91.49% · Lint CLEAN · Frontend stores 100% |
 
 ---
 
@@ -197,7 +197,7 @@ graph TD
 | 🎯 **目的** | RFC承認・影響分析・CAB審議・展開・ロールバックの完全自動化 |
 | 🏗️ **Backend** | FastAPI + PostgreSQL 16 + Redis 7 |
 | 🖥️ **Frontend** | Vue 3.5 + TypeScript + Vite 6 + Pinia 2 + Vue Router 4 |
-| 📊 **状態** | ✅ Backend 51/51 tests · Lint CLEAN · tsc CLEAN |
+| 📊 **状態** | ✅ Backend 60/60 tests · Coverage 84.17% · Lint CLEAN · tsc CLEAN |
 
 **変更管理ワークフロー:**
 
@@ -228,7 +228,7 @@ flowchart LR
 | 🌏 **インフラ** | Azure Container Apps（東日本Primary + 西日本Standby 地理冗長） |
 | 🏗️ **Backend** | Python 3.12 / FastAPI + PostgreSQL + Redis |
 | 🖥️ **Frontend** | Vue 3.5 + TypeScript + Vite 6 + Pinia 2 + Vue Router 4（PWA対応） |
-| 📊 **状態** | ✅ Backend 53/53 tests · Lint CLEAN · CVE 0件 |
+| 📊 **状態** | ✅ Backend 63/63 tests · Coverage 80.20% · Lint CLEAN · CVE 0件 |
 
 **BCP 対応フロー:**
 
@@ -286,25 +286,26 @@ sequenceDiagram
 
 ## 📊 開発状況ダッシュボード
 
-| System | Backend | Frontend | Backend Tests | Lint | Build | Status |
-|:------:|:-------:|:--------:|:-------------:|:----:|:-----:|:------:|
-| ZTIG | FastAPI ✅ | Vue 3 + TS ✅ | 74/74 ✅ | CLEAN ✅ | ✅ | ✅ |
-| SIEM | FastAPI ✅ | Vue 3 + TS ✅ | 173/173 ✅ | CLEAN ✅ | ✅ | ✅ |
-| CGRC | Django 5 ✅ | Vue 3 + TS ✅ | 54/54 ✅ | CLEAN ✅ | ✅ | ✅ |
-| ICCP | FastAPI ✅ | Vue 3 + TS ✅ | 51/51 ✅ | CLEAN ✅ | ✅ | ✅ |
-| IBIS | FastAPI ✅ | Vue 3 + TS ✅ | 53/53 ✅ | CLEAN ✅ | ✅ | ✅ |
-| **合計** | **5/5 ✅** | **5/5 ✅** | **405/405 ✅** | **ALL CLEAN** | **ALL ✅** | **ALL ✅** |
+| System | Backend | Frontend | Backend Tests | Coverage | Lint | CI |
+|:------:|:-------:|:--------:|:-------------:|:--------:|:----:|:--:|
+| ZTIG | FastAPI ✅ | Vue 3 + TS ✅ | **87** PASS ✅ | **81.23%** ✅ | CLEAN ✅ | ✅ |
+| SIEM | FastAPI ✅ | Vue 3 + TS ✅ | **182** PASS ✅ | **82.41%** ✅ | CLEAN ✅ | ✅ |
+| CGRC | Django 5 ✅ | Vue 3 + TS ✅ | PASS ✅ | **91.49%** ✅ | CLEAN ✅ | ✅ |
+| ICCP | FastAPI ✅ | Vue 3 + TS ✅ | **60** PASS ✅ | **84.17%** ✅ | CLEAN ✅ | ✅ |
+| IBIS | FastAPI ✅ | Vue 3 + TS ✅ | **63** PASS ✅ | **80.20%** ✅ | CLEAN ✅ | ✅ |
+| **合計** | **5/5 ✅** | **5/5 ✅** | **392+ PASS ✅** | **ALL 80%+** ✅ | **ALL CLEAN** | **ALL ✅** |
 
 ### 進捗サマリー
 
 | KPI | 値 |  Status |
 |:---:|:---:|:-------:|
 | 🧩 全サブシステム実装完了 | 5/5 | ✅ |
-| 📊 バックエンドテスト総数 | **405件 全PASS** | ✅ |
+| 📊 バックエンドテスト総数 | **392+ 全PASS** | ✅ |
+| 📈 カバレッジ（全サブシステム） | **80%+ 達成（最高 91.49%）** | ✅ |
 | 🔒 セキュリティブロッカー | 0件 | ✅ |
-| 🔄 CI/CD ワークフロー | 6 (Meta + 5 subs) | ✅ |
+| 🔄 CI/CD ワークフロー | 6 (Meta + 5 subs) 全グリーン | ✅ |
 | 📋 Lint Status | ALL CLEAN | ✅ |
-| 🏗️ Build Status | ALL SUCCESS | ✅ |
+| 🖥️ フロントエンドストアテスト | 全5サブシステム 100% | ✅ |
 
 ---
 
@@ -386,11 +387,12 @@ gantt
 | 📊 KPI | 🎯 目標 | 📏 現在値 | Status |
 |:------:|:-------:|:---------:|:------:|
 | 🧩 システム完成数 | 5システム | **5/5** ✅ 全サブシステム実装完了 | ✅ |
-| 📊 バックエンドテスト | 100件以上 | **405件 全PASS** | ✅ |
-| ✅ 全テスト通過 | 100% | **100% (405/405)** | ✅ |
+| 📊 バックエンドテスト | 100件以上 | **392+ 全PASS** | ✅ |
+| 📈 テストカバレッジ | 80%以上 | **80.20〜91.49%（全サブシステム達成）** | ✅ |
+| ✅ CI グリーン | 全6ワークフロー | **全グリーン（Session 10 修復完了）** | ✅ |
 | 🔒 セキュリティブロッカー | 0件 | **0件（CVE 0）** | ✅ |
 | ⚡ Lint Status | ALL CLEAN | **ALL CLEAN** | ✅ |
-| 🏗️ Build Status | ALL SUCCESS | **ALL SUCCESS** | ✅ |
+| 🖥️ フロントエンドストア | 全5サブシステム | **100%（全 96 tests PASS）** | ✅ |
 | 📉 監査工数削減 | 年間500時間 | 目標設定済 | 🟡 実測未開始 |
 | 🛡️ SIEM 処理能力 | 10,000 EPS | 設計値達成 | ✅ |
 | ⏱️ MTTD | 15分以内 | 目標設定済 | 🟡 実測未開始 |
@@ -640,6 +642,7 @@ flowchart LR
 | 2026-04-27 第2部 | #013 | 🔄 自律ループ#4-#10実行 · 🔐 ZTIG:ロール管理/アクセス申請WF/監査ログ/EntraID同期 · 🛡️ SIEM:Sigma/YARAルール/ML異常検知/Kafka/プレイブック · 🏗️ CGRC:SoA自動生成/NIST CSF 2.0/監査レポート · 🔄 ICCP:影響分析/衝突検知/フリーズ期間/KPI/CABカレンダー · ♻️ IBIS:BIA分析API · 📊 全303テスト完了 ✅ |
 | 2026-04-27 第3部 | #014 | 🔐 ZTIG:アカウント棚卸ワークフロー追加（56 tests） · 🔄 ICCP:PIR事後レビューワークフロー追加（51 tests） · ♻️ IBIS:経営層向け状況報告API + 通知システム追加（53 tests） · 📊 全336テスト完了 ✅ |
 | 2026-04-27 第4部 | #015 | 🏗️ CGRC:Celery定期タスク(6種類)追加（54 tests） · 🔐 ZTIG:HENGEONE SCIM 2.0 + AD LDAPS + セッション管理追加（74 tests） · 🛡️ SIEM:多チャネル通知 + IoT軽量エージェント + 脅威インテリジェンス追加（173 tests） · 📊 全405テスト完了 ✅ |
+| 2026-05-01 | #010 | 🟢 **全5サブシステム Backend CI グリーン化達成** · 📈 カバレッジ全サブシステム 80%+ 達成（CGRC 91.49% / ICCP 84.17% / SIEM 82.41% / ZTIG 81.23% / IBIS 80.20%） · 🔧 ruff lint修正・openpyxl追加・email-validator追加・.coveragerc整備・requirements-dev.txt修正・integration tests 4件追加 · 🖥️ フロントエンドストアテスト全5サブシステム 100% 達成 · 🔀 PR#21 オープン（CI 全PASS） |
 
 ---
 
@@ -663,6 +666,6 @@ flowchart LR
 
 *みらい建設工業 IT部門が推進する建設業 DX セキュリティ統合基盤*
 
-📅 最終更新: 2026-04-27 ｜ 🤖 ClaudeOS v8.0 自律開発 ｜ 🚀 本番リリース目標: 2026-10-15
+📅 最終更新: 2026-05-01 ｜ 🤖 ClaudeOS v8.0 自律開発 ｜ 🚀 本番リリース目標: 2026-10-15
 
 </div>
