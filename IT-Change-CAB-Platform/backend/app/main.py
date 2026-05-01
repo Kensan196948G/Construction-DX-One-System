@@ -10,6 +10,7 @@ from app.routers import (
     freeze_periods,
     health,
     impact_analysis,
+    integration,
     kpi,
     pir,
     rfcs,
@@ -46,3 +47,4 @@ app.include_router(freeze_periods.router, prefix=PREFIX, tags=["freeze-periods"]
 app.include_router(kpi.router, prefix=PREFIX, tags=["kpi"])
 app.include_router(calendar.router, prefix=PREFIX, tags=["calendar"])
 app.include_router(pir.router, prefix=PREFIX, tags=["pir"])
+app.include_router(integration.router, tags=["integration"])

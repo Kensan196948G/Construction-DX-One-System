@@ -10,6 +10,7 @@
         <li><RouterLink to="/events">⚡ イベント</RouterLink></li>
         <li><RouterLink to="/alerts">🚨 アラート</RouterLink></li>
         <li><RouterLink to="/rules">📜 検知ルール</RouterLink></li>
+        <li><RouterLink to="/integration">🔗 統合ハブ</RouterLink></li>
       </ul>
       <div class="sidebar-footer">
         <div class="user-info">

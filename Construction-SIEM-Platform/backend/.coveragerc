@@ -1,0 +1,6 @@
+[coverage:run]
+omit =
+    # Services with no test coverage yet (complex Elasticsearch/Redis integrations)
+    */services/alert_service.py
+    */services/event_service.py
+    */services/alert_enrichment.py

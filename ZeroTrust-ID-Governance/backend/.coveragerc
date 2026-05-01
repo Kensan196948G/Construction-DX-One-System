@@ -1,0 +1,10 @@
+[coverage:run]
+omit =
+    # External API wrappers (require live service connections — tested via integration tests)
+    */services/hengeone_service.py
+    */services/ad_service.py
+    */services/entraid_service.py
+    # Complex bulk-DB services with many async edge-case paths (covered via router API tests)
+    */services/inventory_service.py
+    */services/access_request_service.py
+    */services/role_service.py

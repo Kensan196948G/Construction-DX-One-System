@@ -25,6 +25,12 @@ const router = createRouter({
       component: () => import('@/views/RulesView.vue'),
       meta: { requiresAuth: true },
     },
+    {
+      path: '/integration',
+      name: 'integration',
+      component: () => import('@/views/IntegrationHubView.vue'),
+      meta: { requiresAuth: true },
+    },
   ],
 })
 
