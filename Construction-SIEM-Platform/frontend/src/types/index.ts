@@ -147,3 +147,63 @@ export interface RuleStatsSummary {
   total_active: number
   total_inactive: number
 }
+
+export type IoCType = 'ip' | 'domain' | 'url' | 'hash' | 'email' | string
+
+export interface IoCMatchDetail {
+  ioc_value: string
+  ioc_type: string
+  threat_type: string
+  confidence: number
+  severity: string
+  description: string
+  source: string
+  first_seen: string
+  last_seen: string
+}
+
+export interface IoCCheckRequest {
+  value: string
+  ioc_type: IoCType
+}
+
+export interface IoCCheckResponse {
+  status: string
+  ioc_value: string
+  ioc_type: string
+  malicious: boolean
+  matches: IoCMatchDetail[]
+  risk_score: number
+}
+
+export interface CorrelateEventMatch {
+  field: string
+  value: string
+  ioc_type: string
+  match: IoCMatchDetail
+}
+
+export interface CorrelateEventRequest {
+  event_data: Record<string, unknown>
+}
+
+export interface CorrelateEventResponse {
+  status: string
+  matches: CorrelateEventMatch[]
+  total_matches: number
+  risk_score: number
+}
+
+export interface RecentThreatItem {
+  ioc_value: string
+  ioc_type: string
+  threat_type: string
+  confidence: number
+  severity: string
+  last_seen: string
+}
+
+export interface RecentThreatsResponse {
+  status: string
+  data: RecentThreatItem[]
+}
