@@ -10,6 +10,8 @@
         <li><RouterLink to="/incidents">🚨 インシデント</RouterLink></li>
         <li><RouterLink to="/systems">🖥️ ITシステム</RouterLink></li>
         <li><RouterLink to="/exercises">🎯 BCP演習</RouterLink></li>
+        <li><RouterLink to="/bia">📊 BIA 業務影響分析</RouterLink></li>
+        <li><RouterLink to="/reports">📄 レポート</RouterLink></li>
       </ul>
       <div class="sidebar-footer">
         <div v-if="auth.user" class="user-info">

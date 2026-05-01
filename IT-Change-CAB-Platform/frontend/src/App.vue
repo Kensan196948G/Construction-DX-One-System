@@ -9,6 +9,8 @@
         <li><RouterLink to="/">📊 ダッシュボード</RouterLink></li>
         <li><RouterLink to="/rfcs">📝 RFC管理</RouterLink></li>
         <li><RouterLink to="/cab">🏛️ CAB会議</RouterLink></li>
+        <li><RouterLink to="/freeze-periods">🚫 変更凍結期間</RouterLink></li>
+        <li><RouterLink to="/kpi">📈 KPI</RouterLink></li>
       </ul>
       <div class="sidebar-footer">
         <div class="user-info">

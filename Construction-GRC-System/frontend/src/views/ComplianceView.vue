@@ -84,12 +84,13 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, reactive } from 'vue'
-import { complianceApi } from '@/api/compliance'
+import { storeToRefs } from 'pinia'
+import { useComplianceStore } from '@/stores/compliance'
 import type { Control, ControlCreate } from '@/types'
 
-const controls = ref<Control[]>([])
-const loading = ref(false)
-const error = ref<string | null>(null)
+const complianceStore = useComplianceStore()
+const { controls, loading, error } = storeToRefs(complianceStore)
+
 const statusFilter = ref('')
 const showForm = ref(false)
 const form: ControlCreate = reactive({ control_number: '', title: '', domain: '', applicability: 'applicable', description: '' })
@@ -100,46 +101,23 @@ const filteredControls = computed(() =>
     : controls.value,
 )
 
-async function loadControls() {
-  loading.value = true
-  error.value = null
-  try {
-    controls.value = await complianceApi.list()
-  } catch (e) {
-    error.value = e instanceof Error ? e.message : '管理策の取得に失敗しました'
-  } finally {
-    loading.value = false
-  }
-}
-
 function applyFilter() {
   // filtered via computed
 }
 
 async function updateStatus(id: string, status: Control['implementation_status']) {
-  const control = controls.value.find((c) => c.id === id)
-  if (!control) return
-  try {
-    const updated = await complianceApi.update(id, { ...control, implementation_status: status })
-    const idx = controls.value.findIndex((c) => c.id === id)
-    if (idx !== -1) controls.value[idx] = updated
-  } catch (e) {
-    error.value = e instanceof Error ? e.message : 'ステータスの更新に失敗しました'
-  }
+  await complianceStore.assessControl(id, { implementation_status: status })
 }
 
 async function submitControl() {
-  try {
-    const created = await complianceApi.create(form as ControlCreate)
-    controls.value.unshift(created)
+  const created = await complianceStore.createControl(form as ControlCreate)
+  if (created) {
     showForm.value = false
     Object.assign(form, { control_number: '', title: '', domain: '', applicability: 'applicable', description: '' })
-  } catch (e) {
-    error.value = e instanceof Error ? e.message : '管理策の登録に失敗しました'
   }
 }
 
-onMounted(loadControls)
+onMounted(() => complianceStore.fetchControls())
 </script>
 
 <style scoped>

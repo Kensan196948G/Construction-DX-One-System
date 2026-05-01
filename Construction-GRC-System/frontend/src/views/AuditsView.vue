@@ -112,12 +112,13 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, reactive } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useAuditsStore } from '@/stores/audits'
 import { auditsApi } from '@/api/audits'
-import type { Audit } from '@/types'
 
-const audits = ref<Audit[]>([])
-const loading = ref(false)
-const error = ref<string | null>(null)
+const auditsStore = useAuditsStore()
+const { audits, loading, error } = storeToRefs(auditsStore)
+
 const statusFilter = ref('')
 const expandedAudits = ref(new Set<string>())
 const showAuditForm = ref(false)
@@ -147,26 +148,11 @@ function openFindingForm(auditId: string) {
   showFindingForm.value = true
 }
 
-async function loadAudits() {
-  loading.value = true
-  error.value = null
-  try {
-    audits.value = await auditsApi.list()
-  } catch (e) {
-    error.value = e instanceof Error ? e.message : '監査の取得に失敗しました'
-  } finally {
-    loading.value = false
-  }
-}
-
 async function submitAudit() {
-  try {
-    const created = await auditsApi.create({ ...auditForm })
-    audits.value.unshift(created)
+  const created = await auditsStore.createAudit({ ...auditForm })
+  if (created) {
     showAuditForm.value = false
     Object.assign(auditForm, { title: '', scope: '', auditor: '', planned_date: '' })
-  } catch (e) {
-    error.value = e instanceof Error ? e.message : '監査の登録に失敗しました'
   }
 }
 
@@ -182,7 +168,7 @@ async function submitFinding() {
   }
 }
 
-onMounted(loadAudits)
+onMounted(() => auditsStore.fetchAudits())
 </script>
 
 <style scoped>
