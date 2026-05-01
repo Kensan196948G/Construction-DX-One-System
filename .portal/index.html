@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>建設DX セキュリティ統合ポータル</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    header { text-align: center; color: #fff; margin-bottom: 3rem; }
+    header h1 { font-size: 2rem; font-weight: 700; letter-spacing: 0.05em; }
+    header p { color: #94d2bd; margin-top: 0.5rem; font-size: 1.1rem; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      width: 100%;
+      max-width: 1200px;
+    }
+    .card {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 16px;
+      padding: 2rem;
+      text-decoration: none;
+      color: #fff;
+      transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      background: rgba(255,255,255,0.13);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+    .card-icon { font-size: 2.5rem; }
+    .card-title { font-size: 1.2rem; font-weight: 700; }
+    .card-subtitle { font-size: 0.85rem; color: #94d2bd; }
+    .card-desc { font-size: 0.9rem; color: #b0c4cc; line-height: 1.5; }
+    .badge {
+      display: inline-block;
+      background: rgba(72, 199, 142, 0.2);
+      color: #48c78e;
+      border: 1px solid #48c78e;
+      border-radius: 99px;
+      padding: 0.2rem 0.75rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      width: fit-content;
+    }
+    .port-info {
+      font-size: 0.8rem;
+      color: #7ec8e3;
+      font-family: monospace;
+      margin-top: auto;
+      padding-top: 0.5rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    footer {
+      margin-top: 3rem;
+      color: rgba(255,255,255,0.4);
+      font-size: 0.85rem;
+      text-align: center;
+    }
+    .cred-box {
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(72,199,142,0.3);
+      border-radius: 12px;
+      padding: 1.25rem 2rem;
+      color: #48c78e;
+      font-family: monospace;
+      font-size: 0.95rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      width: 100%;
+      max-width: 500px;
+    }
+    .cred-box span { color: #94d2bd; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🏗️ 建設DX セキュリティ統合ポータル</h1>
+    <p>Construction-DX-One-System — みらい建設工業 ISO27001/NIST CSF 2.0 準拠基盤</p>
+  </header>
+
+  <div class="cred-box">
+    🔑 共通ログイン認証情報<br>
+    <span>ユーザー名:</span> admin &nbsp;|&nbsp; <span>パスワード:</span> Admin@1234
+  </div>
+
+  <div class="grid">
+    <a class="card" href="http://192.168.0.185:5101" target="_blank">
+      <div class="card-icon">🔐</div>
+      <div class="card-title">ZeroTrust ID Governance</div>
+      <div class="card-subtitle">ZTIG — ゼロトラスト統合 ID 管理</div>
+      <div class="card-desc">ユーザー管理・ロール管理・アクセス申請・アカウント棚卸・AD/EntraID 統合</div>
+      <div class="badge">FastAPI + PostgreSQL</div>
+      <div class="port-info">http://192.168.0.185:5101</div>
+    </a>
+
+    <a class="card" href="http://192.168.0.185:5102" target="_blank">
+      <div class="card-icon">🛡️</div>
+      <div class="card-title">Construction SIEM Platform</div>
+      <div class="card-subtitle">SIEM — セキュリティ情報・イベント管理</div>
+      <div class="card-desc">アラート管理・イベント分析・検知ルール・脅威インテリジェンス・IoT セキュリティ</div>
+      <div class="badge">FastAPI + SQLite</div>
+      <div class="port-info">http://192.168.0.185:5102</div>
+    </a>
+
+    <a class="card" href="http://192.168.0.185:5103" target="_blank">
+      <div class="card-icon">📋</div>
+      <div class="card-title">Construction GRC System</div>
+      <div class="card-subtitle">CGRC — ガバナンス・リスク・コンプライアンス</div>
+      <div class="card-desc">リスク管理・監査管理・コンプライアンス制御・SoA 適用宣言文</div>
+      <div class="badge">Django + PostgreSQL</div>
+      <div class="port-info">http://192.168.0.185:5103</div>
+    </a>
+
+    <a class="card" href="http://192.168.0.185:5104" target="_blank">
+      <div class="card-icon">🔄</div>
+      <div class="card-title">IT Change CAB Platform</div>
+      <div class="card-subtitle">CAB — 変更諮問委員会プラットフォーム</div>
+      <div class="card-desc">RFC 管理・CAB 会議・変更凍結期間・KPI ダッシュボード</div>
+      <div class="badge">FastAPI + SQLite</div>
+      <div class="port-info">http://192.168.0.185:5104</div>
+    </a>
+
+    <a class="card" href="http://192.168.0.185:5105" target="_blank">
+      <div class="card-icon">🔒</div>
+      <div class="card-title">IT BCP/ITSCM System</div>
+      <div class="card-subtitle">BCP — 事業継続・IT サービス継続管理</div>
+      <div class="card-desc">インシデント管理・BIA 業務影響分析・演習管理・経営報告</div>
+      <div class="badge">FastAPI + SQLite</div>
+      <div class="port-info">http://192.168.0.185:5105</div>
+    </a>
+  </div>
+
+  <footer>
+    <p>Construction-DX-One-System v1.0 | テスト総計 804件 PASS | セッション Session12完了</p>
+  </footer>
+</body>
+</html>

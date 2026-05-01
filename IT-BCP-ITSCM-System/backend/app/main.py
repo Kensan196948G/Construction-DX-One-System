@@ -5,6 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.database import init_db
 from app.routers import (
+    auth,
     bia,
     dashboard,
     exercises,
@@ -39,6 +40,7 @@ app.add_middleware(
 )
 
 PREFIX = "/api/v1"
+app.include_router(auth.router, prefix=PREFIX)
 app.include_router(health.router, prefix=PREFIX, tags=["health"])
 app.include_router(incidents.router, prefix=PREFIX, tags=["incidents"])
 app.include_router(systems.router, prefix=PREFIX, tags=["systems"])

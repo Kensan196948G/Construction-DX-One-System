@@ -30,6 +30,9 @@ async def refresh_token(
 async def register(payload: UserCreate, db: AsyncSession = Depends(get_db)) -> UserRead:
     try:
         user = await auth_service.create_user(db, payload)
+        await db.commit()
+        await db.refresh(user)
         return UserRead.model_validate(user)
     except Exception as e:
+        await db.rollback()
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e)) from e
