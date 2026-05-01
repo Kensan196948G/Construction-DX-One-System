@@ -138,17 +138,17 @@
     "stable": true,
     "blocked": false,
     "current_phase": "verify",
-    "last_updated": "2026-05-01T11:10:00Z",
+    "last_updated": "2026-05-01T11:20:00Z",
     "days_elapsed": 16,
     "days_remaining": 167,
-    "session_number": 11,
-    "session_summary": "Session11: 全フロントエンド機能拡張完了。SIEM events store、CGRC audits/compliance stores、CAB 凍結期間/KPI画面、BCP BIA/Reports画面、ZTIG 棚卸管理画面を実装。PR#22マージ。フロントエンドテスト総計 286件 PASS。",
-    "next_session_priority": "playwright_e2e_tests_and_backend_additional_features",
+    "session_number": 12,
+    "session_summary": "Session12: E2EテストZTIG追加(Playwright 13tests)、CGRCバックエンドテスト拡充(+9tests→74tests)、BCP型安全性改善(any型除去)。PR#23マージ。テスト総計757件。",
+    "next_session_priority": "e2e_tests_other_subsystems_and_siem_threat_intel_api_client",
     "open_prs": [],
     "completed_backends": [
       "ZTIG(87tests/81%ci)",
       "SIEM(182tests/82%ci)",
-      "CGRC(91%ci)",
+      "CGRC(74tests/91%ci)",
       "ICCP(60tests/84%ci)",
       "BCP(63tests/80%ci)"
     ],
@@ -166,10 +166,14 @@
       "CAB": ["Dashboard", "RFCs", "CabMeetings", "FreezePeriods", "KPI"],
       "BCP": ["Dashboard", "Incidents", "Exercises", "Systems", "BIA", "Reports"]
     },
+    "e2e_tests": {
+      "ZTIG_playwright": 13
+    },
     "test_totals": {
       "frontend_vitest": 286,
       "backend_pytest": 457,
-      "total": 743
+      "e2e_playwright": 13,
+      "total": 756
     },
     "blocker": "none",
     "security_issues": ["JWT localStorage → httpOnly Cookie 未対応 (Issue起票済み, P2)"]
