@@ -1,5 +1,5 @@
 import uuid
-from datetime import datetime
+from datetime import UTC, datetime
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy import select
@@ -82,7 +82,7 @@ async def update_rfc_status(
     rfc.status = payload.status
     if payload.rejection_reason:
         rfc.rejection_reason = payload.rejection_reason
-    rfc.updated_at = datetime.utcnow()
+    rfc.updated_at = datetime.now(UTC)
     await db.commit()
     await db.refresh(rfc)
     return RFCResponse.model_validate(rfc)
@@ -100,7 +100,7 @@ async def assign_meeting(
         raise HTTPException(status_code=404, detail="RFC not found")
 
     rfc.cab_meeting_id = meeting_id
-    rfc.updated_at = datetime.utcnow()
+    rfc.updated_at = datetime.now(UTC)
     await db.commit()
     await db.refresh(rfc)
     return RFCResponse.model_validate(rfc)

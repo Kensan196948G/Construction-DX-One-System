@@ -1,5 +1,5 @@
 import uuid
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
 
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -34,7 +34,7 @@ async def update_pir(db: AsyncSession, pir_id: str, payload: PIRUpdate) -> PIR |
     update_data = payload.model_dump(exclude_unset=True)
     for key, value in update_data.items():
         setattr(pir, key, value)
-    pir.updated_at = datetime.utcnow()
+    pir.updated_at = datetime.now(UTC)
     await db.commit()
     await db.refresh(pir)
     return pir
@@ -108,7 +108,7 @@ async def complete_review(
 
     pir.review_status = "completed"
     pir.reviewer_id = reviewer_id
-    pir.review_date = datetime.utcnow()
+    pir.review_date = datetime.now(UTC)
     pir.was_successful = payload.was_successful
     pir.issues_encountered = payload.issues_encountered
     pir.lessons_learned = payload.lessons_learned
@@ -116,14 +116,14 @@ async def complete_review(
     pir.recommendation = payload.recommendation
     if payload.follow_up_actions:
         pir.follow_up_actions = {"items": payload.follow_up_actions}
-    pir.updated_at = datetime.utcnow()
+    pir.updated_at = datetime.now(UTC)
     await db.commit()
     await db.refresh(pir)
     return pir
 
 
 async def mark_overdue(db: AsyncSession) -> list[PIR]:
-    seven_days_ago = datetime.utcnow() - timedelta(days=7)
+    seven_days_ago = datetime.now(UTC) - timedelta(days=7)
     query = select(PIR).where(
         PIR.review_status.in_(["pending", "in_review"]),
         PIR.created_at < seven_days_ago,
@@ -132,7 +132,7 @@ async def mark_overdue(db: AsyncSession) -> list[PIR]:
     overdue_pirs = list(result.scalars().all())
     for pir in overdue_pirs:
         pir.review_status = "overdue"
-        pir.updated_at = datetime.utcnow()
+        pir.updated_at = datetime.now(UTC)
     await db.commit()
     for pir in overdue_pirs:
         await db.refresh(pir)

@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import UTC, datetime
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy import func, select
@@ -128,7 +128,7 @@ async def update_rule(rule_id: str, payload: RuleUpdate, db: AsyncSession = Depe
     update_data = payload.model_dump(exclude_unset=True)
     for key, value in update_data.items():
         setattr(rule, key, value)
-    rule.updated_at = datetime.utcnow()
+    rule.updated_at = datetime.now(UTC)
     await db.commit()
     await db.refresh(rule)
     return RuleResponse.model_validate(rule)
@@ -155,7 +155,7 @@ async def toggle_rule_active(rule_id: str, db: AsyncSession = Depends(get_db)):
     if not rule:
         raise HTTPException(status_code=404, detail="Rule not found")
     rule.is_active = not rule.is_active
-    rule.updated_at = datetime.utcnow()
+    rule.updated_at = datetime.now(UTC)
     await db.commit()
     await db.refresh(rule)
     return RuleToggleResponse(data=RuleResponse.model_validate(rule))

@@ -86,7 +86,7 @@ async def update_incident_status(
             or datetime.now(UTC) <= incident.rto_deadline.replace(tzinfo=UTC)
         )
 
-    incident.updated_at = datetime.utcnow()
+    incident.updated_at = datetime.now(UTC)
     await db.commit()
     await db.refresh(incident)
     return IncidentResponse.model_validate(incident)
@@ -100,7 +100,7 @@ async def activate_bcp(incident_id: str, db: AsyncSession = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Incident not found")
 
     incident.bcp_activated = True
-    incident.updated_at = datetime.utcnow()
+    incident.updated_at = datetime.now(UTC)
     await db.commit()
     await db.refresh(incident)
     return IncidentResponse.model_validate(incident)

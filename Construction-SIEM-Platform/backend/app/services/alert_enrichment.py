@@ -1,5 +1,5 @@
 import logging
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
 
 from sqlalchemy import func, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -20,7 +20,7 @@ def _boost_severity(base: str, correlation_count: int) -> str:
 
 
 async def enrich_alert(alert: Alert, db: AsyncSession) -> dict:
-    now = datetime.utcnow()
+    now = datetime.now(UTC)
     window_24h = now - timedelta(hours=24)
 
     related_query = select(func.count()).select_from(SecurityEvent).where(
@@ -69,7 +69,7 @@ async def enrich_alert(alert: Alert, db: AsyncSession) -> dict:
 
 
 async def correlate_alerts(alert: Alert, db: AsyncSession) -> list[dict]:
-    now = datetime.utcnow()
+    now = datetime.now(UTC)
     window = now - timedelta(hours=24)
 
     correlations: dict[str, dict] = {}

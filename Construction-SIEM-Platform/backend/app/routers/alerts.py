@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import UTC, datetime
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy import func, select
@@ -98,7 +98,7 @@ async def update_alert_status(
     if not alert:
         raise HTTPException(status_code=404, detail="Alert not found")
     alert.status = payload.status
-    alert.updated_at = datetime.utcnow()
+    alert.updated_at = datetime.now(UTC)
     await db.commit()
     await db.refresh(alert)
     return AlertResponse.model_validate(alert)
@@ -116,8 +116,8 @@ async def acknowledge_alert(
         raise HTTPException(status_code=404, detail="Alert not found")
     alert.acknowledged = True
     alert.acknowledged_by = acknowledged_by
-    alert.acknowledged_at = datetime.utcnow()
-    alert.updated_at = datetime.utcnow()
+    alert.acknowledged_at = datetime.now(UTC)
+    alert.updated_at = datetime.now(UTC)
     await db.commit()
     await db.refresh(alert)
     return AlertResponse.model_validate(alert)

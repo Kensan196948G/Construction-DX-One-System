@@ -1,5 +1,5 @@
 import json
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -100,7 +100,7 @@ async def get_calendar_events(year: int, month: int, db: AsyncSession) -> list[d
 
 
 async def get_upcoming_changes(days: int, db: AsyncSession) -> list[dict]:
-    now = datetime.utcnow()
+    now = datetime.now(UTC)
     future = now + timedelta(days=days)
 
     result = await db.execute(

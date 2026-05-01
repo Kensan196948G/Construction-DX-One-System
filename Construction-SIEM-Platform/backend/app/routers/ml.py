@@ -1,6 +1,6 @@
 import json
 import time
-from datetime import datetime
+from datetime import UTC, datetime
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy import func, select
@@ -87,7 +87,7 @@ async def train_model(model_id: str, db: AsyncSession = Depends(get_db)):
     elapsed = time.monotonic() - train_start
 
     model.metrics = json.dumps(metrics, default=str)
-    model.trained_at = datetime.utcnow()
+    model.trained_at = datetime.now(UTC)
     await db.commit()
     await db.refresh(model)
 
@@ -126,7 +126,7 @@ async def predict(model_id: str, payload: PredictRequest, db: AsyncSession = Dep
         is_anomaly=is_anomaly,
         features_used=json.dumps(numeric_features),
         explanation=explanation,
-        detected_at=datetime.utcnow(),
+        detected_at=datetime.now(UTC),
     )
     db.add(score_entry)
     await db.commit()

@@ -3,7 +3,7 @@ import logging
 import uuid
 from collections import defaultdict
 from collections.abc import Callable
-from datetime import datetime
+from datetime import UTC, datetime
 from typing import Any
 
 logger = logging.getLogger(__name__)
@@ -28,7 +28,7 @@ class MessageQueue:
             "topic": topic,
             "key": key,
             "value": value if isinstance(value, dict) else {"data": value},
-            "published_at": datetime.utcnow().isoformat(),
+            "published_at": datetime.now(UTC).isoformat(),
         }
         self._topics[topic].append(message)
 
