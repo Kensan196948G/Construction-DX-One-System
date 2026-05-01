@@ -2,13 +2,14 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { biaApi } from '@/api/bia'
 import type { BiaCreateInput } from '@/api/bia'
+import type { BiaRecord } from '@/types'
 
 export const useBiaStore = defineStore('bia', () => {
-  const biaList = ref<any[]>([])
+  const biaList = ref<BiaRecord[]>([])
   const loading = ref(false)
   const error = ref<string | null>(null)
 
-  async function fetchBia() {
+  async function fetchBia(): Promise<void> {
     loading.value = true
     error.value = null
     try {
@@ -20,7 +21,7 @@ export const useBiaStore = defineStore('bia', () => {
     }
   }
 
-  async function createBia(data: BiaCreateInput): Promise<any | null> {
+  async function createBia(data: BiaCreateInput): Promise<BiaRecord | null> {
     try {
       const record = await biaApi.create(data)
       biaList.value.unshift(record)

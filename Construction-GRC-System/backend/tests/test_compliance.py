@@ -244,3 +244,60 @@ def test_framework_compliance_rates(client):
     assert "compliance_rate" in nist
     assert "function_breakdown" in nist
     assert 0 <= nist["compliance_rate"] <= 100
+
+
+# --- Additional tests with task-specified function names ---
+
+
+@pytest.mark.django_db
+def test_list_controls_empty(client):
+    """GET /api/v1/compliance/ returns 200 when no controls exist."""
+    response = client.get("/api/v1/compliance/")
+    assert response.status_code == 200
+    assert response.json() == []
+
+
+@pytest.mark.django_db
+def test_create_control(client, control_data):
+    """POST /api/v1/compliance/ creates a new control and returns 201."""
+    response = client.post(
+        "/api/v1/compliance/", data=control_data, content_type="application/json"
+    )
+    assert response.status_code == 201
+    data = response.json()
+    assert data["control_number"] == control_data["control_number"]
+    assert data["title"] == control_data["title"]
+    assert "id" in data
+
+
+@pytest.mark.django_db
+def test_assess_control(client, control_data):
+    """PUT /api/v1/compliance/{id}/ updates implementation status (assess) and returns 200."""
+    create_resp = client.post(
+        "/api/v1/compliance/", data=control_data, content_type="application/json"
+    )
+    assert create_resp.status_code == 201
+    control_id = create_resp.json()["id"]
+
+    # Assess the control by updating its implementation status to "implemented"
+    assessed = {**control_data, "implementation_status": "implemented"}
+    response = client.put(
+        f"/api/v1/compliance/{control_id}/",
+        data=assessed,
+        content_type="application/json",
+    )
+    assert response.status_code == 200
+    data = response.json()
+    assert data["implementation_status"] == "implemented"
+
+
+@pytest.mark.django_db
+def test_soa_export(client):
+    """GET /api/v1/compliance/soa/ returns SOA data with 200."""
+    _seed_controls()
+    response = client.get("/api/v1/compliance/soa/")
+    assert response.status_code == 200
+    data = response.json()
+    assert "framework" in data
+    assert "domains" in data
+    assert data["framework"] == "ISO 27001:2022"

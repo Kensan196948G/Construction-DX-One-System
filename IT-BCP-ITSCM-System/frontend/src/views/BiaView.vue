@@ -20,7 +20,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in store.biaList" :key="item.id ?? item.system_id + item.assessment_date">
+        <tr v-for="item in store.biaList" :key="item.id ?? (item.system_id ?? '') + (item.assessment_date ?? '')">
           <td>{{ item.system_id ?? item.systemId ?? '—' }}</td>
           <td>{{ item.assessment_date ?? item.assessmentDate ?? '—' }}</td>
           <td>{{ item.rto_hours ?? item.rtoHours ?? '—' }}</td>

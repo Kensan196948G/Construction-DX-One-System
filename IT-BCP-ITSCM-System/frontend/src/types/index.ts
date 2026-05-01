@@ -107,3 +107,52 @@ export interface LoginResponse {
 export interface RefreshResponse {
   accessToken: string
 }
+
+export type ImpactLevel = 'critical' | 'high' | 'medium' | 'low'
+
+export interface BiaRecord {
+  id?: string
+  system_id?: string
+  systemId?: string
+  assessment_date?: string
+  assessmentDate?: string
+  rto_hours?: number
+  rtoHours?: number
+  rpo_hours?: number
+  rpoHours?: number
+  impact_level?: ImpactLevel
+  impactLevel?: ImpactLevel
+  notes?: string | null
+}
+
+export interface ExecutiveSummary {
+  total_incidents?: number | null
+  totalIncidents?: number | null
+  critical_incidents?: number | null
+  criticalIncidents?: number | null
+  critical_rate?: number | null
+  criticalRate?: number | null
+  bcp_activations?: number | null
+  bcpActivations?: number | null
+  avg_recovery_hours?: number | null
+  avgRecoveryHours?: number | null
+  open_incidents?: number | null
+  openIncidents?: number | null
+  [key: string]: unknown
+}
+
+export interface SystemStatusReport {
+  total_systems?: number | null
+  totalSystems?: number | null
+  normal_systems?: number | null
+  normalSystems?: number | null
+  degraded_systems?: number | null
+  degradedSystems?: number | null
+  down_systems?: number | null
+  downSystems?: number | null
+  tier1_count?: number | null
+  tier1Count?: number | null
+  availability_rate?: number | null
+  availabilityRate?: number | null
+  [key: string]: unknown
+}
