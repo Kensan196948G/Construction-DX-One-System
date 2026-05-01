@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { setActivePinia, createPinia } from 'pinia'
 import { useBiaStore } from '@/stores/bia'
 import { biaApi } from '@/api/bia'
+import type { BiaRecord, ImpactLevel } from '@/types'
 
 vi.mock('@/api/bia', () => ({
   biaApi: {
@@ -10,7 +11,7 @@ vi.mock('@/api/bia', () => ({
   },
 }))
 
-const mockBiaRecord = {
+const mockBiaRecord: BiaRecord = {
   id: 'bia-1',
   system_id: 'sys-001',
   assessment_date: '2024-01-15',
@@ -83,7 +84,7 @@ describe('useBiaStore', () => {
       assessment_date: '2024-01-15',
       rto_hours: 4,
       rpo_hours: 1,
-      impact_level: 'critical',
+      impact_level: 'critical' as ImpactLevel,
     })
     expect(result).toEqual(newRecord)
     expect(store.biaList[0].id).toBe('bia-1')
@@ -98,7 +99,7 @@ describe('useBiaStore', () => {
       assessment_date: '2024-02-01',
       rto_hours: 8,
       rpo_hours: 2,
-      impact_level: 'high',
+      impact_level: 'high' as ImpactLevel,
     })
     expect(result).toBeNull()
     expect(store.error).toBe('Create failed')
@@ -113,7 +114,7 @@ describe('useBiaStore', () => {
       assessment_date: '2024-03-01',
       rto_hours: 2,
       rpo_hours: 0.5,
-      impact_level: 'medium',
+      impact_level: 'medium' as ImpactLevel,
     })
     expect(store.error).toBe('fail')
     await store.fetchBia()
@@ -129,7 +130,7 @@ describe('useBiaStore', () => {
       assessment_date: '2024-04-01',
       rto_hours: 4,
       rpo_hours: 1,
-      impact_level: 'low',
+      impact_level: 'low' as ImpactLevel,
       notes: 'test note',
     }
     await store.createBia(input)

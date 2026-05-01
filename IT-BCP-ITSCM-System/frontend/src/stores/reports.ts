@@ -1,14 +1,15 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { reportsApi } from '@/api/reports'
+import type { ExecutiveSummary, SystemStatusReport } from '@/types'
 
 export const useReportsStore = defineStore('reports', () => {
-  const executiveSummary = ref<any | null>(null)
-  const systemStatus = ref<any | null>(null)
+  const executiveSummary = ref<ExecutiveSummary | null>(null)
+  const systemStatus = ref<SystemStatusReport | null>(null)
   const loading = ref(false)
   const error = ref<string | null>(null)
 
-  async function fetchExecutiveSummary() {
+  async function fetchExecutiveSummary(): Promise<void> {
     loading.value = true
     error.value = null
     try {
@@ -20,7 +21,7 @@ export const useReportsStore = defineStore('reports', () => {
     }
   }
 
-  async function fetchSystemStatus() {
+  async function fetchSystemStatus(): Promise<void> {
     loading.value = true
     error.value = null
     try {

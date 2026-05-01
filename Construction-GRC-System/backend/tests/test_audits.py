@@ -166,3 +166,70 @@ def test_finding_delete(client, audit_data):
     response = client.delete(f"/api/v1/audits/{audit_id}/findings/{finding_id}/")
     assert response.status_code == 204
     assert not Finding.objects.filter(pk=finding_id).exists()
+
+
+# --- Additional tests with task-specified function names ---
+
+
+@pytest.mark.django_db
+def test_list_audits_empty(client):
+    """GET /api/v1/audits/ returns empty list when no audits exist."""
+    response = client.get("/api/v1/audits/")
+    assert response.status_code == 200
+    assert response.json() == []
+
+
+@pytest.mark.django_db
+def test_create_audit(client, audit_data):
+    """POST /api/v1/audits/ creates a new audit and returns 201."""
+    response = client.post("/api/v1/audits/", data=audit_data, content_type="application/json")
+    assert response.status_code == 201
+    data = response.json()
+    assert data["title"] == audit_data["title"]
+    assert "id" in data
+
+
+@pytest.mark.django_db
+def test_get_audit_detail(client, audit_data):
+    """GET /api/v1/audits/{id}/ returns audit detail with 200."""
+    create_resp = client.post("/api/v1/audits/", data=audit_data, content_type="application/json")
+    audit_id = create_resp.json()["id"]
+    response = client.get(f"/api/v1/audits/{audit_id}/")
+    assert response.status_code == 200
+    assert response.json()["id"] == audit_id
+
+
+@pytest.mark.django_db
+def test_update_audit_status(client, audit_data):
+    """PATCH/PUT /api/v1/audits/{id}/ updates audit status and returns 200."""
+    create_resp = client.post("/api/v1/audits/", data=audit_data, content_type="application/json")
+    audit_id = create_resp.json()["id"]
+    updated = {**audit_data, "status": "in_progress"}
+    response = client.put(
+        f"/api/v1/audits/{audit_id}/", data=updated, content_type="application/json"
+    )
+    assert response.status_code == 200
+    assert response.json()["status"] == "in_progress"
+
+
+@pytest.mark.django_db
+def test_audit_findings(client, audit_data):
+    """GET /api/v1/audits/{id}/findings/ returns findings list with 200."""
+    create_resp = client.post("/api/v1/audits/", data=audit_data, content_type="application/json")
+    audit_id = create_resp.json()["id"]
+
+    # Create a finding first
+    client.post(
+        f"/api/v1/audits/{audit_id}/findings/",
+        data={
+            "audit": audit_id,
+            "title": "Sample Finding",
+            "severity": "medium",
+            "status": "open",
+        },
+        content_type="application/json",
+    )
+
+    response = client.get(f"/api/v1/audits/{audit_id}/findings/")
+    assert response.status_code == 200
+    assert len(response.json()) == 1
