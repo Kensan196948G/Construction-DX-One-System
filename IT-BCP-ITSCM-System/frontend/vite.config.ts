@@ -16,6 +16,7 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom',
+    exclude: ['**/node_modules/**', '**/e2e/**', '**/*.spec.ts'],
     coverage: {
       provider: 'v8',
       include: ['src/stores/**', 'src/api/**'],
